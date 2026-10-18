@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --radius: 0.875rem;
+  --background: #f0f8fe;
+  --foreground: #0f1e3b;
+  --card: rgba(255, 255, 255, 0.7);
+  --card-foreground: #0f1e3b;
+  --popover: #fcfeff;
+  --popover-foreground: #0f1e3b;
+  --primary: #11338a;
+  --primary-foreground: #fcfcfc;
+  --secondary: #e0f1fe;
+  --secondary-foreground: #112c6f;
+  --muted: #e6f0f8;
+  --muted-foreground: #54657a;
+  --accent: #d2ecff;
+  --accent-foreground: #0b2978;
+  --destructive: #df202e;
+  --destructive-foreground: #fcfcfc;
+  --border: #d0e1ed;
+  --input: #d0e1ed;
+  --ring: #2784d5;
+  --brand: #1640ad;
+  --brand-green: #0c7830;
+  --glass: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --sev-1: #5bb0d7;
+  --sev-2: #54b66e;
+  --sev-3: #eab532;
+  --sev-4: #f37513;
+  --sev-5: #e62b34;
+  --gradient-sky: linear-gradient(160deg, #f8fdff, #d2ecff 60%, #afdeff);
+  --shadow-glass: 0 20px 50px -20px rgba(31, 85, 150, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow-button: 0 10px 24px -10px rgba(17, 51, 138, 0.7);
+}
+
+@theme inline {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --color-primary: var(--primary);
+  --color-brand: var(--brand);
+}
+
+body {
+  background: var(--gradient-sky);
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-button);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand);
+  transform: translateY(-1px);
+}
