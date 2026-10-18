@@ -9,7 +9,7 @@ Build mode: fast
 
 ## Slices
 
-- [ ] **1. Next.js Scaffold with Risklyte Glass System & Single-Viewport Hero Landing**
+- [x] **1. Next.js Scaffold with Risklyte Glass System & Single-Viewport Hero Landing**
   Becomes usable: A running Next.js app in the browser with the exact Risklyte glassy blue styling, split-hero layout, transparent logo support, and interactive upload card with 3 selectable preset pills (*Lovable Pro*, *Adobe Annual*, *7-Day AI Trial*).
   Why now: Bootstraps the application, locks in the exact design tokens and typography upfront, and delivers the initial landing surface the user first encounters.
   PRD ref: `prd.md > Surface 1: The Hero Landing`, `prd.md > Look and Feel`
@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Open `http://localhost:3000` in your browser; verify the single-viewport layout, atmospheric blue gradient, and frosted glass upload card.
   Commit: `feat: scaffold Next.js app with Risklyte glass styling and HeroLanding`
 
-- [ ] **2. The Defusal Dashboard with Vampire Bleed, Interactive Checklist, and 1-Click .ics Kill-Switch**
+- [x] **2. The Defusal Dashboard with Vampire Bleed, Interactive Checklist, and 1-Click .ics Kill-Switch**
   Becomes usable: Clicking any preset pill runs the sequential scanning animation (*"Reading screenshot..."*, *"Detecting terms..."*, *"Dissecting dark patterns..."*) and opens the Defusal Dashboard with live countdown, 5-year vampire bleed, interactive defusal checklist, working direct portal bypass button, and 1-click `.ics` calendar kill-switch file download.
   Why now: Delivers the unique kernel and the full demonstrable core loop immediately using realistic preset data, proving the entire client experience without needing an API key yet.
   PRD ref: `prd.md > Surface 2: The Defusal Dashboard`, `prd.md > 1. Preset Receipt Selection`, `prd.md > 4. Direct Portal Bypass`, `prd.md > 5. Calendar Kill-Switch`
