@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Shield, RotateCcw, CheckCircle2 } from "lucide-react";
 import { SubscriptionDefusalResponse } from "@/lib/types";
 import { MetricsGrid } from "./MetricsGrid";
@@ -17,21 +18,22 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
     <div className="min-h-screen w-full px-6 sm:px-12 lg:px-20 py-8 relative">
       {/* Top Header Navbar */}
       <header className="max-w-7xl mx-auto flex items-center justify-between pb-6 mb-8 border-b border-[#d0e1ed]/70">
-        <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-[#11338a] flex items-center justify-center text-white shadow-sm">
-            <Shield className="w-5 h-5" />
-          </div>
-          <div>
+        <div className="flex items-center space-x-4">
+          <Image
+            src="/canceltrap-logo.png"
+            alt="CancelTrap Logo"
+            width={180}
+            height={45}
+            className="h-10 w-auto object-contain"
+          />
+          <div className="border-l border-[#d0e1ed] pl-4">
             <div className="flex items-center space-x-2">
-              <span className="text-xl font-extrabold text-[#0f1e3b] font-display">
-                Cancel<span className="text-[#11338a]">Trap</span>
-              </span>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold flex items-center space-x-1">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold flex items-center space-x-1">
                 <CheckCircle2 className="w-3 h-3 text-[#54b66e]" />
                 <span>Defusal Active</span>
               </span>
             </div>
-            <p className="text-xs text-[#54657a]">
+            <p className="text-xs text-[#54657a] mt-0.5">
               Target: <strong>{data.merchant.name}</strong> ({data.merchant.category})
             </p>
           </div>

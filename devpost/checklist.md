@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Click the "Adobe Annual Trap" preset, watch the scanning animation, view the Vampire Bleed calculation, click "Open Direct Cancellation Portal", and click "Download Calendar Kill-Switch" to verify the calendar alert downloads to your computer.
   Commit: `feat: implement DefusalDashboard with vampire bleed and ics kill switch`
 
-- [ ] **3. Live Multimodal Gemini 3.8 Flash Route Handler & Unrecognized Image Error Handling**
+- [x] **3. Live Multimodal Gemini 3.8 Flash Route Handler & Unrecognized Image Error Handling**
   Becomes usable: Dropping or selecting a real custom screenshot sends the image to `POST /api/analyze`, where Gemini 3.8 Flash extracts the data in strict JSON. If an invalid or blurry image is uploaded, an inline red warning alert is displayed inside the card allowing immediate retry.
   Why now: Connects live multimodal AI reasoning, completes the learning objective for strict Gemini JSON contracts, and closes the final edge-case loop.
   PRD ref: `prd.md > 2. Custom Screenshot Upload & Analysis`, `prd.md > 3. Edge Case & Ambiguity Handling`
