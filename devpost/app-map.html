@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CancelTrap — App Map & Architecture Guide</title>
+  <style>
+    :root {
+      --bg: #f0f8fe;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --border: #d0e1ed;
+      --primary: #11338a;
+      --text-main: #0f1e3b;
+      --text-muted: #54657a;
+      --accent-green: #54b66e;
+      --accent-red: #df202e;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(160deg, #f8fdff, #d2ecff 60%, #afdeff);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 32px 20px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    p.lead {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px -10px rgba(31, 85, 150, 0.15);
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .diagram-container {
+      text-align: center;
+      padding: 16px 0;
+      overflow-x: auto;
+    }
+    .route-stop {
+      border-left: 3px solid var(--primary);
+      padding-left: 16px;
+      margin-bottom: 18px;
+    }
+    .route-stop:last-child { margin-bottom: 0; }
+    .route-stop h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .route-stop code {
+      background: #e0f1fe;
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .route-stop p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .pointers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .pointer-card {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .pointer-card strong {
+      display: block;
+      font-size: 13px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .pointer-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .reuse-box {
+      background: #eef8f1;
+      border: 1px solid #c2e8cb;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 14px;
+      color: #1e4620;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CancelTrap — App Map</h1>
+      <p class="lead">A practical architecture guide and mental map of how CancelTrap defuses dark patterns, runs multimodal extraction, and generates kill-switch alerts.</p>
+    </header>
+
+    <!-- Overview -->
+    <div class="card">
+      <h2>1. The System Flow</h2>
+      <div class="diagram-container">
+        <svg viewBox="0 0 760 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
+          <!-- Step 1: Input -->
+          <rect x="20" y="30" width="150" height="90" rx="10" fill="#ffffff" stroke="#11338a" stroke-width="2"/>
+          <text x="95" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#11338a">1. User Input</text>
+          <text x="95" y="85" text-anchor="middle" font-size="11" fill="#54657a">Preset / Screenshot</text>
+          <text x="95" y="102" text-anchor="middle" font-size="10" fill="#54657a">(UploadCard.tsx)</text>
+
+          <!-- Arrow 1 -->
+          <line x1="170" y1="75" x2="210" y2="75" stroke="#11338a" stroke-width="2" marker-end="url(#arrow)"/>
+
+          <!-- Step 2: Route Handler -->
+          <rect x="210" y="30" width="160" height="90" rx="10" fill="#ffffff" stroke="#11338a" stroke-width="2"/>
+          <text x="290" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#11338a">2. API Route</text>
+          <text x="290" y="85" text-anchor="middle" font-size="11" fill="#54657a">POST /api/analyze</text>
+          <text x="290" y="102" text-anchor="middle" font-size="10" fill="#54657a">Gemini 3.8 Flash</text>
+
+          <!-- Arrow 2 -->
+          <line x1="370" y1="75" x2="410" y2="75" stroke="#11338a" stroke-width="2"/>
+
+          <!-- Step 3: Schema Validation -->
+          <rect x="410" y="30" width="160" height="90" rx="10" fill="#ffffff" stroke="#11338a" stroke-width="2"/>
+          <text x="490" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#11338a">3. Strict JSON</text>
+          <text x="490" y="85" text-anchor="middle" font-size="11" fill="#54657a">Vampire Bleed + Maze</text>
+          <text x="490" y="102" text-anchor="middle" font-size="10" fill="#54657a">(types.ts Contract)</text>
+
+          <!-- Arrow 3 -->
+          <line x1="570" y1="75" x2="610" y2="75" stroke="#11338a" stroke-width="2"/>
+
+          <!-- Step 4: Dashboard Output -->
+          <rect x="610" y="30" width="130" height="90" rx="10" fill="#ffffff" stroke="#54b66e" stroke-width="2"/>
+          <text x="675" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#54b66e">4. Action Hub</text>
+          <text x="675" y="85" text-anchor="middle" font-size="11" fill="#54657a">Checklist &amp; .ics</text>
+          <text x="675" y="102" text-anchor="middle" font-size="10" fill="#54657a">(calendar.ts)</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Code Tour Stops -->
+    <div class="card">
+      <h2>2. Code Tour &amp; Key Stops</h2>
+
+      <div class="route-stop">
+        <h3>Stop 1: The Upfront Contract — <code>src/lib/types.ts</code></h3>
+        <p>Defines <code>SubscriptionDefusalResponse</code>, specifying exactly what Gemini must return: merchant details, 5-year vampire bleed, detected deceptive trap, step-by-step checklist, and kill-switch timestamps.</p>
+      </div>
+
+      <div class="route-stop">
+        <h3>Stop 2: Multimodal Gemini 3.8 Flash Route — <code>src/app/api/analyze/route.ts</code></h3>
+        <p>Uses <code>@google/genai</code> on the server with <code>responseMimeType: "application/json"</code>. Validates base64 receipt screenshots, infers relative renewal deadlines, and handles non-subscription uploads gracefully.</p>
+      </div>
+
+      <div class="route-stop">
+        <h3>Stop 3: Interactive Defusal Dashboard — <code>src/components/DefusalDashboard.tsx</code></h3>
+        <p>Orchestrates <code>MetricsGrid</code> (4 top glass metric cards with Vampire Bleed), <code>DefusalChecklist</code> (interactive step checkboxes with decoy warnings), and <code>ActionHub</code>.</p>
+      </div>
+
+      <div class="route-stop">
+        <h3>Stop 4: Zero-Dependency .ics Kill-Switch — <code>src/lib/calendar.ts</code></h3>
+        <p>Pure TypeScript RFC 5545 iCalendar generator that outputs standard <code>VCALENDAR</code>, <code>VEVENT</code>, and <code>VALARM</code> blocks, triggering a 1-click browser download of the alert.</p>
+      </div>
+    </div>
+
+    <!-- To Change This, Start Here -->
+    <div class="card">
+      <h2>3. "To Change This, Start Here"</h2>
+      <div class="pointers-grid">
+        <div class="pointer-card">
+          <strong>Add a New Preset Trap</strong>
+          <span>Edit <code>src/data/presets.ts</code> and add a new entry to <code>PRESET_SCENARIOS</code>.</span>
+        </div>
+        <div class="pointer-card">
+          <strong>Modify Dark Pattern Prompts</strong>
+          <span>Adjust <code>systemPrompt</code> in <code>src/app/api/analyze/route.ts</code>.</span>
+        </div>
+        <div class="pointer-card">
+          <strong>Tune Glass Styling / Colors</strong>
+          <span>Adjust CSS variables in <code>src/app/globals.css</code> (e.g. <code>--gradient-sky</code>, <code>--glass</code>).</span>
+        </div>
+        <div class="pointer-card">
+          <strong>Change Kill-Switch Reminder Time</strong>
+          <span>Edit <code>alertMinutesBefore</code> in <code>src/lib/calendar.ts</code>.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- A Practice to Reuse -->
+    <div class="card">
+      <h2>4. A Practice to Reuse</h2>
+      <div class="reuse-box">
+        <strong>The Upfront Rigid Contract Pattern:</strong><br />
+        By specifying the exact TypeScript interface (<code>SubscriptionDefusalResponse</code>) and enforcing it via Gemini's <code>responseMimeType: "application/json"</code> before touching frontend UI code, we eliminated ambiguous model responses, Markdown fence wrapping bugs, and unpredictable schema drift. In future AI agent projects, defining your JSON schema contract upfront guarantees deterministic UI rendering and clean failure states.
+      </div>
+    </div>
+
+    <footer>
+      CancelTrap &middot; Built for Build With AI: Basics Hackathon &middot; Dev server: <code>npm run dev</code>
+    </footer>
+  </div>
+</body>
+</html>

@@ -41,23 +41,29 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — Checkpoint after Slice 2 (single-viewport hero, preset scanning, interactive defusal dashboard, and .ics calendar generation).
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Early usable behavior explored — Checkpoint after Slice 2 (single-viewport hero, preset scanning, interactive defusal dashboard, and .ics calendar generation).
+- [x] Final kick-the-tires exploration and feedback completed — User verified hero background (`canceltrap-hero.png`), logo (`canceltrap-logo.png`), clean splitline layout, and live Gemini API key integration.
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — connected upfront rigid Gemini JSON schema design (`src/lib/types.ts`) to server-side enforcement (`src/app/api/analyze/route.ts`) and resilient client rendering (`src/components/DefusalDashboard.tsx`).
+- [x] Optional edit and transfer reflection addressed — reusable practice documented: Upfront typed JSON contract enforcement prevents schema drift and fence-parsing errors with multimodal LLMs.
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence: [to be recorded upon completion]
-Route and stops: [to be recorded upon completion]
-Edit outcome: [to be recorded upon completion]
-Reflection: [to be recorded upon completion]
-Activity mode: [to be recorded upon completion]
+Activity and evidence: Traced the multimodal flow from `UploadCard.tsx` base64 encoding to `api/analyze/route.ts` Gemini 3.8 Flash execution and `MetricsGrid.tsx` / `ActionHub.tsx` rendering.
+Route and stops:
+  - Stop 1: `src/lib/types.ts` (`SubscriptionDefusalResponse`)
+  - Stop 2: `src/app/api/analyze/route.ts` (`POST` handler with `responseMimeType: "application/json"`)
+  - Stop 3: `src/components/DefusalDashboard.tsx` (Dashboard orchestrator)
+  - Stop 4: `src/lib/calendar.ts` (`generateICSContent`, `downloadKillSwitchIcs`)
+Edit outcome: Replaced hero copy with clean minimal layout, integrated custom `canceltrap-hero.png` backdrop and `canceltrap-logo.png` image asset, and added vertical splitline.
+Reflection: The upfront contract pattern enabled fast, bug-free development by decoupling UI construction from model idiosyncrasies.
+Activity mode: Live app verified on Next.js dev server (`http://localhost:3000`).
 
 ## Revisions
+- Incorporated custom hero background image (`public/canceltrap-hero.png`) and transparent logo asset (`public/canceltrap-logo.png`) based on learner feedback.
+- Streamlined hero text to match minimalist Risklyte layout with a faint vertical split line separating the left branding/cards from the right upload card.
