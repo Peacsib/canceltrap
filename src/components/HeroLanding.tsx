@@ -23,32 +23,29 @@ export function HeroLanding({
 }: HeroLandingProps) {
   return (
     <main
-      className="h-screen w-full flex flex-col justify-between px-8 sm:px-14 lg:px-20 py-8 lg:py-10 relative overflow-hidden bg-cover bg-center bg-no-repeat select-none"
+      className="h-screen w-full flex flex-col justify-between px-8 sm:px-14 lg:px-20 py-8 lg:py-12 relative overflow-hidden bg-cover bg-center bg-no-repeat select-none"
       style={{
         backgroundImage: "url('/canceltrap-hero.png')",
       }}
     >
-      {/* Top Left: Logo */}
-      <div className="z-20 w-full max-w-7xl mx-auto flex items-center justify-between">
-        <Image
-          src="/canceltrap-logo.png"
-          alt="CancelTrap Logo"
-          width={280}
-          height={70}
-          priority
-          className="h-12 sm:h-14 w-auto object-contain"
-        />
-      </div>
-
-      {/* Middle: Split Layout */}
+      {/* Main Middle Row: Left Brand/Content & Right Upload Card */}
       <div className="flex-1 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full z-10 my-auto">
-        {/* Left Column: Headline and Subhead */}
-        <div className="flex-1 max-w-xl text-left">
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#0f1e3b] leading-[1.12] font-display">
-            Defuse deceptive subscriptions.
-          </h1>
+        {/* Left Column: Logo placed where the bold headline was + subhead */}
+        <div className="flex-1 max-w-xl text-left flex flex-col justify-center">
+          {/* Prominent Logo replacing the bold text headline */}
+          <div className="mb-6">
+            <Image
+              src="/canceltrap-logo.png"
+              alt="CancelTrap"
+              width={420}
+              height={105}
+              priority
+              className="h-16 sm:h-20 lg:h-24 w-auto object-contain drop-shadow-sm"
+            />
+          </div>
 
-          <p className="mt-5 text-lg sm:text-xl text-[#54657a] font-normal leading-relaxed max-w-lg">
+          {/* Clean Subhead */}
+          <p className="text-lg sm:text-xl text-[#54657a] font-normal leading-relaxed max-w-lg">
             Turn sneaky renewal receipts into live defusal checklists — in seconds, with nothing to set up.
           </p>
         </div>
@@ -65,7 +62,7 @@ export function HeroLanding({
         </div>
       </div>
 
-      {/* Bottom Left: 4 Frosted Feature Cards (Risklyte pixel-match) */}
+      {/* Bottom Left: 4 Frosted Feature Cards */}
       <div className="z-20 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
           {/* Card 1 */}
