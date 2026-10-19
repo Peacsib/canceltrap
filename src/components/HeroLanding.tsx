@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { LayoutGrid, Shield, Zap, Calendar } from "lucide-react";
+import { Search, Shield, TrendingDown, Calendar } from "lucide-react";
 import { UploadCard } from "./UploadCard";
 import { SubscriptionDefusalResponse } from "@/lib/types";
 
@@ -30,23 +30,27 @@ export function HeroLanding({
     >
       {/* Main Middle Row: Left Brand/Content & Right Upload Card */}
       <div className="flex-1 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full z-10 my-auto">
-        {/* Left Column: Logo placed where the bold headline was + subhead */}
+        {/* Left Column: Big Logo + Meaningful Tagline */}
         <div className="flex-1 max-w-xl text-left flex flex-col justify-center">
-          {/* Prominent Logo replacing the bold text headline */}
-          <div className="mb-6">
+          {/* Big, Commanding Brand Logo */}
+          <div className="mb-4 -ml-1">
             <Image
               src="/canceltrap-logo.png"
               alt="CancelTrap"
-              width={420}
-              height={105}
+              width={600}
+              height={150}
               priority
-              className="h-16 sm:h-20 lg:h-24 w-auto object-contain drop-shadow-sm"
+              className="h-20 sm:h-24 lg:h-28 w-auto object-contain drop-shadow-sm"
             />
           </div>
 
-          {/* Clean Subhead */}
-          <p className="text-lg sm:text-xl text-[#54657a] font-normal leading-relaxed max-w-lg">
-            Turn sneaky renewal receipts into live defusal checklists — in seconds, with nothing to set up.
+          {/* Meaningful, Human Tagline (No Jargon) */}
+          <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-[#0f1e3b] font-display tracking-tight leading-snug">
+            Cancel hidden subscriptions before you get charged.
+          </h1>
+
+          <p className="mt-3 text-base sm:text-lg text-[#54657a] font-normal leading-relaxed max-w-lg">
+            Drop any receipt or trial email to find the direct cancellation link and set a reminder before money leaves your account.
           </p>
         </div>
 
@@ -62,16 +66,16 @@ export function HeroLanding({
         </div>
       </div>
 
-      {/* Bottom Left: 4 Frosted Feature Cards */}
+      {/* Bottom Left: 4 Frosted Feature Cards (Human-First Copy) */}
       <div className="z-20 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
           {/* Card 1 */}
           <div className="bg-white/80 backdrop-blur-xl rounded-[20px] p-4 border border-white/90 shadow-[0_10px_25px_-10px_rgba(20,50,110,0.12)] text-left transition-transform hover:-translate-y-0.5">
             <div className="w-7 h-7 rounded-lg bg-blue-50 text-[#11338a] flex items-center justify-center mb-2.5">
-              <LayoutGrid className="w-4 h-4" />
+              <Search className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-[#0f1e3b] text-xs">Automatic Defusal</h3>
-            <p className="text-[11px] text-[#54657a] mt-0.5">No hidden mazes</p>
+            <h3 className="font-bold text-[#0f1e3b] text-xs">Expose Hidden Traps</h3>
+            <p className="text-[11px] text-[#54657a] mt-0.5">Spot decoy pause buttons</p>
           </div>
 
           {/* Card 2 */}
@@ -79,17 +83,17 @@ export function HeroLanding({
             <div className="w-7 h-7 rounded-lg bg-blue-50 text-[#11338a] flex items-center justify-center mb-2.5">
               <Shield className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-[#0f1e3b] text-xs">Direct by Design</h3>
-            <p className="text-[11px] text-[#54657a] mt-0.5">Bypasses cancel traps</p>
+            <h3 className="font-bold text-[#0f1e3b] text-xs">Direct Cancel Link</h3>
+            <p className="text-[11px] text-[#54657a] mt-0.5">Skip tricky settings menus</p>
           </div>
 
           {/* Card 3 */}
           <div className="bg-white/80 backdrop-blur-xl rounded-[20px] p-4 border border-white/90 shadow-[0_10px_25px_-10px_rgba(20,50,110,0.12)] text-left transition-transform hover:-translate-y-0.5">
             <div className="w-7 h-7 rounded-lg bg-blue-50 text-[#11338a] flex items-center justify-center mb-2.5">
-              <Zap className="w-4 h-4" />
+              <TrendingDown className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-[#0f1e3b] text-xs">Instant Insights</h3>
-            <p className="text-[11px] text-[#54657a] mt-0.5">5-Year vampire bleed</p>
+            <h3 className="font-bold text-[#0f1e3b] text-xs">Cost Projection</h3>
+            <p className="text-[11px] text-[#54657a] mt-0.5">5-Year cumulative drain</p>
           </div>
 
           {/* Card 4 */}
@@ -97,8 +101,8 @@ export function HeroLanding({
             <div className="w-7 h-7 rounded-lg bg-blue-50 text-[#11338a] flex items-center justify-center mb-2.5">
               <Calendar className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-[#0f1e3b] text-xs">Kill-Switch Ready</h3>
-            <p className="text-[11px] text-[#54657a] mt-0.5">RFC 5545 in one click</p>
+            <h3 className="font-bold text-[#0f1e3b] text-xs">Calendar Kill-Switch</h3>
+            <p className="text-[11px] text-[#54657a] mt-0.5">Reminder before you pay</p>
           </div>
         </div>
       </div>
