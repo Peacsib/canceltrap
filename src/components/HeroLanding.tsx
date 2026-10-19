@@ -229,15 +229,15 @@ export function HeroLanding({
       {/* Main Hero Section: Left Copy & Right Interactive 3D phone zone */}
       <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-8 lg:py-12">
         {/* Left Column: Clean, high-impact copy matching mockup */}
-        <div className="w-full lg:max-w-[560px] text-left flex flex-col justify-center space-y-5">
+        <div className="w-full lg:max-w-xl xl:max-w-2xl text-left flex flex-col justify-center space-y-6">
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee] border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs">
             <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Stop unwanted charges</span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-[#0c1b38] font-display tracking-tight leading-[1.12]">
+          {/* Main Headline - perfectly balanced 2 lines */}
+          <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.14]">
             Cancel <span className="text-[#1658eb]">subscriptions</span> <br />
             <span className="text-[#15a24a]">before</span> you get charged.
           </h1>
@@ -248,11 +248,11 @@ export function HeroLanding({
           </p>
 
           {/* CTA Row */}
-          <div className="flex flex-wrap items-center gap-5 pt-2">
+          <div className="flex flex-wrap items-center gap-6 pt-2">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-7 py-3.5 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.5)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              className="px-7 py-3.5 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.45)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <Upload className="w-4 h-4 stroke-[2.5]" />
               <span>Find my subscription</span>
@@ -273,23 +273,6 @@ export function HeroLanding({
           <div className="flex items-center gap-2 text-xs text-[#556987] pt-1">
             <Lock className="w-3.5 h-3.5 text-[#15a24a] stroke-[2.5]" />
             <span>Your data is safe &amp; private</span>
-          </div>
-
-          {/* Quick Preset Selector Chips */}
-          <div className="pt-3 border-t border-slate-200/60 max-w-md">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs text-[#556987] font-medium">Try instant demo:</span>
-              {PRESET_SCENARIOS.map((preset) => (
-                <button
-                  key={preset.id}
-                  type="button"
-                  onClick={() => runPresetAnalysis(preset)}
-                  className="px-3 py-1 rounded-full bg-white/90 hover:bg-white text-[#1658eb] font-semibold text-xs border border-blue-200 shadow-xs hover:shadow-sm hover:border-[#1658eb]/50 transition-all cursor-pointer"
-                >
-                  {preset.id === "adobe" ? "Adobe Annual" : preset.id === "lovable" ? "Lovable Pro" : "7-Day AI"}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Error Alert if any */}
@@ -455,6 +438,25 @@ export function HeroLanding({
                   <p><strong>2. Multimodal Scan:</strong> Gemini 3.8 Flash extracts the merchant name, renewal deadline, and recurring price.</p>
                   <p><strong>3. Dark-Pattern Defusal:</strong> We pinpoint sneaky decoy buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;) and give you the direct cancellation link.</p>
                   <p><strong>4. Kill-Switch Reminder:</strong> Generate a one-click calendar reminder (.ics) set 48 hours before renewal.</p>
+                </div>
+
+                <div className="mt-5 pt-4 border-t border-slate-100">
+                  <span className="text-xs font-semibold text-[#0c1b38] block mb-2">Or test an instant sample scan:</span>
+                  <div className="flex gap-2 flex-wrap">
+                    {PRESET_SCENARIOS.map((preset) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => {
+                          setActiveModal(null);
+                          runPresetAnalysis(preset);
+                        }}
+                        className="px-3 py-1.5 rounded-xl bg-[#e8f1fd] text-[#1658eb] hover:bg-[#d6e7fc] text-xs font-semibold transition-all cursor-pointer"
+                      >
+                        {preset.id === "adobe" ? "Adobe Annual Trap" : preset.id === "lovable" ? "Lovable Pro" : "7-Day AI Trial"}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
