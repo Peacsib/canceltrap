@@ -391,43 +391,43 @@ export function HeroLanding({
         </div>
       </div>
 
-      {/* Bottom Features Strip: Exact match of the 3-item clean white bar */}
-      <footer className="w-full bg-white/95 backdrop-blur-md border-t border-slate-200/80 py-5 px-6 sm:px-12 lg:px-16 z-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200/80">
+      {/* Bottom Features Strip: Translucent frosted glass, subtle and unobtrusive */}
+      <footer className="w-full bg-white/20 backdrop-blur-2xl border-t border-white/40 shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)] py-3.5 px-6 sm:px-12 lg:px-16 z-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/40">
           {/* Item 1: Save money */}
-          <div className="flex items-center gap-4 py-3 md:py-0 md:px-8 first:pl-0">
-            <div className="w-12 h-12 rounded-2xl bg-[#e8f1fd] text-[#1658eb] flex items-center justify-center shrink-0">
-              <Zap className="w-5 h-5 fill-[#1658eb] text-[#1658eb]" />
+          <div className="flex items-center gap-3.5 py-2.5 md:py-0 md:px-8 first:pl-0">
+            <div className="w-9 h-9 rounded-xl bg-white/40 backdrop-blur-md border border-white/60 text-[#1658eb] flex items-center justify-center shrink-0 shadow-xs">
+              <Zap className="w-4 h-4 fill-[#1658eb]/70 text-[#1658eb]" />
             </div>
             <div>
-              <h4 className="font-bold text-[#0c1b38] text-sm sm:text-base">Save money</h4>
-              <p className="text-xs sm:text-sm text-[#556987] mt-0.5">
+              <h4 className="font-semibold text-[#0c1b38]/85 text-xs sm:text-sm">Save money</h4>
+              <p className="text-[11px] sm:text-xs text-[#556987]/85 mt-0.5 leading-snug">
                 Avoid surprise charges and unwanted renewals.
               </p>
             </div>
           </div>
 
           {/* Item 2: Save time */}
-          <div className="flex items-center gap-4 py-3 md:py-0 md:px-8">
-            <div className="w-12 h-12 rounded-2xl bg-[#e8f1fd] text-[#1658eb] flex items-center justify-center shrink-0">
-              <Shield className="w-5 h-5 text-[#1658eb]" />
+          <div className="flex items-center gap-3.5 py-2.5 md:py-0 md:px-8">
+            <div className="w-9 h-9 rounded-xl bg-white/40 backdrop-blur-md border border-white/60 text-[#1658eb] flex items-center justify-center shrink-0 shadow-xs">
+              <Shield className="w-4 h-4 text-[#1658eb]" />
             </div>
             <div>
-              <h4 className="font-bold text-[#0c1b38] text-sm sm:text-base">Save time</h4>
-              <p className="text-xs sm:text-sm text-[#556987] mt-0.5">
+              <h4 className="font-semibold text-[#0c1b38]/85 text-xs sm:text-sm">Save time</h4>
+              <p className="text-[11px] sm:text-xs text-[#556987]/85 mt-0.5 leading-snug">
                 Get to the exact cancellation page in seconds.
               </p>
             </div>
           </div>
 
           {/* Item 3: Stay in control */}
-          <div className="flex items-center gap-4 py-3 md:py-0 md:px-8 last:pr-0">
-            <div className="w-12 h-12 rounded-2xl bg-[#e8f1fd] text-[#1658eb] flex items-center justify-center shrink-0">
-              <Bell className="w-5 h-5 text-[#1658eb]" />
+          <div className="flex items-center gap-3.5 py-2.5 md:py-0 md:px-8 last:pr-0">
+            <div className="w-9 h-9 rounded-xl bg-white/40 backdrop-blur-md border border-white/60 text-[#1658eb] flex items-center justify-center shrink-0 shadow-xs">
+              <Bell className="w-4 h-4 text-[#1658eb]" />
             </div>
             <div>
-              <h4 className="font-bold text-[#0c1b38] text-sm sm:text-base">Stay in control</h4>
-              <p className="text-xs sm:text-sm text-[#556987] mt-0.5">
+              <h4 className="font-semibold text-[#0c1b38]/85 text-xs sm:text-sm">Stay in control</h4>
+              <p className="text-[11px] sm:text-xs text-[#556987]/85 mt-0.5 leading-snug">
                 Set reminders and never forget again.
               </p>
             </div>
