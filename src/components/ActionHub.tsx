@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ExternalLink, Calendar, Check, Download, Info, ShieldAlert } from "lucide-react";
+import { ExternalLink, Calendar, Check, Download, Info } from "lucide-react";
 import { SubscriptionDefusalResponse } from "@/lib/types";
 import { downloadKillSwitchIcs } from "@/lib/calendar";
 
@@ -14,15 +14,48 @@ export function ActionHub({ data }: ActionHubProps) {
   const [portalOpened, setPortalOpened] = useState(false);
   const [icsDownloaded, setIcsDownloaded] = useState(false);
 
+  const getCleanPortalUrl = () => {
+    const raw = merchant?.directPortalUrl?.trim();
+    if (raw && (raw.startsWith("http://") || raw.startsWith("https://"))) {
+      return raw;
+    }
+    if (raw && raw.includes(".")) {
+      return `https://${raw}`;
+    }
+    return `https://www.google.com/search?q=${encodeURIComponent("how to cancel " + (merchant?.name || "subscription"))}`;
+  };
+
   const handleOpenPortal = () => {
+    const targetUrl = getCleanPortalUrl();
     setPortalOpened(true);
-    window.open(merchant.directPortalUrl, "_blank", "noopener,noreferrer");
+    window.open(targetUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleDownloadIcs = () => {
-    downloadKillSwitchIcs(killSwitch, `${merchant.name.toLowerCase().replace(/\s+/g, "-")}-kill-switch.ics`);
+    const safeKillSwitch = {
+      eventTitle: killSwitch?.eventTitle || `🚨 Kill-Switch: Cancel ${merchant?.name || "Subscription"}`,
+      suggestedAlertDate: killSwitch?.suggestedAlertDate || new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+      alertMinutesBefore: killSwitch?.alertMinutesBefore || 120,
+      eventDescription: killSwitch?.eventDescription || `Reminder to cancel ${merchant?.name || "subscription"} before auto-renewal.`,
+    };
+
+    const cleanFilename = `${(merchant?.name || "subscription").toLowerCase().replace(/[^a-z0-9]/g, "-")}-kill-switch.ics`;
+    downloadKillSwitchIcs(safeKillSwitch, cleanFilename);
     setIcsDownloaded(true);
     setTimeout(() => setIcsDownloaded(false), 3000);
+  };
+
+  const formatAlertDate = (dateStr?: string) => {
+    if (!dateStr) return "2 days before renewal";
+    const d = new Date(dateStr);
+    return isNaN(d.getTime())
+      ? dateStr
+      : d.toLocaleString(undefined, {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        });
   };
 
   return (
@@ -44,7 +77,7 @@ export function ActionHub({ data }: ActionHubProps) {
         </div>
 
         <p className="text-xs text-[#54657a] my-3 leading-relaxed">
-          Opens the deep-linked plan management page for <strong>{merchant.name}</strong> directly in a new tab.
+          Opens the deep-linked plan management page for <strong>{merchant?.name || "this service"}</strong> directly in a new tab.
         </p>
 
         <button
@@ -71,7 +104,7 @@ export function ActionHub({ data }: ActionHubProps) {
 
         <div className="mt-3 text-center">
           <span className="text-[11px] text-[#54657a] truncate block">
-            Target: {merchant.directPortalUrl}
+            Target: {getCleanPortalUrl()}
           </span>
         </div>
       </div>
@@ -94,19 +127,10 @@ export function ActionHub({ data }: ActionHubProps) {
 
         <div className="my-3 p-3.5 rounded-xl bg-white/70 border border-[#d0e1ed] text-xs space-y-1.5 text-[#0f1e3b]">
           <div className="font-semibold text-[#11338a]">
-            {killSwitch.eventTitle}
+            {killSwitch?.eventTitle || `Kill-Switch: Cancel ${merchant?.name || "Subscription"}`}
           </div>
           <div className="text-[#54657a]">
-            Alert scheduled:{" "}
-            <strong>
-              {new Date(killSwitch.suggestedAlertDate).toLocaleString(undefined, {
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "2-digit",
-              })}
-            </strong>{" "}
-            (2 hours before renewal)
+            Alert scheduled: <strong>{formatAlertDate(killSwitch?.suggestedAlertDate)}</strong> (2 hours before renewal)
           </div>
         </div>
 
@@ -130,7 +154,7 @@ export function ActionHub({ data }: ActionHubProps) {
       </div>
 
       {/* 3. Merchant Fine Print & Policy Notes */}
-      {merchant.finePrintNotes && (
+      {merchant?.finePrintNotes && (
         <div className="glass-card p-5 border-slate-200">
           <div className="flex items-start space-x-2.5">
             <Info className="w-4 h-4 text-[#11338a] mt-0.5 shrink-0" />

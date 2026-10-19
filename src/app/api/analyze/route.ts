@@ -26,8 +26,7 @@ export async function POST(req: NextRequest) {
     }
 
     const ai = new GoogleGenAI({ apiKey });
-    // Support Gemini 3.8 Flash or configured model
-    const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
     const systemPrompt = `You are CancelTrap, an expert consumer-advocacy AI specialized in defusing subscription dark patterns and auto-renewal traps.
 Analyze the provided subscription confirmation, billing receipt, or trial screenshot.
