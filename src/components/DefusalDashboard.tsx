@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import {
-  Shield,
   RotateCcw,
   CheckCircle2,
   Clock,
@@ -43,7 +42,7 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
   return (
     <div className="min-h-screen w-full px-4 sm:px-8 lg:px-16 py-6 sm:py-8 relative">
       {/* ─── Top Header Navbar ─── */}
-      <header className="max-w-6xl mx-auto flex items-center justify-between pb-5 mb-6 border-b border-[#d0e1ed]/70">
+      <header className="max-w-5xl mx-auto flex items-center justify-between pb-5 mb-6 border-b border-[#d0e1ed]/70">
         {/* Brand Logo Capsule */}
         <div className="flex items-center space-x-3">
           <div className="inline-flex items-center justify-center bg-white/70 backdrop-blur-xl border border-white/80 rounded-full px-4 py-1.5 shadow-[0_4px_16px_-4px_rgba(31,85,150,0.15)] ring-1 ring-black/5">
@@ -59,7 +58,7 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
 
           <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-100/90 text-emerald-800 font-semibold flex items-center space-x-1 border border-emerald-200">
             <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-            <span>Defusal Active</span>
+            <span>Ready to Cancel</span>
           </span>
         </div>
 
@@ -70,13 +69,13 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
           className="px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white border border-[#d0e1ed] text-[#0f1e3b] font-semibold text-xs flex items-center space-x-1.5 transition-all shadow-sm hover:border-[#11338a]/50 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5 text-[#54657a]" />
-          <span>New Scan</span>
+          <span>Check Another</span>
         </button>
       </header>
 
       {/* ─── Main Content Container ─── */}
-      <main className="max-w-6xl mx-auto space-y-6">
-        {/* ─── Compact Glassy Summary Ribbon (Less text, high signal) ─── */}
+      <main className="max-w-5xl mx-auto space-y-6">
+        {/* ─── Plain-English Summary Ribbon ─── */}
         <div className="glass-card p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 text-left">
           {/* Target Service Badge */}
           <div className="flex items-center space-x-3">
@@ -86,20 +85,19 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
             <div>
               <div className="flex items-center space-x-2">
                 <h2 className="text-base font-bold text-[#0f1e3b] font-display">
-                  {merchant?.name || "Target Subscription"}
+                  {merchant?.name || "Subscription"}
                 </h2>
                 <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-slate-100 text-[#54657a] border border-slate-200">
                   {merchant?.category || "Service"}
                 </span>
               </div>
               <p className="text-xs text-[#54657a] mt-0.5">
-                Identified from receipt analysis &middot; Verified cancellation
-                path
+                Cancellation details found from your receipt
               </p>
             </div>
           </div>
 
-          {/* Micro-Metrics Strip (4 punchy pills instead of 4 giant boxes) */}
+          {/* Micro-Metrics Strip (Simple, Plain-English) */}
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             {/* 1. Countdown Pill */}
             <div
@@ -111,7 +109,7 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
             >
               <Clock className="w-3.5 h-3.5 text-slate-500" />
               <span>
-                <strong>{days}d left</strong> ({formatRenewalDate(billing?.renewalDate)})
+                <strong>Renews in {days} days</strong> ({formatRenewalDate(billing?.renewalDate)})
               </span>
             </div>
 
@@ -123,19 +121,19 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
                   {billing?.currency || "$"}
                   {amount.toFixed(2)}
                 </strong>
-                /{billing?.billingCycle || "mo"}
+                /{billing?.billingCycle || "month"}
               </span>
             </div>
 
-            {/* 3. 5-Year Bleed Risk Pill */}
-            <div className="px-3 py-1.5 rounded-xl border border-red-200 bg-red-50/70 text-[#df202e] text-xs flex items-center space-x-1.5 font-semibold">
-              <TrendingDown className="w-3.5 h-3.5 text-[#df202e]" />
+            {/* 3. 5-Year Savings Pill */}
+            <div className="px-3 py-1.5 rounded-xl border border-emerald-200 bg-emerald-50/80 text-emerald-800 text-xs flex items-center space-x-1.5 font-semibold">
+              <TrendingDown className="w-3.5 h-3.5 text-emerald-600" />
               <span>
-                ${bleed.toFixed(0)} 5-yr bleed
+                ${bleed.toFixed(0)} saved over 5 years
               </span>
             </div>
 
-            {/* 4. Dark Pattern Tag */}
+            {/* 4. Trap Warning Pill */}
             {darkPattern?.patternType && (
               <div className="px-3 py-1.5 rounded-xl border border-amber-200 bg-amber-50/70 text-amber-900 text-xs flex items-center space-x-1.5 font-medium">
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
@@ -147,7 +145,7 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
           </div>
         </div>
 
-        {/* ─── Interactive Defusal Wizard (Sequential 3-Step Simulator) ─── */}
+        {/* ─── Simple 3-Step Cancellation Guide ─── */}
         <InteractiveDefusalWizard data={data} onReset={onReset} />
       </main>
     </div>
