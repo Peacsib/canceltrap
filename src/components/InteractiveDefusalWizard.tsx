@@ -18,6 +18,8 @@ import {
   DollarSign,
   TrendingDown,
   Info,
+  ShieldCheck,
+  Compass,
 } from "lucide-react";
 import { SubscriptionDefusalResponse } from "@/lib/types";
 import { downloadKillSwitchIcs } from "@/lib/calendar";
@@ -147,16 +149,16 @@ export function InteractiveDefusalWizard({
 
   return (
     <div className="w-full space-y-6">
-      {/* ─── Main Step Container ─── */}
-      <div className="glass-card p-5 sm:p-7 relative overflow-hidden text-left border border-white shadow-[0_20px_50px_-15px_rgba(22,88,235,0.14)]">
-        {/* Top 3-Step Navigation Tabs */}
-        <div className="relative mb-6 pb-5 border-b border-[#d0e1ed]/70">
-          <div className="flex items-center justify-between gap-2 max-w-2xl mx-auto">
+      {/* ─── Expansive Full-Width Glass Card ─── */}
+      <div className="glass-card p-6 sm:p-8 lg:p-10 relative overflow-hidden text-left border border-white shadow-[0_20px_60px_-15px_rgba(22,88,235,0.14)] w-full">
+        {/* Top 3-Step Navigation Stepper */}
+        <div className="relative mb-8 pb-6 border-b border-[#d0e1ed]/70 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
             {/* Step 1 Tab */}
             <button
               type="button"
               onClick={() => setCurrentStep(1)}
-              className={`flex-1 flex items-center space-x-3 p-3 rounded-2xl transition-all cursor-pointer border ${
+              className={`flex items-center space-x-3.5 p-3.5 sm:p-4 rounded-2xl transition-all cursor-pointer border text-left ${
                 step1Done
                   ? currentStep === 1
                     ? "bg-emerald-50 text-emerald-900 border-emerald-300 shadow-sm ring-2 ring-emerald-500/20"
@@ -167,7 +169,7 @@ export function InteractiveDefusalWizard({
               }`}
             >
               <div
-                className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
                   step1Done
                     ? "bg-emerald-500 text-white"
                     : currentStep === 1
@@ -187,13 +189,11 @@ export function InteractiveDefusalWizard({
               </div>
             </button>
 
-            <ChevronRight className="w-4 h-4 text-slate-300 shrink-0 hidden sm:block" />
-
             {/* Step 2 Tab */}
             <button
               type="button"
               onClick={() => setCurrentStep(2)}
-              className={`flex-1 flex items-center space-x-3 p-3 rounded-2xl transition-all cursor-pointer border ${
+              className={`flex items-center space-x-3.5 p-3.5 sm:p-4 rounded-2xl transition-all cursor-pointer border text-left ${
                 step2Done
                   ? currentStep === 2
                     ? "bg-emerald-50 text-emerald-900 border-emerald-300 shadow-sm ring-2 ring-emerald-500/20"
@@ -204,7 +204,7 @@ export function InteractiveDefusalWizard({
               }`}
             >
               <div
-                className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
                   step2Done
                     ? "bg-emerald-500 text-white"
                     : currentStep === 2
@@ -224,13 +224,11 @@ export function InteractiveDefusalWizard({
               </div>
             </button>
 
-            <ChevronRight className="w-4 h-4 text-slate-300 shrink-0 hidden sm:block" />
-
             {/* Step 3 Tab */}
             <button
               type="button"
               onClick={() => setCurrentStep(3)}
-              className={`flex-1 flex items-center space-x-3 p-3 rounded-2xl transition-all cursor-pointer border ${
+              className={`flex items-center space-x-3.5 p-3.5 sm:p-4 rounded-2xl transition-all cursor-pointer border text-left ${
                 step3Done
                   ? currentStep === 3
                     ? "bg-emerald-50 text-emerald-900 border-emerald-300 shadow-sm ring-2 ring-emerald-500/20"
@@ -241,7 +239,7 @@ export function InteractiveDefusalWizard({
               }`}
             >
               <div
-                className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
                   step3Done
                     ? "bg-emerald-500 text-white"
                     : currentStep === 3
@@ -264,10 +262,10 @@ export function InteractiveDefusalWizard({
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════
-            STEP 1: GO TO CANCELLATION PAGE
+            STEP 1: GO TO CANCELLATION PAGE (FULL-WIDTH EXPANSIVE LAYOUT)
         ═══════════════════════════════════════════════════════════════ */}
         {currentStep === 1 && (
-          <div className="space-y-6 max-w-2xl mx-auto animate-in fade-in duration-200">
+          <div className="space-y-6 w-full animate-in fade-in duration-200">
             <div>
               <div className="flex items-center space-x-2">
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-[#1658eb]">
@@ -283,81 +281,114 @@ export function InteractiveDefusalWizard({
               <h3 className="text-xl sm:text-2xl font-bold text-[#0c1b38] font-display mt-2">
                 Go to the Cancellation Page
               </h3>
-              <p className="text-xs sm:text-sm text-[#556987] mt-1 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#556987] mt-1">
                 No need to search through account settings. Click the button
                 below to open the exact cancellation page for{" "}
                 <strong>{merchant?.name}</strong>.
               </p>
             </div>
 
-            {/* Direct Link Box */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-white/90 border border-[#d0e1ed] shadow-xs space-y-3">
-              <div className="flex items-center justify-between text-xs text-[#556987]">
-                <span className="font-semibold text-[#0c1b38] flex items-center space-x-1.5">
-                  <Lock className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Direct link to your account</span>
-                </span>
-                <span className="text-[11px] bg-slate-100 px-2.5 py-0.5 rounded-full font-medium">
-                  Official Website
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/70">
-                <div className="flex items-center space-x-2.5 min-w-0">
-                  <div className="w-7 h-7 rounded-lg bg-[#1658eb] text-white flex items-center justify-center shrink-0">
-                    <ExternalLink className="w-3.5 h-3.5" />
+            {/* Expansive Two-Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+              {/* Left Column (7 cols): Link Box & Action */}
+              <div className="lg:col-span-7 p-6 rounded-3xl bg-white/90 border border-[#d0e1ed] shadow-xs flex flex-col justify-between space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-[#556987]">
+                    <span className="font-semibold text-[#0c1b38] flex items-center space-x-1.5">
+                      <Lock className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Direct link to your account</span>
+                    </span>
+                    <span className="text-[11px] bg-slate-100 px-2.5 py-0.5 rounded-full font-medium">
+                      Official Website
+                    </span>
                   </div>
-                  <span className="font-mono text-xs sm:text-sm font-semibold text-[#1658eb] truncate">
-                    {portalHostname}
-                  </span>
+
+                  <div className="flex items-center justify-between p-4 rounded-2xl bg-blue-50/70 border border-blue-200/70">
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-8 h-8 rounded-xl bg-[#1658eb] text-white flex items-center justify-center shrink-0">
+                        <ExternalLink className="w-4 h-4" />
+                      </div>
+                      <span className="font-mono text-xs sm:text-sm font-semibold text-[#1658eb] truncate">
+                        {portalHostname}
+                      </span>
+                    </div>
+
+                    <span className="text-xs text-[#556987] shrink-0 hidden sm:inline">
+                      Opens in new tab
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#556987]">
+                    💡 <strong>Tip:</strong> Keep this tab open while you cancel on their website so you can follow the next step.
+                  </p>
                 </div>
 
-                <span className="text-xs text-[#556987] shrink-0 hidden sm:inline">
-                  Opens in new tab
-                </span>
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={handleOpenPortal}
+                    className={`w-full sm:w-auto py-3.5 px-8 rounded-full font-semibold text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-md ${
+                      step1Done
+                        ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                        : "bg-[#1658eb] hover:bg-[#1246c4] text-white hover:-translate-y-0.5"
+                    }`}
+                  >
+                    {step1Done ? (
+                      <>
+                        <Check className="w-4 h-4 stroke-[3]" />
+                        <span>Page Opened &middot; Continue to Step 2 &rarr;</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Open Cancellation Page</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
-              <p className="text-xs text-[#556987]">
-                💡 <strong>Tip:</strong> Keep this tab open while you cancel on their website so you can follow the next step.
-              </p>
-            </div>
+              {/* Right Column (5 cols): What to Do Next Preview */}
+              <div className="lg:col-span-5 p-6 rounded-3xl bg-slate-50/80 border border-slate-200 flex flex-col justify-between space-y-4">
+                <span className="text-xs font-bold text-[#0c1b38] block uppercase tracking-wider">
+                  What to do when the page opens:
+                </span>
 
-            {/* Action Bar */}
-            <div className="flex items-center justify-between pt-2">
-              <span className="text-xs text-[#556987]">
-                Clicking opens the cancellation page in a new window.
-              </span>
+                <ol className="space-y-3 text-xs text-[#556987]">
+                  <li className="flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-blue-100 text-[#1658eb] font-bold flex items-center justify-center shrink-0 text-[11px]">
+                      1
+                    </span>
+                    <span>Sign in with the email address linked to your subscription.</span>
+                  </li>
+                  <li className="flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-blue-100 text-[#1658eb] font-bold flex items-center justify-center shrink-0 text-[11px]">
+                      2
+                    </span>
+                    <span>Click <strong>&quot;Manage plan&quot;</strong> or <strong>&quot;Cancel subscription&quot;</strong>.</span>
+                  </li>
+                  <li className="flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-blue-100 text-[#1658eb] font-bold flex items-center justify-center shrink-0 text-[11px]">
+                      3
+                    </span>
+                    <span>Come back to this page for <strong>Step 2</strong> to dodge their retention offers!</span>
+                  </li>
+                </ol>
 
-              <button
-                type="button"
-                onClick={handleOpenPortal}
-                className={`py-3 px-6 rounded-full font-semibold text-xs sm:text-sm flex items-center space-x-2 transition-all cursor-pointer shadow-md ${
-                  step1Done
-                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                    : "bg-[#1658eb] hover:bg-[#1246c4] text-white hover:-translate-y-0.5"
-                }`}
-              >
-                {step1Done ? (
-                  <>
-                    <Check className="w-4 h-4 stroke-[3]" />
-                    <span>Page Opened &middot; Continue to Step 2 &rarr;</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Open Cancellation Page</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </>
-                )}
-              </button>
+                <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs text-[#556987] flex items-center space-x-2">
+                  <Info className="w-4 h-4 text-[#1658eb] shrink-0" />
+                  <span>Clicking the button will not cancel automatically — it takes you to the merchant&apos;s verified cancel page.</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════
-            STEP 2: AVOID SNEAKY OFFERS
+            STEP 2: AVOID SNEAKY OFFERS (FULL-WIDTH EXPANSIVE GRID)
         ═══════════════════════════════════════════════════════════════ */}
         {currentStep === 2 && (
-          <div className="space-y-6 max-w-2xl mx-auto animate-in fade-in duration-200">
+          <div className="space-y-6 w-full animate-in fade-in duration-200">
             <div>
               <div className="flex items-center space-x-2">
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900">
@@ -378,64 +409,69 @@ export function InteractiveDefusalWizard({
               </p>
             </div>
 
-            {/* Checkpoints */}
-            <div className="space-y-3">
+            {/* Expansive Responsive Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {defusalChecklist.map((item, idx) => {
                 const isChecked = !!checkedItems[idx];
                 return (
                   <div
                     key={idx}
                     onClick={() => toggleItemCheck(idx)}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start space-x-3.5 ${
+                    className={`p-5 rounded-3xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                       isChecked
-                        ? "bg-emerald-50/80 border-emerald-200 text-[#0c1b38]"
-                        : "bg-white/90 border-[#d0e1ed] hover:border-[#1658eb]/50"
+                        ? "bg-emerald-50/80 border-emerald-300 text-[#0c1b38] shadow-xs"
+                        : "bg-white/90 border-[#d0e1ed] hover:border-[#1658eb]/50 hover:shadow-xs"
                     }`}
                   >
-                    <div
-                      className={`w-5 h-5 rounded-lg mt-0.5 flex items-center justify-center shrink-0 text-xs font-bold transition-all ${
-                        isChecked
-                          ? "bg-emerald-600 text-white"
-                          : "border-2 border-slate-300 bg-white"
-                      }`}
-                    >
-                      {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] uppercase font-bold text-[#556987]">
+                          Instruction {item.stepNumber}
+                        </span>
+                        <div
+                          className={`w-5 h-5 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${
+                            isChecked
+                              ? "bg-emerald-600 text-white"
+                              : "border-2 border-slate-300 bg-white"
+                          }`}
+                        >
+                          {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                        </div>
+                      </div>
 
-                    <div className="flex-1 min-w-0">
                       <p className="font-semibold text-xs sm:text-sm text-[#0c1b38] leading-snug">
                         {item.instruction}
                       </p>
-
-                      {item.decoyWarning && (
-                        <div className="mt-2 p-2 rounded-xl bg-amber-50/90 border border-amber-200 flex items-center space-x-2 text-xs text-amber-900">
-                          <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                          <span className="font-medium text-[11px]">
-                            <strong>Watch out:</strong> {item.decoyWarning}
-                          </span>
-                        </div>
-                      )}
                     </div>
+
+                    {item.decoyWarning && (
+                      <div className="p-3 rounded-2xl bg-amber-50/90 border border-amber-200 text-xs text-amber-900 flex items-start space-x-2">
+                        <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                        <span className="font-medium text-[11px] leading-relaxed">
+                          <strong>Watch out:</strong> {item.decoyWarning}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               })}
             </div>
 
             {/* Navigation Bar */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-4 border-t border-[#d0e1ed]/70">
               <button
                 type="button"
                 onClick={() => setCurrentStep(1)}
-                className="py-2.5 px-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-[#0c1b38] flex items-center space-x-1.5 cursor-pointer transition-all"
+                className="py-2.5 px-5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-[#0c1b38] flex items-center space-x-1.5 cursor-pointer transition-all"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Back</span>
+                <span>Back to Step 1</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleCompleteStep2}
-                className="py-3 px-6 rounded-full font-semibold text-xs sm:text-sm flex items-center space-x-2 transition-all cursor-pointer shadow-md bg-[#1658eb] hover:bg-[#1246c4] text-white hover:-translate-y-0.5"
+                className="py-3 px-7 rounded-full font-semibold text-xs sm:text-sm flex items-center space-x-2 transition-all cursor-pointer shadow-md bg-[#1658eb] hover:bg-[#1246c4] text-white hover:-translate-y-0.5"
               >
                 <span>Continue to Step 3: Set Reminder &rarr;</span>
               </button>
@@ -444,10 +480,10 @@ export function InteractiveDefusalWizard({
         )}
 
         {/* ═══════════════════════════════════════════════════════════════
-            STEP 3: SET CALENDAR REMINDER
+            STEP 3: SET CALENDAR REMINDER (FULL-WIDTH EXPANSIVE LAYOUT)
         ═══════════════════════════════════════════════════════════════ */}
         {currentStep === 3 && (
-          <div className="space-y-6 max-w-2xl mx-auto animate-in fade-in duration-200">
+          <div className="space-y-6 w-full animate-in fade-in duration-200">
             <div>
               <div className="flex items-center space-x-2">
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-[#1658eb]">
@@ -469,77 +505,115 @@ export function InteractiveDefusalWizard({
               </p>
             </div>
 
-            {/* Reminder Card */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-white/90 border border-[#d0e1ed] shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                <div className="flex items-center space-x-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1658eb] flex items-center justify-center font-bold">
-                    <Calendar className="w-4 h-4" />
+            {/* Expansive Two-Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+              {/* Left Column (7 cols): Reminder Action Card */}
+              <div className="lg:col-span-7 p-6 rounded-3xl bg-white/90 border border-[#d0e1ed] shadow-xs flex flex-col justify-between space-y-5">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div className="flex items-center space-x-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#1658eb] flex items-center justify-center font-bold">
+                        <Calendar className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-xs sm:text-sm text-[#0c1b38]">
+                          Cancel {merchant?.name || "Subscription"} Reminder
+                        </h4>
+                        <p className="text-[11px] text-[#556987]">
+                          Compatible with Google Calendar, Apple Calendar, &amp; Outlook
+                        </p>
+                      </div>
+                    </div>
+
+                    <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
+                      2 Days Before
+                    </span>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-xs sm:text-sm text-[#0c1b38]">
-                      Cancel {merchant?.name || "Subscription"} Reminder
-                    </h4>
-                    <p className="text-[11px] text-[#556987]">
-                      Works with Apple Calendar, Google Calendar, &amp; Outlook
-                    </p>
+
+                  {/* Scheduled Time Box */}
+                  <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200/80 flex items-center space-x-3 text-xs sm:text-sm font-semibold text-[#0c1b38]">
+                    <Clock className="w-4 h-4 text-[#1658eb] shrink-0" />
+                    <span>
+                      Alert scheduled for:{" "}
+                      <strong>{formatAlertDate(killSwitch?.suggestedAlertDate)}</strong>
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#556987]">
+                    The calendar event includes the direct cancellation link and details so you can finish canceling in 30 seconds when the alarm goes off.
+                  </p>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={handleDownloadIcs}
+                    className={`w-full sm:w-auto py-3.5 px-8 rounded-full font-semibold text-xs sm:text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-md ${
+                      step3Done
+                        ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                        : "bg-[#1658eb] hover:bg-[#1246c4] text-white hover:-translate-y-0.5"
+                    }`}
+                  >
+                    {step3Done ? (
+                      <>
+                        <Check className="w-4 h-4 stroke-[3]" />
+                        <span>Reminder Downloaded &middot; You&apos;re Done ✓</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4" />
+                        <span>Add to Calendar (.ics)</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Column (5 cols): 5-Year Savings Breakdown */}
+              <div className="lg:col-span-5 p-6 rounded-3xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between space-y-4">
+                <span className="text-xs font-bold text-emerald-950 block uppercase tracking-wider">
+                  Money You Save by Canceling
+                </span>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs pb-2 border-b border-emerald-200/60">
+                    <span className="text-emerald-900">Current Rate:</span>
+                    <strong className="text-emerald-950 font-mono">
+                      {billing?.currency || "$"}{amount.toFixed(2)}/{billing?.billingCycle || "mo"}
+                    </strong>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs pb-2 border-b border-emerald-200/60">
+                    <span className="text-emerald-900">1-Year Savings:</span>
+                    <strong className="text-emerald-950 font-mono">
+                      {billing?.currency || "$"}{(amount * 12).toFixed(2)}
+                    </strong>
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm pt-1">
+                    <span className="font-bold text-emerald-950">5-Year Total Saved:</span>
+                    <strong className="text-emerald-700 font-extrabold text-lg sm:text-xl font-display">
+                      {billing?.currency || "$"}{bleed.toFixed(2)}
+                    </strong>
                   </div>
                 </div>
 
-                <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
-                  2 Days Before
-                </span>
-              </div>
-
-              {/* Scheduled Time Box */}
-              <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 flex items-center space-x-3 text-xs sm:text-sm font-semibold text-[#0c1b38]">
-                <Clock className="w-4 h-4 text-[#1658eb] shrink-0" />
-                <span>
-                  Alert scheduled for:{" "}
-                  <strong>{formatAlertDate(killSwitch?.suggestedAlertDate)}</strong>
-                </span>
-              </div>
-
-              {/* Savings preview */}
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-                <span className="text-[#556987]">Money you save by canceling:</span>
-                <span className="font-bold text-emerald-700 text-sm">
-                  ${bleed.toFixed(2)} over 5 years
-                </span>
+                <div className="p-3 rounded-2xl bg-white/90 border border-emerald-200 text-xs text-emerald-900 flex items-center space-x-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>You are fully protected from unexpected recurring charges.</span>
+                </div>
               </div>
             </div>
 
             {/* Navigation Bar */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-4 border-t border-[#d0e1ed]/70">
               <button
                 type="button"
                 onClick={() => setCurrentStep(2)}
-                className="py-2.5 px-4 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-[#0c1b38] flex items-center space-x-1.5 cursor-pointer transition-all"
+                className="py-2.5 px-5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-[#0c1b38] flex items-center space-x-1.5 cursor-pointer transition-all"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Back</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleDownloadIcs}
-                className={`py-3 px-6 rounded-full font-semibold text-xs sm:text-sm flex items-center space-x-2 transition-all cursor-pointer shadow-md ${
-                  step3Done
-                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                    : "bg-[#1658eb] hover:bg-[#1246c4] text-white hover:-translate-y-0.5"
-                }`}
-              >
-                {step3Done ? (
-                  <>
-                    <Check className="w-4 h-4 stroke-[3]" />
-                    <span>Reminder Downloaded &middot; You&apos;re Done ✓</span>
-                  </>
-                ) : (
-                  <>
-                    <Download className="w-4 h-4" />
-                    <span>Add to Calendar (.ics)</span>
-                  </>
-                )}
+                <span>Back to Step 2</span>
               </button>
             </div>
           </div>
@@ -547,24 +621,24 @@ export function InteractiveDefusalWizard({
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════
-          COMPLETION CELEBRATION (PLAIN ENGLISH)
+          COMPLETION CELEBRATION (FULL-WIDTH EXPANSIVE BANNER)
       ═══════════════════════════════════════════════════════════════ */}
       {allComplete && (
-        <div className="glass-card p-5 sm:p-6 border-emerald-300/80 bg-gradient-to-r from-emerald-50/95 via-white/90 to-blue-50/95 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 text-left animate-in fade-in duration-300">
-          <div className="flex items-center space-x-3.5">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
-              <Sparkles className="w-5 h-5 animate-pulse" />
+        <div className="glass-card p-6 sm:p-7 border-emerald-300/80 bg-gradient-to-r from-emerald-50/95 via-white/90 to-blue-50/95 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-5 text-left animate-in fade-in duration-300 w-full">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <Sparkles className="w-6 h-6 animate-pulse" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h4 className="text-base font-bold text-[#0c1b38] font-display">
+                <h4 className="text-base sm:text-lg font-bold text-[#0c1b38] font-display">
                   You&apos;re All Set!
                 </h4>
                 <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-600 text-white">
                   Protected
                 </span>
               </div>
-              <p className="text-xs text-[#556987] mt-0.5 leading-relaxed">
+              <p className="text-xs text-[#556987] mt-1 leading-relaxed">
                 You opened the cancellation page, dodged the retention offers,
                 and scheduled a calendar reminder. You&apos;ll save{" "}
                 <strong className="text-emerald-700 font-bold">
@@ -579,9 +653,9 @@ export function InteractiveDefusalWizard({
             <button
               type="button"
               onClick={onReset}
-              className="px-5 py-2.5 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-xs flex items-center space-x-1.5 transition-all shadow-sm cursor-pointer hover:-translate-y-0.5"
+              className="px-6 py-3 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-xs sm:text-sm flex items-center space-x-2 transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-4 h-4" />
               <span>Check Another Subscription</span>
             </button>
           </div>

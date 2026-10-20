@@ -42,7 +42,7 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
   return (
     <div className="min-h-screen w-full px-4 sm:px-8 lg:px-16 py-6 sm:py-8 relative">
       {/* ─── Top Header Navbar ─── */}
-      <header className="max-w-5xl mx-auto flex items-center justify-between pb-5 mb-6 border-b border-[#d0e1ed]/70">
+      <header className="w-full max-w-[1400px] mx-auto flex items-center justify-between pb-5 mb-6 border-b border-[#d0e1ed]/70">
         {/* Brand Logo Capsule */}
         <div className="flex items-center space-x-3">
           <div className="inline-flex items-center justify-center bg-white/70 backdrop-blur-xl border border-white/80 rounded-full px-4 py-1.5 shadow-[0_4px_16px_-4px_rgba(31,85,150,0.15)] ring-1 ring-black/5">
@@ -73,8 +73,8 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
         </button>
       </header>
 
-      {/* ─── Main Content Container ─── */}
-      <main className="max-w-5xl mx-auto space-y-6">
+      {/* ─── Main Content Container (Full Width) ─── */}
+      <main className="w-full max-w-[1400px] mx-auto space-y-6">
         {/* ─── Plain-English Summary Ribbon ─── */}
         <div className="glass-card p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 text-left">
           {/* Target Service Badge */}
