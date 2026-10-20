@@ -280,33 +280,33 @@ export function HeroLanding({
         </div>
       </header>
 
-      {/* Main Hero Section: Left Copy & Right Interactive 3D phone zone */}
-      <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-8 lg:py-12">
-        {/* Left Column: Clean, high-impact copy matching mockup */}
-        <div className="w-full lg:max-w-xl xl:max-w-2xl text-left flex flex-col justify-center space-y-5">
+      {/* Main Hero Section: Split into distinct Left and Right halves with a visible middle line */}
+      <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-6 lg:py-10 gap-8 lg:gap-0">
+        {/* Hero Left Column: Brand promise, headline & CTA */}
+        <div className="w-full lg:w-[48%] xl:w-[46%] text-left flex flex-col justify-center space-y-4 pr-0 lg:pr-8 xl:pr-12">
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee] border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs">
             <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Take control of subscriptions</span>
           </div>
 
-          {/* Short, Punchy Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.12]">
+          {/* Short, Punchy Headline - calibrated size for clean 2 columns */}
+          <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.15]">
             Stop paying for <br />
             <span className="text-[#1658eb]">subscriptions</span> you <span className="text-[#15a24a]">forgot</span>.
           </h1>
 
           {/* Clean, Jargonless Tagline (Max 2 lines) */}
-          <p className="text-base sm:text-lg text-[#556987] font-normal leading-relaxed max-w-lg">
+          <p className="text-sm sm:text-base text-[#556987] font-normal leading-relaxed max-w-md">
             Upload a receipt or trial email to find the cancellation page and set a reminder before renewal.
           </p>
 
-          {/* Clean CTA Row without redundant paste button */}
-          <div className="flex flex-wrap items-center gap-5 pt-1">
+          {/* Clean CTA Row */}
+          <div className="flex flex-wrap items-center gap-4 pt-1">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-7 py-3.5 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.45)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              className="px-6 py-3 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.45)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <Upload className="w-4 h-4 stroke-[2.5]" />
               <span>Find my subscription</span>
@@ -345,8 +345,11 @@ export function HeroLanding({
           )}
         </div>
 
-        {/* Right Column: Seamless Interactive Hotspot over the 3D phone graphic */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end relative min-h-[380px] lg:min-h-[460px]">
+        {/* Visible Middle Split Line: Distinct boundary separating Hero Left from Hero Right */}
+        <div className="hidden lg:block w-[1.5px] h-[320px] xl:h-[360px] bg-gradient-to-b from-transparent via-[#1658eb]/25 to-transparent shrink-0 my-auto shadow-[0_0_8px_rgba(22,88,235,0.12)]" />
+
+        {/* Hero Right Column: 3D phone showcase & interactive zone */}
+        <div className="w-full lg:w-[48%] xl:w-[50%] pl-0 lg:pl-8 xl:pl-12 flex items-center justify-center lg:justify-end relative min-h-[380px] lg:min-h-[460px]">
           {/* Active AI Scanning Overlay Card when analyzing */}
           {isAnalyzing ? (
             <div className="w-full max-w-md p-7 rounded-3xl bg-white/95 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(22,88,235,0.25)] border border-white animate-in zoom-in-95 duration-200 z-30">
