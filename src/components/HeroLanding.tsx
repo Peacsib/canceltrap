@@ -222,16 +222,16 @@ export function HeroLanding({
       )}
 
       {/* Top Header / Navigation Bar - Logo Centered in the Upper Left Circle Arc */}
-      <header className="w-full px-6 sm:px-10 lg:px-14 pt-4 sm:pt-6 pb-2 flex items-center justify-between z-20">
-        {/* Brand Logo centered in upper circle */}
-        <div className="flex items-center justify-center pl-2 sm:pl-4">
+      <header className="w-full px-6 sm:px-10 lg:px-14 pt-4 sm:pt-6 pb-2 flex items-start justify-between z-20">
+        {/* Brand Logo centered inside the upper-left gradient circle */}
+        <div className="pt-6 sm:pt-8 lg:pt-10 pl-2 sm:pl-6 lg:pl-8">
           <Image
             src="/canceltrap-logo.png"
             alt="CancelTrap"
-            width={210}
-            height={50}
+            width={190}
+            height={46}
             priority
-            className="h-9 sm:h-10 lg:h-11 w-auto object-contain cursor-pointer drop-shadow-sm transition-transform hover:scale-105"
+            className="h-8 sm:h-9 lg:h-10 w-auto object-contain cursor-pointer drop-shadow-sm transition-transform hover:scale-105"
             onClick={() => window.location.reload()}
           />
         </div>
