@@ -12,7 +12,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SubscriptionDefusalResponse } from "@/lib/types";
-import { InteractiveWorkflowGraph } from "./InteractiveWorkflowGraph";
+import { InteractiveDefusalWizard } from "./InteractiveDefusalWizard";
 
 interface DefusalDashboardProps {
   data: SubscriptionDefusalResponse;
@@ -147,8 +147,8 @@ export function DefusalDashboard({ data, onReset }: DefusalDashboardProps) {
           </div>
         </div>
 
-        {/* ─── Interactive Workflow Neural Graph (Visual, Dynamic, Engaging) ─── */}
-        <InteractiveWorkflowGraph data={data} onReset={onReset} />
+        {/* ─── Interactive Defusal Wizard (Sequential 3-Step Simulator) ─── */}
+        <InteractiveDefusalWizard data={data} onReset={onReset} />
       </main>
     </div>
   );
