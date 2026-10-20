@@ -431,8 +431,8 @@ export function HeroLanding({
         </div>
       </div>
 
-      {/* Bottom Features Strip: Translucent frosted glass, quiet, not white, and non-blue icons */}
-      <footer className="w-full bg-white/20 backdrop-blur-xl border-t border-white/40 shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)] py-3 px-6 sm:px-12 lg:px-16 z-20">
+      {/* Bottom Features Strip: Translucent frosted glass with crisp black upper borderline */}
+      <footer className="w-full bg-white/20 backdrop-blur-xl border-t border-black shadow-[inset_0_1px_0_rgba(0,0,0,0.1)] py-3 px-6 sm:px-12 lg:px-16 z-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/40">
           {/* Item 1: Save money */}
           <div className="flex items-center gap-3 py-2 md:py-0 md:px-8 first:pl-0">
