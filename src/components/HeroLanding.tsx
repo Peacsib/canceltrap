@@ -222,18 +222,22 @@ export function HeroLanding({
       )}
 
       {/* Top Header / Navigation Bar - Logo Centered in the Upper Left Circle Arc */}
-      <header className="w-full px-6 sm:px-10 lg:px-14 pt-4 sm:pt-6 pb-2 flex items-start justify-between z-20">
-        {/* Brand Logo centered inside the upper-left gradient circle */}
-        <div className="pt-6 sm:pt-8 lg:pt-10 pl-2 sm:pl-6 lg:pl-8">
-          <Image
-            src="/canceltrap-logo.png"
-            alt="CancelTrap"
-            width={190}
-            height={46}
-            priority
-            className="h-8 sm:h-9 lg:h-10 w-auto object-contain cursor-pointer drop-shadow-sm transition-transform hover:scale-105"
+      <header className="w-full px-5 sm:px-8 lg:px-10 pt-3 sm:pt-4 pb-2 flex items-start justify-between z-20">
+        {/* Brand Logo - Nestled cleanly inside the upper-left gradient circle with crisp frosted badge */}
+        <div className="pt-2 sm:pt-3 pl-1 sm:pl-2">
+          <div
             onClick={() => window.location.reload()}
-          />
+            className="inline-flex items-center px-4 py-2 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-[0_4px_18px_-4px_rgba(17,51,138,0.15)] hover:bg-white/95 hover:shadow-lg transition-all cursor-pointer group"
+          >
+            <Image
+              src="/canceltrap-logo.png"
+              alt="CancelTrap"
+              width={160}
+              height={40}
+              priority
+              className="h-7 sm:h-8 w-auto object-contain drop-shadow-2xs transition-transform group-hover:scale-102"
+            />
+          </div>
         </div>
 
         {/* Center Navigation Links */}
