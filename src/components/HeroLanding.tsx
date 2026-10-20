@@ -221,21 +221,21 @@ export function HeroLanding({
         </div>
       )}
 
-      {/* Top Header / Navigation Bar - Logo Centered in the Upper Left Circle Arc */}
-      <header className="w-full px-5 sm:px-8 lg:px-10 pt-3 sm:pt-4 pb-2 flex items-start justify-between z-20">
-        {/* Brand Logo - Nestled cleanly inside the upper-left gradient circle with crisp frosted badge */}
-        <div className="pt-2 sm:pt-3 pl-1 sm:pl-2">
+      {/* Top Header / Navigation Bar */}
+      <header className="w-full px-5 sm:px-8 lg:px-12 pt-3 sm:pt-4 pb-2 flex items-start justify-between z-20">
+        {/* Brand Logo - Nestled cleanly inside the upper-left gradient circle as a refined glass capsule */}
+        <div className="pt-3 sm:pt-5 pl-2 sm:pl-4">
           <div
             onClick={() => window.location.reload()}
-            className="inline-flex items-center px-4 py-2 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-[0_4px_18px_-4px_rgba(17,51,138,0.15)] hover:bg-white/95 hover:shadow-lg transition-all cursor-pointer group"
+            className="inline-flex items-center px-5 py-2.5 sm:px-6 sm:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-white shadow-[0_10px_25px_-5px_rgba(15,30,59,0.14),0_2px_6px_rgba(0,0,0,0.04)] ring-1 ring-black/5 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-5px_rgba(15,30,59,0.2)] hover:bg-white transition-all duration-300 cursor-pointer group"
           >
             <Image
               src="/canceltrap-logo.png"
               alt="CancelTrap"
-              width={160}
-              height={40}
+              width={180}
+              height={45}
               priority
-              className="h-7 sm:h-8 w-auto object-contain drop-shadow-2xs transition-transform group-hover:scale-102"
+              className="h-7 sm:h-8.5 w-auto object-contain transition-transform group-hover:scale-[1.02]"
             />
           </div>
         </div>
