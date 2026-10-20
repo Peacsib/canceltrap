@@ -283,30 +283,30 @@ export function HeroLanding({
       {/* Main Hero Section: Left Copy & Right Interactive 3D phone zone */}
       <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-8 lg:py-12">
         {/* Left Column: Clean, high-impact copy matching mockup */}
-        <div className="w-full lg:max-w-xl xl:max-w-2xl text-left flex flex-col justify-center space-y-6">
+        <div className="w-full lg:max-w-xl xl:max-w-2xl text-left flex flex-col justify-center space-y-5">
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee] border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs">
             <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Stop unwanted charges</span>
+            <span>Take control of subscriptions</span>
           </div>
 
-          {/* Main Headline - perfectly balanced 2 lines */}
-          <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.14]">
-            Cancel <span className="text-[#1658eb]">subscriptions</span> <br />
-            <span className="text-[#15a24a]">before</span> you get charged.
+          {/* Short, Punchy Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.12]">
+            Stop paying for <br />
+            <span className="text-[#1658eb]">subscriptions</span> you <span className="text-[#15a24a]">forgot</span>.
           </h1>
 
-          {/* Subtitle */}
+          {/* Clean, Jargonless Tagline (Max 2 lines) */}
           <p className="text-base sm:text-lg text-[#556987] font-normal leading-relaxed max-w-lg">
-            Upload a screenshot or trial email to find the provider&apos;s official cancellation page and set a reminder before your subscription renews.
+            Upload a receipt or trial email to find the cancellation page and set a reminder before renewal.
           </p>
 
-          {/* CTA Row with Upload & Paste Support */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* Clean CTA Row without redundant paste button */}
+          <div className="flex flex-wrap items-center gap-5 pt-1">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-6 py-3.5 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.45)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              className="px-7 py-3.5 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.45)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <Upload className="w-4 h-4 stroke-[2.5]" />
               <span>Find my subscription</span>
@@ -315,19 +315,8 @@ export function HeroLanding({
 
             <button
               type="button"
-              onClick={handlePasteClick}
-              className="px-5 py-3.5 rounded-full bg-white/80 hover:bg-white text-[#1658eb] border border-blue-200/80 hover:border-[#1658eb]/50 font-semibold text-sm sm:text-base inline-flex items-center gap-2 shadow-xs hover:shadow-sm transition-all cursor-pointer transform hover:-translate-y-0.5"
-              title="Paste screenshot from clipboard (Ctrl+V)"
-            >
-              <ClipboardPaste className="w-4 h-4 text-[#1658eb]" />
-              <span>Paste</span>
-              <span className="text-[10px] font-medium text-slate-500 bg-slate-100/90 px-1.5 py-0.5 rounded border border-slate-200/80">Ctrl+V</span>
-            </button>
-
-            <button
-              type="button"
               onClick={() => setActiveModal("howItWorks")}
-              className="text-[#1658eb] hover:text-[#1246c4] font-semibold text-sm sm:text-base inline-flex items-center gap-1.5 transition-colors cursor-pointer group ml-1"
+              className="text-[#1658eb] hover:text-[#1246c4] font-semibold text-sm sm:text-base inline-flex items-center gap-1.5 transition-colors cursor-pointer group"
             >
               <span>How it works</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -424,26 +413,15 @@ export function HeroLanding({
             /* Interactive Hotspot over the 3D phone screen in the background */
             <div className="w-[300px] h-[380px] lg:w-[360px] lg:h-[440px] relative flex flex-col items-center justify-center group">
               {/* Minimal compact glass card: takes minimal space, fitted to the phone screen */}
-              <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-95 group-hover:scale-100 w-[210px] p-3 rounded-2xl bg-white/45 backdrop-blur-md border border-white/85 shadow-[0_12px_28px_-8px_rgba(22,88,235,0.25)] flex flex-col items-center gap-2 z-10 pointer-events-auto">
+              <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-95 group-hover:scale-100 p-2 rounded-2xl bg-white/45 backdrop-blur-md border border-white/85 shadow-[0_12px_28px_-8px_rgba(22,88,235,0.25)] flex flex-col items-center z-10 pointer-events-auto">
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full py-2 px-3 rounded-xl bg-[#1658eb] hover:bg-[#1246c4] text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  className="py-2.5 px-5 rounded-xl bg-[#1658eb] hover:bg-[#1246c4] text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   <span>Upload screenshot</span>
                 </button>
-
-                <button
-                  type="button"
-                  onClick={handlePasteClick}
-                  className="w-full py-2 px-3 rounded-xl bg-white/90 hover:bg-white text-[#1658eb] border border-blue-200 text-xs font-semibold shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-                >
-                  <ClipboardPaste className="w-3.5 h-3.5" />
-                  <span>Paste (Ctrl+V)</span>
-                </button>
-
-                <span className="text-[10px] text-[#556987] font-medium">Click to browse or paste</span>
               </div>
             </div>
           )}
