@@ -486,7 +486,7 @@ export function InteractiveWorkflowGraph({
           </div>
 
           {/* ─────────────────────────────────────────────────────────────
-              NODE 5: TOP SATELLITE · GEMINI 3.8 FLASH ENGINE
+              NODE 5: TOP SATELLITE · VISION SCAN ENGINE
           ───────────────────────────────────────────────────────────── */}
           <div
             onClick={() => setSelectedNode("ai")}
@@ -502,7 +502,7 @@ export function InteractiveWorkflowGraph({
               }`}
             >
               <Cpu className="w-3 h-3 text-purple-500 animate-pulse" />
-              <span className="text-[10px]">Gemini 3.8 Flash Neural OCR</span>
+              <span className="text-[10px]">Visual Pattern Scanner</span>
             </div>
           </div>
         </div>
@@ -721,7 +721,7 @@ export function InteractiveWorkflowGraph({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 uppercase tracking-wider">
-                  Gemini 3.8 Flash Vision Intelligence
+                  Visual Pattern Scanner
                 </span>
                 <h4 className="text-sm sm:text-base font-bold text-[#0c1b38] font-display mt-0.5">
                   Dark Pattern Identified:{" "}
@@ -730,7 +730,7 @@ export function InteractiveWorkflowGraph({
                   </span>
                 </h4>
                 <p className="text-xs text-[#556987]">
-                  Multimodal OCR extracted renewal terms and mapped verified direct portal routes.
+                  Visual scan extracted renewal terms and mapped verified direct portal routes.
                 </p>
               </div>
 

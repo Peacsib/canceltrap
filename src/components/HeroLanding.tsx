@@ -362,7 +362,7 @@ export function HeroLanding({
                   <Sparkles className="w-5 h-5 animate-pulse text-[#1658eb]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#0c1b38] text-base">Gemini 3.8 Flash Analyzing</h3>
+                  <h3 className="font-bold text-[#0c1b38] text-base">Scanning Screenshot</h3>
                   <p className="text-xs text-[#556987]">Defusing subscription trap in real time</p>
                 </div>
               </div>
@@ -496,9 +496,9 @@ export function HeroLanding({
                 <h3 className="text-xl font-bold text-[#0c1b38] mb-3">How CancelTrap Works</h3>
                 <div className="space-y-3 text-sm text-[#556987]">
                   <p><strong>1. Upload or Paste:</strong> Drop any trial confirmation, billing receipt, or account settings screenshot (or press Ctrl+V).</p>
-                  <p><strong>2. Multimodal Scan:</strong> Gemini 3.8 Flash extracts the merchant name, renewal deadline, and recurring price.</p>
-                  <p><strong>3. Dark-Pattern Defusal:</strong> We pinpoint sneaky decoy buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;) and give you the direct cancellation link.</p>
-                  <p><strong>4. Kill-Switch Reminder:</strong> Generate a one-click calendar reminder (.ics) set 48 hours before renewal.</p>
+                  <p><strong>2. Smart Scan:</strong> Instantly detects the company name, renewal deadline, and recurring price.</p>
+                  <p><strong>3. Hidden Link Finder:</strong> We find the hidden cancellation page and warn you about tricky decoy buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;).</p>
+                  <p><strong>4. Calendar Reminder:</strong> Download a 1-click calendar reminder set before your trial renews.</p>
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
@@ -526,10 +526,10 @@ export function HeroLanding({
               <div>
                 <h3 className="text-xl font-bold text-[#0c1b38] mb-3">Core Features</h3>
                 <div className="space-y-3 text-sm text-[#556987]">
-                  <p>🛡️ <strong>Direct Portal Deep-Links:</strong> Direct links to vendor cancellation centers without navigating nested menus.</p>
-                  <p>⚠️ <strong>Decoy Button Warnings:</strong> Clear indicators of dark patterns designed to trick you into staying subscribed.</p>
-                  <p>📈 <strong>5-Year Vampire Bleed:</strong> See how much this subscription drains from your wallet over 5 years.</p>
-                  <p>📅 <strong>RFC 5545 Calendar Kill-Switch:</strong> Works natively with Google Calendar, Apple Calendar, and Outlook.</p>
+                  <p>🛡️ <strong>Direct Cancel Links:</strong> Jump straight to the vendor&apos;s cancellation page without searching through nested menus.</p>
+                  <p>⚠️ <strong>Decoy Button Warnings:</strong> Clear warnings for tricks designed to keep you paying.</p>
+                  <p>📈 <strong>5-Year Cost Projection:</strong> See how much this subscription would cost you over 5 years if forgotten.</p>
+                  <p>📅 <strong>1-Click Calendar Reminder:</strong> Works natively with Google Calendar, Apple Calendar, and Outlook.</p>
                 </div>
               </div>
             )}
@@ -538,7 +538,7 @@ export function HeroLanding({
               <div>
                 <h3 className="text-xl font-bold text-[#0c1b38] mb-3">Privacy First</h3>
                 <p className="text-sm text-[#556987] leading-relaxed">
-                  CancelTrap does not require you to connect your bank account or credit card. Screenshots are processed in-memory directly via the Gemini API and are never stored in any database.
+                  CancelTrap does not require you to connect your bank account or credit card. Screenshots are processed securely in-memory and are never stored in any database.
                 </p>
               </div>
             )}

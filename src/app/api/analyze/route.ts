@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "GEMINI_API_KEY is not configured in .env.local. Please add your Gemini API key or use one of the built-in sample presets.",
+            "API service key is not configured in .env.local. Please check your setup or use one of the built-in sample presets.",
         },
         { status: 500 }
       );
@@ -109,7 +109,7 @@ CRITICAL RULES:
       {
         error:
           err.message ||
-          "Failed to analyze subscription receipt with Gemini 3.8 Flash.",
+          "Failed to scan subscription image. Please try another screenshot or use a sample preset.",
       },
       { status: 500 }
     );
