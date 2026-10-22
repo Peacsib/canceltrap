@@ -30,30 +30,31 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
       },
       darkPattern: {
         detected: true,
-        patternType: "Disguised Downgrade Trap",
+        patternType: "Hidden Manage Pill & Disguised Downgrade Trap",
         severity: "warning",
-        summary: "The cancel flow disguises cancellation as a 'Downgrade to Free' button with deceptive greyed-out styling, nudging users to keep credits instead.",
+        summary: "Lovable hides the cancel flow behind a tiny '[Manage]' pill button next to 'Lovable Pro', and completely avoids the word 'Cancel', disguising it as 'Downgrade to free'.",
         tricksExposed: [
-          "Primary action button is labeled 'Keep Pro with 20% discount'",
-          "Real cancellation button is hidden behind a secondary 'Downgrade' link",
-          "Prompts a multi-step exit survey before confirming",
+          "No visible 'Cancel' button anywhere on the main billing page",
+          "Must click an inconspicuous '[Manage]' pill badge next to the 'Lovable Pro' title",
+          "Cancellation action is disguised as 'Downgrade to free' rather than 'Cancel subscription'",
+          "Decoy buttons for 'Edit billing information' and 'Invoices & payments' deflect attention",
         ],
       },
       defusalChecklist: [
         {
           stepNumber: 1,
-          instruction: "Click 'Settings' → 'Billing & Plans' in the Lovable workspace.",
-          decoyWarning: "Do not click 'Modify Plan' in the header — it only shows upgrade tiers.",
+          instruction: "On the billing page (lovable.dev/settings/billing), locate the 'Lovable Pro' card and click the small dark '[Manage]' pill button next to the title.",
+          decoyWarning: "Do not search for a 'Cancel' link on the main page — it does not exist there.",
         },
         {
           stepNumber: 2,
-          instruction: "Scroll to current subscription and select 'Manage Plan' → 'Cancel Subscription'.",
-          decoyWarning: "Ignore the pop-up offering 'Pause account for $5/mo' or credit roll-over.",
+          instruction: "In the 'Manage plan' popup modal, ignore the prominent 'Upgrade plan' button and bottom billing links.",
+          decoyWarning: "Avoid clicking 'Invoices & payments' or 'Edit billing' which redirect to Stripe.",
         },
         {
           stepNumber: 3,
-          instruction: "Select 'Downgrade to Free Tier' on the exit modal and confirm cancellation.",
-          decoyWarning: "Do not close the modal until you see the green confirmation banner.",
+          instruction: "Click 'Downgrade to free' inside the modal to officially stop recurring billing.",
+          decoyWarning: "Lovable never uses the word 'Cancel' — 'Downgrade to free' is their official cancellation trigger.",
         },
       ],
       killSwitch: {
