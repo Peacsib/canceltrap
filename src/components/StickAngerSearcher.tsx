@@ -58,11 +58,10 @@ export function StickAngerSearcher({
 
   return (
     <div
-      className={`w-full rounded-2xl border transition-all duration-500 p-5 sm:p-6 shadow-[0_4px_24px_-4px_rgba(31,85,150,0.08)] overflow-hidden relative select-none ${
-        isFound
-          ? "bg-gradient-to-b from-emerald-50/70 via-white to-teal-50/30 border-emerald-300"
+      className={`w-full rounded-2xl border transition-all duration-500 p-5 sm:p-6 shadow-[0_4px_24px_-4px_rgba(31,85,150,0.08)] overflow-hidden relative select-none ${isFound
+          ? "bg-linear-to-b from-emerald-50/70 via-white to-teal-50/30 border-emerald-300"
           : "bg-white border-slate-200/90"
-      }`}
+        }`}
     >
       {/* ── Minimal celebratory confetti when found ── */}
       {isFound && (
@@ -112,32 +111,28 @@ export function StickAngerSearcher({
 
         {/* Runner Track Container */}
         <div
-          className={`w-full h-full relative ${
-            isFound ? "flex items-center justify-center" : ""
-          }`}
+          className={`w-full h-full relative ${isFound ? "flex items-center justify-center" : ""
+            }`}
         >
           <div
-            className={`${
-              isFound
+            className={`${isFound
                 ? "transform scale-115 transition-transform duration-500 animate-victory-bounce"
                 : "running-track absolute bottom-3"
-            }`}
+              }`}
           >
             {/* ── Clean Speech Bubble (Always Upright) ── */}
             <div className="bubble-anchor">
               <div
-                className={`text-xs font-bold px-3 py-1 rounded-xl shadow-xs border whitespace-nowrap transition-all ${
-                  isFound
+                className={`text-xs font-bold px-3 py-1 rounded-xl shadow-xs border whitespace-nowrap transition-all ${isFound
                     ? "bg-emerald-600 text-white border-emerald-500 shadow-emerald-500/10"
                     : "bg-white text-slate-800 border-slate-200 shadow-slate-200/50 animate-wobble-bubble"
-                }`}
+                  }`}
               >
                 {isFound ? "Aha! Found it! 🎉" : angryQuips[quipIndex]}
                 {/* Tail */}
                 <div
-                  className={`bubble-tail ${
-                    isFound ? "border-t-emerald-600" : "border-t-white"
-                  }`}
+                  className={`bubble-tail ${isFound ? "border-t-emerald-600" : "border-t-white"
+                    }`}
                 />
               </div>
             </div>
@@ -148,11 +143,10 @@ export function StickAngerSearcher({
                 width="110"
                 height="115"
                 viewBox="0 0 110 115"
-                className={`transition-colors duration-500 ${
-                  isFound
+                className={`transition-colors duration-500 ${isFound
                     ? "stroke-emerald-600 fill-emerald-600"
                     : "stroke-slate-900 fill-slate-900"
-                }`}
+                  }`}
                 style={{ strokeWidth: 3, strokeLinecap: "round", strokeLinejoin: "round" }}
               >
                 {/* ── Victory Sunburst Rays Around Head (When Found) ── */}

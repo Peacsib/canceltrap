@@ -103,14 +103,14 @@ CRITICAL RULES:
     const parsedData: SubscriptionDefusalResponse = JSON.parse(cleanedText);
 
     return NextResponse.json(parsedData);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Gemini analysis error:", err);
+    const message =
+      err instanceof Error
+        ? err.message
+        : "Failed to scan subscription image. Please try another screenshot or use a sample preset.";
     return NextResponse.json(
-      {
-        error:
-          err.message ||
-          "Failed to scan subscription image. Please try another screenshot or use a sample preset.",
-      },
+      { error: message },
       { status: 500 }
     );
   }

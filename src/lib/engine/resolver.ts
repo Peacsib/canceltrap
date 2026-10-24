@@ -15,7 +15,6 @@ import {
   DestinationNode,
   ResolutionResult,
   ActionType,
-  NavigationStep,
 } from "./types";
 import { DESTINATION_REGISTRY } from "./registry";
 import { parseIntent } from "./intent";

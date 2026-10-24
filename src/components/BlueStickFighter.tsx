@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 export type FighterAction =
   | "run"
@@ -26,6 +26,36 @@ interface TargetSpot {
   text: string;
 }
 
+// Targets corresponding to the 9 active logos (cloud logo removed)
+const LOGO_TARGETS: Record<string, { x: number; y: number; action: FighterAction; text: string }> = {
+  aws: { x: -62, y: -22, action: "bat_swing", text: "-$65/mo Cancelled! 💥" },
+  chatgpt: { x: 18, y: -45, action: "bat_swing", text: "Plus Trap Busted! ⚡" },
+  adobe: { x: -74, y: 8, action: "flying_kick", text: "Termination Fee Waived! 🥊" },
+  figma: { x: 74, y: 10, action: "boxing_combo", text: "Seats Reduced! 🛡️" },
+  spotify: { x: 16, y: 44, action: "jump_slam", text: "Free Tier Restored! 🎵" },
+  notion: { x: -58, y: 38, action: "bat_swing", text: "Subscription Cut! ⚔️" },
+  lovable: { x: -34, y: -48, action: "flying_kick", text: "Downgraded to Free! ✨" },
+  netflix: { x: 54, y: 34, action: "bat_swing", text: "Auto-Renew Killed! 🛑" },
+  gemini: { x: 64, y: -18, action: "boxing_combo", text: "AI Trap Defused! ⚡" },
+};
+
+// Autonomous, intelligent sequence: hunts logos one by one, dodges, spins, and celebrates!
+const AUTONOMOUS_ROUTINE: TargetSpot[] = [
+  { id: "aws", x: -62, y: -22, action: "bat_swing", text: "-$65/mo Cancelled! 💥" },
+  { id: "dodge", x: -20, y: -5, action: "dodge", text: "" },
+  { id: "chatgpt", x: 18, y: -45, action: "bat_swing", text: "Plus Trap Busted! ⚡" },
+  { id: "spin", x: 0, y: -10, action: "spin", text: "" },
+  { id: "adobe", x: -74, y: 8, action: "flying_kick", text: "Termination Fee Waived! 🥊" },
+  { id: "figma", x: 74, y: 10, action: "boxing_combo", text: "Seats Reduced! 🛡️" },
+  { id: "dodge", x: 40, y: 10, action: "dodge", text: "" },
+  { id: "spotify", x: 16, y: 44, action: "jump_slam", text: "Free Tier Restored! 🎵" },
+  { id: "notion", x: -58, y: 38, action: "bat_swing", text: "Subscription Cut! ⚔️" },
+  { id: "lovable", x: -34, y: -48, action: "flying_kick", text: "Downgraded to Free! ✨" },
+  { id: "netflix", x: 54, y: 34, action: "bat_swing", text: "Auto-Renew Killed! 🛑" },
+  { id: "gemini", x: 64, y: -18, action: "boxing_combo", text: "AI Trap Defused! ⚡" },
+  { id: "victory", x: 0, y: 5, action: "victory_dance", text: "Defused All Traps! 🏆" },
+];
+
 export function BlueStickFighter({ isAttacking = false, targetService, onStrikeLogo }: BlueStickFighterProps) {
   // Arena position state (freely navigates inside the glass dome arena)
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 5 });
@@ -40,39 +70,14 @@ export function BlueStickFighter({ isAttacking = false, targetService, onStrikeL
   const sequenceIndexRef = useRef(0);
   const isBusyRef = useRef(false);
   const positionRef = useRef<{ x: number; y: number }>({ x: 0, y: 5 });
+  const onStrikeLogoRef = useRef(onStrikeLogo);
 
-  // Targets corresponding to the 9 active logos (cloud logo removed)
-  const logoTargets: Record<string, { x: number; y: number; action: FighterAction; text: string }> = {
-    aws: { x: -62, y: -22, action: "bat_swing", text: "-$65/mo Cancelled! 💥" },
-    chatgpt: { x: 18, y: -45, action: "bat_swing", text: "Plus Trap Busted! ⚡" },
-    adobe: { x: -74, y: 8, action: "flying_kick", text: "Termination Fee Waived! 🥊" },
-    figma: { x: 74, y: 10, action: "boxing_combo", text: "Seats Reduced! 🛡️" },
-    spotify: { x: 16, y: 44, action: "jump_slam", text: "Free Tier Restored! 🎵" },
-    notion: { x: -58, y: 38, action: "bat_swing", text: "Subscription Cut! ⚔️" },
-    lovable: { x: -34, y: -48, action: "flying_kick", text: "Downgraded to Free! ✨" },
-    netflix: { x: 54, y: 34, action: "bat_swing", text: "Auto-Renew Killed! 🛑" },
-    gemini: { x: 64, y: -18, action: "boxing_combo", text: "AI Trap Defused! ⚡" },
-  };
-
-  // Autonomous, intelligent sequence: hunts logos one by one, dodges, spins, and celebrates!
-  const autonomousRoutine: TargetSpot[] = [
-    { id: "aws", x: -62, y: -22, action: "bat_swing", text: "-$65/mo Cancelled! 💥" },
-    { id: "dodge", x: -20, y: -5, action: "dodge", text: "" },
-    { id: "chatgpt", x: 18, y: -45, action: "bat_swing", text: "Plus Trap Busted! ⚡" },
-    { id: "spin", x: 0, y: -10, action: "spin", text: "" },
-    { id: "adobe", x: -74, y: 8, action: "flying_kick", text: "Termination Fee Waived! 🥊" },
-    { id: "figma", x: 74, y: 10, action: "boxing_combo", text: "Seats Reduced! 🛡️" },
-    { id: "dodge", x: 40, y: 10, action: "dodge", text: "" },
-    { id: "spotify", x: 16, y: 44, action: "jump_slam", text: "Free Tier Restored! 🎵" },
-    { id: "notion", x: -58, y: 38, action: "bat_swing", text: "Subscription Cut! ⚔️" },
-    { id: "lovable", x: -34, y: -48, action: "flying_kick", text: "Downgraded to Free! ✨" },
-    { id: "netflix", x: 54, y: 34, action: "bat_swing", text: "Auto-Renew Killed! 🛑" },
-    { id: "gemini", x: 64, y: -18, action: "boxing_combo", text: "AI Trap Defused! ⚡" },
-    { id: "victory", x: 0, y: 5, action: "victory_dance", text: "Defused All Traps! 🏆" },
-  ];
+  useEffect(() => {
+    onStrikeLogoRef.current = onStrikeLogo;
+  }, [onStrikeLogo]);
 
   // Execute a targeted movement & action routine
-  const executeTargetMove = (spot: TargetSpot) => {
+  const executeTargetMove = useCallback((spot: TargetSpot) => {
     isBusyRef.current = true;
 
     // 1. Determine direction from positionRef
@@ -143,8 +148,8 @@ export function BlueStickFighter({ isAttacking = false, targetService, onStrikeL
         }
 
         // Trigger logo reaction!
-        if (onStrikeLogo && spot.id) {
-          onStrikeLogo(spot.id, spot.text);
+        if (onStrikeLogoRef.current && spot.id) {
+          onStrikeLogoRef.current(spot.id, spot.text);
         }
 
         setTimeout(() => {
@@ -156,25 +161,25 @@ export function BlueStickFighter({ isAttacking = false, targetService, onStrikeL
         }, 220);
       }, 140);
     }, 360);
-  };
+  }, []);
 
   // Autonomous hunting loop: continuously traverses through targets one by one
   useEffect(() => {
     const loopInterval = setInterval(() => {
       if (isBusyRef.current) return;
 
-      const nextSpot = autonomousRoutine[sequenceIndexRef.current];
-      sequenceIndexRef.current = (sequenceIndexRef.current + 1) % autonomousRoutine.length;
+      const nextSpot = AUTONOMOUS_ROUTINE[sequenceIndexRef.current];
+      sequenceIndexRef.current = (sequenceIndexRef.current + 1) % AUTONOMOUS_ROUTINE.length;
       executeTargetMove(nextSpot);
     }, 2100);
 
     return () => clearInterval(loopInterval);
-  }, []);
+  }, [executeTargetMove]);
 
   // Interactive mouse reaction: when user hovers or clicks ANY logo, sprint straight to it and strike!
   useEffect(() => {
-    if (targetService && logoTargets[targetService]) {
-      const target = logoTargets[targetService];
+    if (targetService && LOGO_TARGETS[targetService]) {
+      const target = LOGO_TARGETS[targetService];
       executeTargetMove({
         id: targetService,
         x: target.x,
@@ -183,7 +188,7 @@ export function BlueStickFighter({ isAttacking = false, targetService, onStrikeL
         text: target.text,
       });
     }
-  }, [targetService, isAttacking]);
+  }, [targetService, isAttacking, executeTargetMove]);
 
   // Victory dance hip sway
   useEffect(() => {
@@ -304,7 +309,7 @@ export function BlueStickFighter({ isAttacking = false, targetService, onStrikeL
               : currentAction === "jump_slam" && actionPhase === "impact"
               ? "translate-y-1.5"
               : currentAction === "dodge"
-              ? "translate-y-1 rotate-[-12deg]"
+              ? "translate-y-1 -rotate-12"
               : currentAction === "victory_dance"
               ? danceStep % 2 === 0
                 ? "-translate-y-1 rotate-[4deg]"

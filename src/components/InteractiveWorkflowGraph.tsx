@@ -6,13 +6,11 @@ import {
   Calendar,
   Check,
   ShieldCheck,
-  Clock,
   Ban,
   Sparkles,
   Download,
   RotateCcw,
   CheckCircle2,
-  Lock,
   Cpu,
   TrendingDown,
   ArrowUpRight,
@@ -154,17 +152,17 @@ export function InteractiveWorkflowGraph({
       {/* ═══════════════════════════════════════════════════════════════
           INTERACTIVE WORKFLOW CANVAS (NEURAL NETWORK MAP)
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="relative w-full rounded-3xl bg-gradient-to-b from-white/90 via-[#f0f7ff]/70 to-white/95 backdrop-blur-2xl border border-white shadow-[0_20px_50px_-15px_rgba(22,88,235,0.16)] p-5 sm:p-7 overflow-hidden">
+      <div className="relative w-full rounded-3xl bg-linear-to-b from-white/90 via-[#f0f7ff]/70 to-white/95 backdrop-blur-2xl border border-white shadow-[0_20px_50px_-15px_rgba(22,88,235,0.16)] p-5 sm:p-7 overflow-hidden">
         {/* Subtle Ambient Background Orbits */}
         <div className="absolute inset-0 pointer-events-none opacity-30">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] h-[340px] sm:h-[460px] rounded-full border border-[#1658eb]/40 border-dashed animate-[spin_100s_linear_infinite]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] sm:w-[300px] h-[220px] sm:h-[300px] rounded-full border border-indigo-300/30" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-85 sm:w-115 h-85 sm:h-115 rounded-full border border-[#1658eb]/40 border-dashed animate-[spin_100s_linear_infinite]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-55 sm:w-75 h-55 sm:h-75 rounded-full border border-indigo-300/30" />
         </div>
 
         {/* Top Header of the Canvas */}
         <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 pb-3 mb-2 border-b border-[#d0e1ed]/50 text-left">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#1658eb] to-[#0c7830] text-white flex items-center justify-center shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-linear-to-br from-[#1658eb] to-[#0c7830] text-white flex items-center justify-center shadow-xs">
               <Sparkles className="w-4 h-4 animate-pulse" />
             </div>
             <div>
@@ -190,7 +188,7 @@ export function InteractiveWorkflowGraph({
               </span>
               <div className="w-24 sm:w-32 h-1.5 bg-slate-100 rounded-full mt-0.5 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#1658eb] via-[#54b66e] to-emerald-400 transition-all duration-500 rounded-full"
+                  className="h-full bg-linear-to-r from-[#1658eb] via-[#54b66e] to-emerald-400 transition-all duration-500 rounded-full"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -210,7 +208,7 @@ export function InteractiveWorkflowGraph({
         {/* ═══════════════════════════════════════════════════════════════
             THE VISUAL HUB-AND-SPOKE NETWORK (CIRCULAR NODES + SVG)
         ═══════════════════════════════════════════════════════════════ */}
-        <div className="relative w-full h-[340px] sm:h-[380px] flex items-center justify-center my-1 select-none">
+        <div className="relative w-full h-85 sm:h-95 flex items-center justify-center my-1 select-none">
           {/* SVG Animated Connector Circuits */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
@@ -299,8 +297,8 @@ export function InteractiveWorkflowGraph({
             <div
               className={`w-32 h-32 sm:w-36 sm:h-36 rounded-full flex flex-col items-center justify-center p-2 text-center transition-all duration-300 relative border-4 ${
                 allComplete
-                  ? "bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-[0_0_40px_rgba(16,185,129,0.35)] border-white"
-                  : "bg-gradient-to-br from-[#1658eb] via-[#1246c4] to-[#0c1b38] text-white shadow-[0_12px_35px_-8px_rgba(22,88,235,0.4)] border-white/90"
+                  ? "bg-linear-to-br from-emerald-500 to-teal-700 text-white shadow-[0_0_40px_rgba(16,185,129,0.35)] border-white"
+                  : "bg-linear-to-br from-[#1658eb] via-[#1246c4] to-[#0c1b38] text-white shadow-[0_12px_35px_-8px_rgba(22,88,235,0.4)] border-white/90"
               }`}
             >
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mb-1 shadow-inner">
@@ -313,7 +311,7 @@ export function InteractiveWorkflowGraph({
                 )}
               </div>
 
-              <span className="font-extrabold text-xs sm:text-sm font-display truncate max-w-[105px] px-1 text-white">
+              <span className="font-extrabold text-xs sm:text-sm font-display truncate max-w-26.25 px-1 text-white">
                 {merchant?.name || "Target Hub"}
               </span>
 
@@ -356,7 +354,7 @@ export function InteractiveWorkflowGraph({
                   }`}
                 >
                   {step1Done ? (
-                    <Check className="w-4 h-4 stroke-[3]" />
+                    <Check className="w-4 h-4 stroke-3" />
                   ) : (
                     <ExternalLink className="w-3.5 h-3.5" />
                   )}
@@ -398,7 +396,7 @@ export function InteractiveWorkflowGraph({
                   }`}
                 >
                   {step2Done ? (
-                    <Check className="w-4 h-4 stroke-[3]" />
+                    <Check className="w-4 h-4 stroke-3" />
                   ) : (
                     <ShieldCheck className="w-3.5 h-3.5" />
                   )}
@@ -440,7 +438,7 @@ export function InteractiveWorkflowGraph({
                   }`}
                 >
                   {step3Done ? (
-                    <Check className="w-4 h-4 stroke-[3]" />
+                    <Check className="w-4 h-4 stroke-3" />
                   ) : (
                     <Calendar className="w-3.5 h-3.5" />
                   )}
@@ -547,7 +545,7 @@ export function InteractiveWorkflowGraph({
               >
                 {step1Done ? (
                   <>
-                    <Check className="w-4 h-4 stroke-[3] text-emerald-700" />
+                    <Check className="w-4 h-4 stroke-3 text-emerald-700" />
                     <span>Portal Launched &middot; Relaunch ↗</span>
                   </>
                 ) : (
@@ -674,7 +672,7 @@ export function InteractiveWorkflowGraph({
               >
                 {step3Done ? (
                   <>
-                    <Check className="w-4 h-4 stroke-[3] text-emerald-700" />
+                    <Check className="w-4 h-4 stroke-3 text-emerald-700" />
                     <span>Kill-Switch Armed (.ics)</span>
                   </>
                 ) : (
@@ -778,7 +776,7 @@ export function InteractiveWorkflowGraph({
 
       {/* ─── Celebratory Completion Banner ─── */}
       {allComplete && (
-        <div className="glass-card p-5 border-emerald-300/80 bg-gradient-to-r from-emerald-50/90 via-white/80 to-blue-50/90 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 text-left animate-in fade-in duration-300">
+        <div className="glass-card p-5 border-emerald-300/80 bg-linear-to-r from-emerald-50/90 via-white/80 to-blue-50/90 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 text-left animate-in fade-in duration-300">
           <div className="flex items-center space-x-3.5">
             <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
               <Sparkles className="w-5 h-5" />

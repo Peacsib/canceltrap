@@ -15,9 +15,7 @@ import {
   Check,
   Star,
   Trash2,
-  Sparkles,
   ExternalLink,
-  X,
   Shield,
   AlertTriangle,
   Loader2,
@@ -26,10 +24,19 @@ import { InAppDefusalWindow } from "./InAppDefusalWindow";
 import { StickAngerSearcher } from "./StickAngerSearcher";
 import { PoppableWaterOrb } from "./PoppableWaterOrb";
 import { AwsChipIcon, AwsRowIcon, AwsCardIcon } from "./AwsLogo";
-import { SubscriptionDefusalResponse } from "@/lib/types";
 import type { DestinationNode } from "@/lib/engine/types";
+import type { SubscriptionDefusalResponse } from "@/lib/types";
 import { DESTINATION_REGISTRY } from "@/lib/engine/registry";
 import { resolve } from "@/lib/engine/resolver";
+
+const emptySubscribe = () => () => {};
+function useIsMounted() {
+  return React.useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
 
 export type SidebarTab = "overview" | "find" | "saved" | "history";
 export type TabType = "search" | "url";
@@ -498,7 +505,7 @@ function DynamicBrandIcon({
 function EconetEcoAiIcon({ size = "row" }: { size?: "sm" | "row" | "card" }) {
   if (size === "card") {
     return (
-      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#002f6c] via-[#004b9b] to-[#0072ce] border border-[#004b9b] flex flex-col items-center justify-center shrink-0 shadow-xs relative overflow-hidden text-white" title="ecoAI Tokens (Econet Wireless Zimbabwe)">
+      <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-[#002f6c] via-[#004b9b] to-[#0072ce] border border-[#004b9b] flex flex-col items-center justify-center shrink-0 shadow-xs relative overflow-hidden text-white" title="ecoAI Tokens (Econet Wireless Zimbabwe)">
         <div className="flex items-center gap-0.5 font-black text-xs tracking-tight">
           <span className="text-[#38bdf8]">eco</span>
           <span className="text-white">AI</span>
@@ -520,7 +527,7 @@ function EconetEcoAiIcon({ size = "row" }: { size?: "sm" | "row" | "card" }) {
     );
   }
   return (
-    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#002f6c] to-[#0056b3] border border-blue-900 flex flex-col items-center justify-center shrink-0 shadow-xs text-white" title="ecoAI Tokens (Econet Wireless Zimbabwe)">
+    <div className="w-10 h-10 rounded-xl bg-linear-to-br from-[#002f6c] to-[#0056b3] border border-blue-900 flex flex-col items-center justify-center shrink-0 shadow-xs text-white" title="ecoAI Tokens (Econet Wireless Zimbabwe)">
       <div className="flex items-center gap-0.5 font-bold text-[11px] leading-none">
         <span className="text-[#38bdf8]">eco</span>
         <span>AI</span>
@@ -656,13 +663,13 @@ function renderServiceIcon(id: string, name: string, size: "sm" | "row" | "card"
 // ── Main Dashboard Component ────────────────────────────────────────────────
 
 export function DefusalDashboard({
-  data: initialData,
   destination: initialDestination,
   initialTab = "overview",
   onReset,
 }: DefusalDashboardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isMounted = useIsMounted();
 
   const serviceParam = searchParams?.get("service")?.toLowerCase();
   const queryParam = searchParams?.get("q");
@@ -725,8 +732,6 @@ export function DefusalDashboard({
     return "";
   });
 
-  const [isMounted, setIsMounted] = useState(false);
-
   // Saved Routes State (Deterministic initial state to prevent SSR hydration mismatch)
   const [savedRoutes, setSavedRoutes] = useState<ServiceData[]>([
     PRESET_SERVICES.google_cloud,
@@ -739,39 +744,27 @@ export function DefusalDashboard({
     { id: "adobe", name: "Adobe", action: "Turn off auto-renewal", time: "5 hours ago", timestamp: 1729739000000 },
   ]);
 
-  // Scanned Receipt Banner state (Deterministic initial state)
-  const [scannedReceiptNotice, setScannedReceiptNotice] = useState<SubscriptionDefusalResponse | null>(() => {
-    return initialData || null;
-  });
-
-  // Client-side hydration sync for localStorage and sessionStorage
+  // Client-side hydration sync for localStorage
   useEffect(() => {
-    setIsMounted(true);
-    try {
-      const storedSaved = localStorage.getItem("canceltrap_saved_routes");
-      if (storedSaved) {
-        const parsed = JSON.parse(storedSaved);
-        if (Array.isArray(parsed) && parsed.length > 0) setSavedRoutes(parsed);
-      }
-    } catch {}
-
-    try {
-      const storedHistory = localStorage.getItem("canceltrap_history");
-      if (storedHistory) {
-        const parsed = JSON.parse(storedHistory);
-        if (Array.isArray(parsed) && parsed.length > 0) setHistoryItems(parsed);
-      }
-    } catch {}
-
-    if (!initialData) {
+    const t = setTimeout(() => {
       try {
-        const storedScan = sessionStorage.getItem("canceltrap_active_scan");
-        if (storedScan) {
-          setScannedReceiptNotice(JSON.parse(storedScan) as SubscriptionDefusalResponse);
+        const storedSaved = localStorage.getItem("canceltrap_saved_routes");
+        if (storedSaved) {
+          const parsed = JSON.parse(storedSaved);
+          if (Array.isArray(parsed) && parsed.length > 0) setSavedRoutes(parsed);
         }
       } catch {}
-    }
-  }, [initialData]);
+
+      try {
+        const storedHistory = localStorage.getItem("canceltrap_history");
+        if (storedHistory) {
+          const parsed = JSON.parse(storedHistory);
+          if (Array.isArray(parsed) && parsed.length > 0) setHistoryItems(parsed);
+        }
+      } catch {}
+    }, 0);
+    return () => clearTimeout(t);
+  }, []);
 
   const searchBoxRef = useRef<HTMLDivElement>(null);
   const resolvedCacheRef = useRef<Record<string, ServiceData>>({});
@@ -1082,28 +1075,39 @@ export function DefusalDashboard({
     }
   }, [activeTab, loadCustomDestination, selectServiceById]);
 
-  // Synchronize serviceParam when URL param changes (render-time pattern)
-  const [prevServiceParam, setPrevServiceParam] = useState(serviceParam);
-  if (serviceParam !== prevServiceParam) {
-    setPrevServiceParam(serviceParam);
-    if (serviceParam) {
-      selectServiceById(serviceParam);
-    }
-  }
-
-  // Synchronize initialDestination when prop changes (render-time pattern)
-  const [prevDestinationId, setPrevDestinationId] = useState(initialDestination?.id);
-  if (initialDestination?.id !== prevDestinationId) {
-    setPrevDestinationId(initialDestination?.id);
-    if (initialDestination) {
-      loadCustomDestination(initialDestination);
-    }
-  }
-
-  // Synchronize asynchronous search query in useEffect (proper place for async network fetches)
+  // Synchronize serviceParam when URL param changes
+  const prevServiceParamRef = useRef(serviceParam);
   useEffect(() => {
-    if (queryParam) {
-      handleSearchQuery(queryParam);
+    if (serviceParam && serviceParam !== prevServiceParamRef.current) {
+      prevServiceParamRef.current = serviceParam;
+      const t = setTimeout(() => {
+        selectServiceById(serviceParam);
+      }, 0);
+      return () => clearTimeout(t);
+    }
+  }, [serviceParam, selectServiceById]);
+
+  // Synchronize initialDestination when prop changes
+  const prevDestIdRef = useRef(initialDestination?.id);
+  useEffect(() => {
+    if (initialDestination && initialDestination.id !== prevDestIdRef.current) {
+      prevDestIdRef.current = initialDestination.id;
+      const t = setTimeout(() => {
+        loadCustomDestination(initialDestination);
+      }, 0);
+      return () => clearTimeout(t);
+    }
+  }, [initialDestination, loadCustomDestination]);
+
+  // Synchronize asynchronous search query from URL
+  const prevQueryParamRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (queryParam && queryParam !== prevQueryParamRef.current) {
+      prevQueryParamRef.current = queryParam;
+      const t = setTimeout(() => {
+        handleSearchQuery(queryParam);
+      }, 0);
+      return () => clearTimeout(t);
     }
   }, [queryParam, handleSearchQuery]);
 
@@ -1167,15 +1171,6 @@ export function DefusalDashboard({
     }
   };
 
-  const dismissScannedNotice = () => {
-    setScannedReceiptNotice(null);
-    if (typeof window !== "undefined") {
-      try {
-        sessionStorage.removeItem("canceltrap_active_scan");
-      } catch {}
-    }
-  };
-
   const activeDestinationNode: DestinationNode | null = useMemo(() => {
     if (!activeService) return null;
     return {
@@ -1205,7 +1200,7 @@ export function DefusalDashboard({
   }, [activeService]);
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-[#d4ecfd] via-[#e8f3fd] to-[#c7e5fd] flex text-[#0c1b38] antialiased overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-linear-to-br from-[#d4ecfd] via-[#e8f3fd] to-[#c7e5fd] flex text-[#0c1b38] antialiased overflow-x-hidden">
       {/* ─── Ambient Oceanic Water Backdrop Layer ─── */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         {/* Soft caustics wallpaper from newhero.webp */}
@@ -1220,14 +1215,14 @@ export function DefusalDashboard({
 
         {/* Ambient Azure & Sky Luminous Glows */}
         <div
-          className="absolute -top-[10%] right-[10%] w-[600px] h-[600px] rounded-full blur-[110px] opacity-60 water-caustics-gleam"
+          className="absolute top-[-10%] right-[10%] w-150 h-150 rounded-full blur-[110px] opacity-60 water-caustics-gleam"
           style={{
             background:
               "radial-gradient(circle, rgba(56, 189, 248, 0.42) 0%, rgba(14, 165, 233, 0.2) 50%, transparent 75%)",
           }}
         />
         <div
-          className="absolute top-[40%] -left-[10%] w-[550px] h-[550px] rounded-full blur-[120px] opacity-45 water-caustics-gleam"
+          className="absolute top-[40%] left-[-10%] w-137.5 h-137.5 rounded-full blur-[120px] opacity-45 water-caustics-gleam"
           style={{
             background:
               "radial-gradient(ellipse, rgba(186, 230, 253, 0.5) 0%, rgba(2, 132, 199, 0.16) 55%, transparent 80%)",
@@ -1235,7 +1230,7 @@ export function DefusalDashboard({
           }}
         />
         <div
-          className="absolute -bottom-[10%] right-[25%] w-[650px] h-[450px] rounded-full blur-[110px] opacity-50 water-caustics-gleam"
+          className="absolute bottom-[-10%] right-[25%] w-162.5 h-112.5 rounded-full blur-[110px] opacity-50 water-caustics-gleam"
           style={{
             background:
               "radial-gradient(circle, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.14) 50%, transparent 75%)",
@@ -1800,7 +1795,7 @@ export function DefusalDashboard({
                             <div
                               className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold shadow-2xs transition ${
                                 isLast
-                                  ? "bg-gradient-to-r from-[#1658eb] to-[#0f4bc9] text-white shadow-xs"
+                                  ? "bg-linear-to-r from-[#1658eb] to-[#0f4bc9] text-white shadow-xs"
                                   : isFirst
                                   ? "bg-white/95 border border-slate-200 text-[#0c1b38] font-mono text-[11px]"
                                   : "bg-white/85 border border-sky-200/80 text-[#1658eb]"
@@ -1870,7 +1865,7 @@ export function DefusalDashboard({
                     <button
                       type="button"
                       onClick={handleOpenDestination}
-                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#1658eb] to-[#0f4bc9] hover:from-[#1246c4] hover:to-[#0d3ea6] text-white font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(22,88,235,0.25)] hover:shadow-[0_6px_20px_rgba(22,88,235,0.32)] active:scale-98 transition flex items-center gap-2 shrink-0 cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-linear-to-r from-[#1658eb] to-[#0f4bc9] hover:from-[#1246c4] hover:to-[#0d3ea6] text-white font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(22,88,235,0.25)] hover:shadow-[0_6px_20px_rgba(22,88,235,0.32)] active:scale-98 transition flex items-center gap-2 shrink-0 cursor-pointer"
                       title="Open real tab & launch CancelTrap step-by-step Co-Pilot"
                     >
                       <span>Open destination</span>

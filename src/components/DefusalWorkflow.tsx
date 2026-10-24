@@ -6,14 +6,11 @@ import {
   Calendar,
   Check,
   ShieldCheck,
-  AlertTriangle,
-  ArrowRight,
   Clock,
   Ban,
   Sparkles,
   Download,
   RotateCcw,
-  CheckCircle2,
   Lock,
 } from "lucide-react";
 import { SubscriptionDefusalResponse } from "@/lib/types";
@@ -25,7 +22,7 @@ interface DefusalWorkflowProps {
 }
 
 export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
-  const { merchant, billing, darkPattern, defusalChecklist, killSwitch } = data;
+  const { merchant, billing, defusalChecklist, killSwitch } = data;
 
   // Workflow completion states
   const [step1Done, setStep1Done] = useState(false);
@@ -249,7 +246,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
             </span>
             <div className="w-32 h-1.5 bg-slate-200/80 rounded-full mt-1 overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#11338a] to-[#54b66e] transition-all duration-500 rounded-full"
+                className="h-full bg-linear-to-r from-[#11338a] to-[#54b66e] transition-all duration-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -292,7 +289,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
                 }`}
               >
                 {step1Done ? (
-                  <Check className="w-4 h-4 stroke-[3]" />
+                  <Check className="w-4 h-4 stroke-3" />
                 ) : (
                   <ExternalLink className="w-4 h-4" />
                 )}
@@ -332,7 +329,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
             >
               {step1Done ? (
                 <>
-                  <Check className="w-3.5 h-3.5 stroke-[3] text-emerald-700" />
+                  <Check className="w-3.5 h-3.5 stroke-3 text-emerald-700" />
                   <span>Portal Opened &middot; Relaunch ↗</span>
                 </>
               ) : (
@@ -378,7 +375,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
                 }`}
               >
                 {step2Done ? (
-                  <Check className="w-4 h-4 stroke-[3]" />
+                  <Check className="w-4 h-4 stroke-3" />
                 ) : (
                   <ShieldCheck className="w-4 h-4 text-amber-700" />
                 )}
@@ -452,12 +449,12 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
             >
               {step2Done ? (
                 <>
-                  <Check className="w-3.5 h-3.5 stroke-[3] text-emerald-700" />
+                  <Check className="w-3.5 h-3.5 stroke-3 text-emerald-700" />
                   <span>Decoys Bypassed &middot; Verified ✓</span>
                 </>
               ) : (
                 <>
-                  <Check className="w-3.5 h-3.5 stroke-[2]" />
+                  <Check className="w-3.5 h-3.5 stroke-2" />
                   <span>Mark Decoys Evaded</span>
                 </>
               )}
@@ -498,7 +495,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
                 }`}
               >
                 {step3Done ? (
-                  <Check className="w-4 h-4 stroke-[3]" />
+                  <Check className="w-4 h-4 stroke-3" />
                 ) : (
                   <Calendar className="w-4 h-4" />
                 )}
@@ -541,7 +538,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
             >
               {step3Done ? (
                 <>
-                  <Check className="w-3.5 h-3.5 stroke-[3] text-emerald-700" />
+                  <Check className="w-3.5 h-3.5 stroke-3 text-emerald-700" />
                   <span>Kill-Switch Downloaded (.ics)</span>
                 </>
               ) : (
@@ -557,7 +554,7 @@ export function DefusalWorkflow({ data, onReset }: DefusalWorkflowProps) {
 
       {/* ─── Celebratory Completion State ─── */}
       {allComplete && (
-        <div className="glass-card p-6 border-emerald-300/80 bg-gradient-to-r from-emerald-50/90 via-white/80 to-blue-50/90 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 text-left animate-in fade-in duration-300">
+        <div className="glass-card p-6 border-emerald-300/80 bg-linear-to-r from-emerald-50/90 via-white/80 to-blue-50/90 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 text-left animate-in fade-in duration-300">
           <div className="flex items-center space-x-3.5">
             <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-sm">
               <Sparkles className="w-5 h-5" />

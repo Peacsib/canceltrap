@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Upload, ShieldCheck, AlertCircle, Check, Loader2, Sparkles, FileText, ArrowRight } from "lucide-react";
+import { Upload, ShieldCheck, AlertCircle, Check, Loader2, FileText } from "lucide-react";
 import { PRESET_SCENARIOS, PresetScenario } from "@/data/presets";
 import { SubscriptionDefusalResponse } from "@/lib/types";
 
