@@ -34,13 +34,83 @@ const GENERIC_AGGREGATORS = [
   "capterra.com",
 ];
 
-export async function discoverLiveWeb(query: string): Promise<LiveDiscoveryResult | null> {
-  const cleanQuery = query.trim();
-  if (!cleanQuery) return null;
+export interface RawSearchResult {
+  title: string;
+  url: string;
+  domain: string;
+  snippet: string;
+}
 
-  // Search live web for authentic subscription portal
+/**
+ * Searches the live web using the official Brave Search API.
+ * High-speed, structured JSON results without HTML scraping or bot-blocking.
+ */
+export async function searchBraveWeb(
+  query: string,
+  count: number = 6
+): Promise<RawSearchResult[]> {
+  const apiKey = process.env.BRAVE_SEARCH_API_KEY;
+  if (!apiKey) return [];
+
+  try {
+    const url = `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(
+      query
+    )}&count=${count}`;
+
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(3500),
+      headers: {
+        Accept: "application/json",
+        "X-Subscription-Token": apiKey,
+      },
+    });
+
+    if (!res.ok) {
+      console.warn(`[Brave Search API] HTTP ${res.status}: ${res.statusText}`);
+      return [];
+    }
+
+    const data = await res.json();
+    const results = data.web?.results || [];
+
+    const candidates: RawSearchResult[] = [];
+
+    for (const r of results) {
+      if (!r.url) continue;
+      let domain = "";
+      try {
+        domain = new URL(r.url).hostname.replace(/^www\./, "").toLowerCase();
+      } catch {
+        continue;
+      }
+
+      // Exclude generic aggregators
+      if (
+        GENERIC_AGGREGATORS.some(
+          (g) => domain.includes(g) && !query.toLowerCase().includes(g.split(".")[0])
+        )
+      ) {
+        continue;
+      }
+
+      candidates.push({
+        title: r.title || "",
+        url: r.url,
+        domain,
+        snippet: r.description || "",
+      });
+    }
+
+    return candidates;
+  } catch (err) {
+    console.warn("[Brave Search API] Request failed:", err);
+    return [];
+  }
+}
+
+async function searchDuckDuckGo(query: string): Promise<RawSearchResult[]> {
   const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(
-    cleanQuery + " cancel subscription OR account portal OR official login"
+    query + " cancel subscription OR account portal OR official login"
   )}`;
 
   try {
@@ -52,13 +122,13 @@ export async function discoverLiveWeb(query: string): Promise<LiveDiscoveryResul
       },
     });
 
-    if (!res.ok) return null;
+    if (!res.ok) return [];
     const html = await res.text();
 
     const blockRegex =
       /<h2 class="result__title">[\s\S]*?<a[^>]+class="result__url"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<a class="result__snippet"[^>]*>([\s\S]*?)<\/a>/g;
 
-    const rawCandidates: Array<{ url: string; domain: string; snippet: string }> = [];
+    const rawCandidates: RawSearchResult[] = [];
     let match;
 
     while ((match = blockRegex.exec(html)) !== null && rawCandidates.length < 8) {
@@ -70,24 +140,51 @@ export async function discoverLiveWeb(query: string): Promise<LiveDiscoveryResul
       const rawDomain = match[2].replace(/<[^>]+>/g, "").trim();
       const snippet = match[3].replace(/<[^>]+>/g, "").trim();
 
-      // Clean domain
       let domain = rawDomain.split("/")[0].replace(/^www\./, "").toLowerCase();
       if (domain.includes(":")) domain = domain.split(":")[0];
 
-      // Exclude generic aggregator sites (unless the user specifically searched for it)
       if (
         GENERIC_AGGREGATORS.some(
-          (g) => domain.includes(g) && !cleanQuery.toLowerCase().includes(g.split(".")[0])
+          (g) => domain.includes(g) && !query.toLowerCase().includes(g.split(".")[0])
         )
       ) {
         continue;
       }
 
       rawCandidates.push({
+        title: snippet.slice(0, 40),
         url: rawHref,
         domain,
         snippet,
       });
+    }
+
+    return rawCandidates;
+  } catch {
+    return [];
+  }
+}
+
+export async function discoverLiveWeb(query: string): Promise<LiveDiscoveryResult | null> {
+  const cleanQuery = query.trim();
+  if (!cleanQuery) return null;
+
+  try {
+    let rawCandidates: RawSearchResult[] = [];
+    let sourceEngine = "Brave Search API";
+
+    // 1. Try high-performance Brave Search API first
+    if (process.env.BRAVE_SEARCH_API_KEY) {
+      rawCandidates = await searchBraveWeb(
+        `${cleanQuery} cancel subscription OR billing settings OR account portal`,
+        6
+      );
+    }
+
+    // 2. Fallback to DuckDuckGo if Brave Search is unconfigured or returned no hits
+    if (rawCandidates.length === 0) {
+      sourceEngine = "Live Web Discovery";
+      rawCandidates = await searchDuckDuckGo(cleanQuery);
     }
 
     if (rawCandidates.length === 0) {
@@ -257,12 +354,12 @@ export async function discoverLiveWeb(query: string): Promise<LiveDiscoveryResul
           ],
       verification: {
         status: "VERIFIED",
-        confidenceScore: 92,
+        confidenceScore: sourceEngine.includes("Brave") ? 96 : 90,
         evidenceSummary: isFreeService
-          ? `Verified from live web discovery: official portal (${top.domain}) for free/open-source tool "${cleanQuery}".`
-          : `Verified from live web discovery: official portal (${top.domain}) for "${cleanQuery}".`,
+          ? `Verified from ${sourceEngine}: official portal (${top.domain}) for free/open-source tool "${cleanQuery}".`
+          : `Verified from ${sourceEngine}: official destination (${top.domain} -> ${top.url}) for "${cleanQuery}".`,
         lastVerifiedDate: new Date().toISOString().split("T")[0],
-        verifiedBy: "algorithmic_discovery",
+        verifiedBy: sourceEngine.includes("Brave") ? "brave_search_verified" as any : "algorithmic_discovery",
       },
     };
 

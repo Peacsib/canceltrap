@@ -1717,162 +1717,158 @@ export function DefusalDashboard({
                 </div>
               </div>
             ) : activeService ? (
-              <div className="mt-7 bg-white/85 backdrop-blur-2xl rounded-3xl border border-white/95 p-6 sm:p-7 shadow-[0_16px_48px_rgba(20,70,160,0.08),inset_0_1px_3px_rgba(255,255,255,1)] flex flex-col sm:flex-row sm:items-center justify-between gap-6 card-hover-lift">
-                <div className="flex items-start gap-4">
-                  {/* Dynamic Brand Logo */}
-                  {renderServiceIcon(activeService.id, activeService.name, "card", activeService.directUrl)}
-
-                  <div>
-                    {/* Header Line with Destination Found Badge & Bookmark Toggle */}
-                    <div className="flex items-center gap-2.5 flex-wrap">
-                      <h3 className="text-xl font-bold text-[#0c1b38] font-display">
-                        {activeService.name}
-                      </h3>
-                      {activeService.directUrl && (
-                        <span className="text-[11px] font-mono bg-white/80 text-slate-700 px-2 py-0.5 rounded-md border border-slate-200 font-medium">
-                          {(() => {
-                            try { return new URL(activeService.directUrl).hostname; } catch { return activeService.directUrl; }
-                          })()}
-                        </span>
-                      )}
-                      <span className={`px-3 py-0.5 rounded-full border font-semibold text-xs flex items-center gap-1.5 ${
-                        activeService.isFreeService
-                          ? "bg-emerald-50 border-emerald-300 text-emerald-700"
-                          : "bg-[#e8f7ee] border-[#a7e8be] text-[#0f8b3c]"
-                      }`}>
-                        {activeService.isFreeService ? (
-                          <Shield className="w-3.5 h-3.5 text-emerald-600" />
-                        ) : (
-                          <CheckCircle2 className="w-3.5 h-3.5 fill-[#0f8b3c] text-white" />
+              <div className="mt-7 bg-white/90 backdrop-blur-2xl rounded-3xl border border-white/95 p-6 sm:p-8 shadow-[0_16px_48px_rgba(20,70,160,0.06),inset_0_1px_3px_rgba(255,255,255,1)] flex flex-col gap-6 card-hover-lift transition-all">
+                {/* ── Top Header Row ── */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sky-100/60 pb-5">
+                  <div className="flex items-center gap-4">
+                    {renderServiceIcon(activeService.id, activeService.name, "card", activeService.directUrl)}
+                    <div>
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <h3 className="text-xl sm:text-2xl font-bold text-[#0c1b38] font-display">
+                          {activeService.name}
+                        </h3>
+                        {activeService.directUrl && (
+                          <span className="text-[11px] font-mono bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full border border-slate-200/80 font-medium">
+                            {(() => {
+                              try { return new URL(activeService.directUrl).hostname; } catch { return activeService.directUrl; }
+                            })()}
+                          </span>
                         )}
-                        <span>{activeService.badgeText}</span>
-                      </span>
-
-                      {/* Bookmark Save Button */}
-                      <button
-                        type="button"
-                        onClick={() => toggleSaveRoute(activeService)}
-                        className={`p-1.5 rounded-lg border transition cursor-pointer ${
-                          isRouteSaved
-                            ? "bg-amber-50 border-amber-300 text-amber-500"
-                            : "bg-white/70 border-white/90 text-slate-400 hover:text-amber-500"
-                        }`}
-                        title={isRouteSaved ? "Saved in routes" : "Save this route"}
-                      >
-                        <Star className={`w-3.5 h-3.5 ${isRouteSaved ? "fill-amber-400" : ""}`} />
-                      </button>
-                    </div>
-
-                    {/* Subtitle */}
-                    <p className="text-sm text-[#486284] mt-1 font-normal capitalize">
-                      {activeService.actionTitle}
-                    </p>
-
-                    {/* Reassurance Tag for Zero-Billing Free Software or Zimbabwe EcoAI */}
-                    {activeService.isFreeService ? (
-                      <div className="mt-2.5 inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
-                        <Shield className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>Zero Recurring Billing • $0.00 / Free Forever • No Subscription Trap</span>
+                        <span className={`px-2.5 py-0.5 rounded-full border font-semibold text-[11px] flex items-center gap-1.5 ${
+                          activeService.isFreeService
+                            ? "bg-emerald-50 border-emerald-300 text-emerald-700"
+                            : "bg-emerald-50 border-emerald-200 text-emerald-700"
+                        }`}>
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>{activeService.isFreeService ? "100% Free Software" : "Verified Endpoint"}</span>
+                        </span>
                       </div>
-                    ) : activeService.name.toLowerCase().includes("zimbabwe") ? (
-                      <div className="mt-2.5 inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold">
-                        <span>🇿🇼 Econet Wireless Zimbabwe</span>
-                        <span className="text-amber-400">•</span>
-                        <span>USSD *449# / ecoaitoken.co.zw</span>
-                      </div>
-                    ) : null}
-
-                    {/* Institutional Verified Defusal Path Stepper */}
-                    <div className="mt-4 flex items-center flex-wrap gap-2">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider select-none shrink-0 mr-0.5">
-                        Defusal Path:
-                      </span>
-                      {activeService.trail.map((item, idx) => {
-                        const isFirst = idx === 0;
-                        const isLast = idx === activeService.trail.length - 1;
-                        return (
-                          <React.Fragment key={idx}>
-                            <div
-                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold shadow-2xs transition ${
-                                isLast
-                                  ? "bg-linear-to-r from-[#1658eb] to-[#0f4bc9] text-white shadow-xs"
-                                  : isFirst
-                                  ? "bg-white/95 border border-slate-200 text-[#0c1b38] font-mono text-[11px]"
-                                  : "bg-white/85 border border-sky-200/80 text-[#1658eb]"
-                              }`}
-                            >
-                              <span className={`text-[10px] font-bold ${isLast ? "text-blue-200" : "text-slate-400"}`}>
-                                {idx + 1}.
-                              </span>
-                              <span className="whitespace-nowrap">{item}</span>
-                            </div>
-                            {idx < activeService.trail.length - 1 && (
-                              <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0 stroke-[2.5]" />
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
+                      <p className="text-xs sm:text-sm text-[#486284] mt-1 font-normal capitalize">
+                        {activeService.actionTitle}
+                      </p>
                     </div>
+                  </div>
 
-                    {/* Verified Official Portal Seal */}
-                    <div className="mt-3.5 flex items-center gap-2 flex-wrap">
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-emerald-50 border border-emerald-200/90 text-emerald-800 text-[11px] font-semibold shadow-2xs">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.8]" />
-                        <span>Verified Official Portal</span>
-                      </div>
-                      <span className="text-[11px] text-[#556987] font-medium">• {activeService.verificationNote}</span>
-                    </div>
+                  {/* Bookmark Star & Quick Primary Button */}
+                  <div className="flex items-center gap-2.5 self-start sm:self-center">
+                    <button
+                      type="button"
+                      onClick={() => toggleSaveRoute(activeService)}
+                      className={`p-2.5 rounded-xl border transition cursor-pointer ${
+                        isRouteSaved
+                          ? "bg-amber-50 border-amber-300 text-amber-500"
+                          : "bg-white border-slate-200 text-slate-400 hover:text-amber-500"
+                      }`}
+                      title={isRouteSaved ? "Saved in routes" : "Save this route"}
+                    >
+                      <Star className={`w-4 h-4 ${isRouteSaved ? "fill-amber-400" : ""}`} />
+                    </button>
+
+                    <a
+                      href={activeService.directUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`px-5 py-2.5 rounded-xl text-white font-semibold text-xs sm:text-sm shadow-md active:scale-98 transition flex items-center gap-2 cursor-pointer ${
+                        activeService.isFreeService
+                          ? "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20"
+                          : "bg-linear-to-r from-[#1658eb] to-[#0f4bc9] hover:from-[#1246c4] hover:to-[#0d3ea6] shadow-blue-500/20"
+                      }`}
+                      title={`Open official ${activeService.name} cancellation portal in new tab`}
+                    >
+                      <span>{activeService.isFreeService ? "Visit Official Site" : "Open Cancellation Portal"}</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                   </div>
                 </div>
 
-                {/* Right Action Buttons: Direct Real Tab + Co-Pilot */}
-                {activeService.isFreeService ? (
-                  <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-center">
-                    <a
-                      href={activeService.directUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4.5 py-2.5 rounded-xl bg-white/90 hover:bg-white text-emerald-800 border border-emerald-200 font-semibold text-xs sm:text-sm flex items-center gap-1.5 shadow-2xs hover:shadow-xs active:scale-95 transition cursor-pointer"
-                      title={`Visit official ${activeService.name} website`}
-                    >
-                      <span>Visit official site</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-emerald-700" />
-                    </a>
-
-                    <button
-                      type="button"
-                      onClick={handleOpenDestination}
-                      className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(16,185,129,0.25)] active:scale-98 transition flex items-center gap-2 shrink-0 cursor-pointer"
-                      title="View software safety & usage guidelines"
-                    >
-                      <span>View safety guide</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
+                {/* ── 3 Clean, Well-Organized Defusal Steps ── */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                  {/* Step 1: Direct Entry */}
+                  <div className="p-4 rounded-2xl bg-white/70 border border-slate-200/70 shadow-2xs flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-5 h-5 rounded-full bg-blue-100 text-[#1658eb] text-[11px] font-bold flex items-center justify-center shrink-0">
+                          1
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                          Direct Access
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#0c1b38] font-medium leading-relaxed">
+                        {activeService.inAppSteps[0]?.instruction ||
+                          `Navigate directly to ${activeService.name} account settings.`}
+                      </p>
+                    </div>
+                    {activeService.inAppSteps[0]?.decoyWarning && (
+                      <p className="mt-2.5 text-[11px] text-amber-800 bg-amber-50/80 border border-amber-200/60 rounded-lg p-2 leading-tight">
+                        <span className="font-semibold">Watch out:</span> {activeService.inAppSteps[0].decoyWarning}
+                      </p>
+                    )}
                   </div>
-                ) : (
-                  <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-center">
-                    <a
-                      href={activeService.directUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4.5 py-2.5 rounded-xl bg-white/90 hover:bg-white text-[#1658eb] border border-sky-200/90 hover:border-sky-300 font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-2xs hover:shadow-xs active:scale-98 transition cursor-pointer"
-                      title={`Open real ${activeService.name} portal in a new browser tab`}
-                    >
-                      <span>Open real tab</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-[#1658eb]" />
-                    </a>
 
-                    <button
-                      type="button"
-                      onClick={handleOpenDestination}
-                      className="px-5 py-2.5 rounded-xl bg-linear-to-r from-[#1658eb] to-[#0f4bc9] hover:from-[#1246c4] hover:to-[#0d3ea6] text-white font-semibold text-xs sm:text-sm shadow-[0_4px_14px_rgba(22,88,235,0.25)] hover:shadow-[0_6px_20px_rgba(22,88,235,0.32)] active:scale-98 transition flex items-center gap-2 shrink-0 cursor-pointer"
-                      title="Open real tab & launch CancelTrap step-by-step Co-Pilot"
-                    >
-                      <span>Open destination</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
+                  {/* Step 2: Trap Evasion */}
+                  <div className="p-4 rounded-2xl bg-white/70 border border-slate-200/70 shadow-2xs flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-5 h-5 rounded-full bg-blue-100 text-[#1658eb] text-[11px] font-bold flex items-center justify-center shrink-0">
+                          2
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                          Locate & Avoid Traps
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#0c1b38] font-medium leading-relaxed">
+                        {activeService.inAppSteps[1]?.instruction ||
+                          "Find Active Subscriptions and select 'Manage Plan' or 'Cancel'."}
+                      </p>
+                    </div>
+                    {activeService.inAppSteps[1]?.decoyWarning && (
+                      <p className="mt-2.5 text-[11px] text-amber-800 bg-amber-50/80 border border-amber-200/60 rounded-lg p-2 leading-tight">
+                        <span className="font-semibold">Decoy Trap:</span> {activeService.inAppSteps[1].decoyWarning}
+                      </p>
+                    )}
                   </div>
-                )}
+
+                  {/* Step 3: Confirmation */}
+                  <div className="p-4 rounded-2xl bg-white/70 border border-slate-200/70 shadow-2xs flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold flex items-center justify-center shrink-0">
+                          3
+                        </span>
+                        <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
+                          Confirm Termination
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#0c1b38] font-medium leading-relaxed">
+                        {activeService.inAppSteps[2]?.instruction ||
+                          "Confirm cancellation until the final deactivation screen is shown."}
+                      </p>
+                    </div>
+                    {activeService.inAppSteps[2]?.decoyWarning && (
+                      <p className="mt-2.5 text-[11px] text-slate-600 bg-slate-50 border border-slate-200/70 rounded-lg p-2 leading-tight">
+                        <span className="font-semibold">Note:</span> {activeService.inAppSteps[2].decoyWarning}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* ── Bottom Footnote Bar: Verification Note & Co-Pilot Option ── */}
+                <div className="pt-3 border-t border-sky-100/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#556987]">
+                  <div className="flex items-center gap-2">
+                    <Shield className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span className="truncate">{activeService.verificationNote}</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleOpenDestination}
+                    className="text-[#1658eb] hover:text-[#0f4bc9] font-semibold text-xs flex items-center gap-1 transition cursor-pointer self-start sm:self-auto"
+                  >
+                    <span>Launch Interactive Co-Pilot</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="mt-7 bg-white/70 backdrop-blur-xl rounded-3xl border border-white/90 p-8 sm:p-10 shadow-[0_12px_36px_rgba(20,70,160,0.06)] text-center flex flex-col items-center justify-center">

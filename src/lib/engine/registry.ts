@@ -238,6 +238,175 @@ export const DESTINATION_REGISTRY: RegistryEntry[] = [
   },
 
   // ──────────────────────────────────────────────────────────────────────
+  // Kiro (AWS Spec-Driven Agentic AI IDE)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "kiro",
+    providerName: "Kiro (AWS AI IDE)",
+    providerDomain: "kiro.dev",
+    aliases: [
+      "kiro",
+      "kiro.dev",
+      "kiro ai",
+      "aws kiro",
+      "amazon kiro",
+      "kiro ide",
+      "kiro aws",
+      "kiro app",
+    ],
+    products: ["Kiro Pro", "Kiro Pro+", "Kiro Pro Max", "Kiro Power", "Credit Pools"],
+    category: "AI Platform & Developer Tools",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://app.kiro.dev/settings/billing",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "Open Kiro Profile & Billing",
+            instruction: "In the Kiro IDE or web console at kiro.dev, click your workspace avatar in the lower left corner and select 'Settings' -> 'Billing & Plans'. Alternatively navigate to app.kiro.dev/settings/billing.",
+            targetType: "link",
+            decoyWarning: "If subscribed through an AWS linked organization account, ensure you are signed in under the root account or IAM role with billing permissions.",
+          },
+          {
+            stepNumber: 2,
+            label: "Open Plan Management",
+            instruction: "Under Active Plan (Pro, Pro+, or Pro Max), click 'Manage Plan' or 'Subscription Details'. This opens the subscription management portal.",
+            targetType: "button",
+            decoyWarning: "Do not select 'Purchase Add-on Credits' — select 'Manage Plan' to access plan termination.",
+          },
+          {
+            stepNumber: 3,
+            label: "Downgrade to Free Tier",
+            instruction: "Click 'Cancel Plan' or 'Downgrade to Free'. Confirm your decision; you will retain your full active credit allowance until the 1st of the next calendar month.",
+            targetType: "button",
+            decoyWarning: "Unused prompt credits expire at the next monthly cycle reset on the 1st and do not roll over.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Billing cycles process strictly on the 1st of each calendar month",
+          "Credits do not carry over between months regardless of usage",
+          "Add-on credits purchased over quota are non-refundable",
+        ],
+        finePrintNotes: "Direct web portal: https://app.kiro.dev/settings/billing. If billed via AWS Marketplace, manage via AWS Cost Management Console.",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
+  // Bolt.new (StackBlitz In-Browser AI Development Platform)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "bolt-new",
+    providerName: "Bolt.new (StackBlitz)",
+    providerDomain: "bolt.new",
+    aliases: [
+      "bolt",
+      "bolt.new",
+      "bolt new",
+      "bolt ai",
+      "stackblitz bolt",
+      "bolt stackblitz",
+    ],
+    products: ["Bolt Pro", "Bolt Team", "Token Allowance"],
+    category: "AI App Development Platform",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://bolt.new/settings",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "Open Bolt.new Settings",
+            instruction: "Navigate directly to bolt.new/settings or open bolt.new and click your profile icon in the sidebar / top right, then select 'Settings'.",
+            targetType: "link",
+            decoyWarning: "Ensure you are logged into the GitHub or StackBlitz account with the active Pro plan.",
+          },
+          {
+            stepNumber: 2,
+            label: "Open Billing & Subscription",
+            instruction: "In the Settings modal, select the 'Billing' tab. Click 'Manage Subscription' to open the secure Stripe customer portal.",
+            targetType: "button",
+            decoyWarning: "Do not click 'Top up tokens' — select 'Manage Subscription'.",
+          },
+          {
+            stepNumber: 3,
+            label: "Cancel Plan & Confirm",
+            instruction: "Click 'Cancel plan' in the Stripe portal and confirm. Your plan remains active and usable until the end of your current billing period.",
+            targetType: "button",
+            decoyWarning: "Existing projects remain accessible, but private repository sync and expanded token limits will end at term conclusion.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Token allowances reset at each monthly billing cycle without rollover",
+          "Cancellation requires completing the Stripe portal confirmation flow",
+        ],
+        finePrintNotes: "Direct URL: https://bolt.new/settings.",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
+  // Bolt Mobility (Ride-Hailing & Scooter Rentals)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "bolt-mobility",
+    providerName: "Bolt (Mobility & Rides)",
+    providerDomain: "bolt.eu",
+    aliases: [
+      "bolt ride",
+      "bolt taxi",
+      "bolt mobility",
+      "bolt plus pass",
+      "bolt.eu",
+    ],
+    products: ["Bolt Plus", "Rides", "Food Delivery", "Scooter Passes"],
+    category: "Ride Hailing & Urban Mobility",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://bolt.eu",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "Open Bolt Mobile App",
+            instruction: "Open the Bolt app on iOS or Android, tap the menu (three bars) in the top left, and select 'Bolt Plus' or 'Subscriptions'.",
+            targetType: "button",
+            decoyWarning: "Subscription management is mobile-app native; web dashboard is primarily for receipts.",
+          },
+          {
+            stepNumber: 2,
+            label: "Select Active Subscription",
+            instruction: "Tap on your active Bolt Plus or monthly pass and tap 'Manage'.",
+            targetType: "button",
+            decoyWarning: "Ensure you don't accidentally purchase an auto-renewing ride pass.",
+          },
+          {
+            stepNumber: 3,
+            label: "Cancel Subscription",
+            instruction: "Tap 'Cancel Subscription' and confirm. Benefits stay active until the billing cycle ends.",
+            targetType: "button",
+            decoyWarning: "Check that any saved credit card doesn't have pending pre-authorization holds.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Passes auto-renew automatically unless explicitly turned off 24 hours prior to expiration",
+        ],
+        finePrintNotes: "Manage primarily via the Bolt mobile app (iOS / Android).",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
   // NetOne Cellular (Zimbabwe Mobile Network & Value Added Services)
   // ──────────────────────────────────────────────────────────────────────
   {
