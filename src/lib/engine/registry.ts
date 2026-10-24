@@ -74,6 +74,64 @@ export const DESTINATION_REGISTRY: RegistryEntry[] = [
   },
 
   // ──────────────────────────────────────────────────────────────────────
+  // Ngaatec (Ngaatec Private Limited — Zimbabwe Web Hosting & Domains)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "ngaatec",
+    providerName: "Ngaatec",
+    providerDomain: "ngaatec.co.zw",
+    aliases: [
+      "ngaatec",
+      "ngaatec web hosting",
+      "ngaatec hosting",
+      "ngaatec domains",
+      "ngaatec private limited",
+      "ngaatec.co.zw",
+      "ngaatec.com",
+    ],
+    products: ["Web Hosting", "Domain Registration", "cPanel Services", "SSL Certificates"],
+    category: "Web Hosting & Cloud Services",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://www.ngaatec.co.zw",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "Open Ngaatec Client Portal",
+            instruction: "Navigate to ngaatec.co.zw and log in to the Client Area using your registered account credentials.",
+            targetType: "link",
+            decoyWarning: "Ensure you are signed in to the primary account linked to your domain and hosting billing.",
+          },
+          {
+            stepNumber: 2,
+            label: "Navigate to Services & Subscriptions",
+            instruction: "From the Client Area dashboard, click 'Services' -> 'My Services'. Locate the active hosting package or domain you wish to cancel and click 'Manage'.",
+            targetType: "button",
+            decoyWarning: "Do not select 'Invoices' or 'Upgrade' — open the specific active service details panel.",
+          },
+          {
+            stepNumber: 3,
+            label: "Request Service Cancellation",
+            instruction: "In the Actions sidebar, select 'Request Cancellation'. Choose between 'Immediate' or 'End of Billing Period', enter a brief cancellation reason, and confirm.",
+            targetType: "button",
+            decoyWarning: "If paid via EcoCash or automated bank standing order, ensure any recurring merchant authorization is revoked.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Domain renewal notices sent automatically prior to hosting cycle expiry",
+          "Cancellation requests require formal confirmation via the WHMCS Client Area",
+          "Automated mobile money or EcoCash recurring billing standing orders must be canceled directly",
+        ],
+        finePrintNotes: "Cancel via Client Area before invoice generation cycle. Support: info@ngaatec.com / WhatsApp support.",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
   // Lovable (GPT Engineer)
   // ──────────────────────────────────────────────────────────────────────
   {

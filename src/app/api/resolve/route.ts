@@ -17,6 +17,8 @@ import { resolve, resolveWithAction } from "@/lib/engine/resolver";
 import { discoverLiveWeb } from "@/lib/engine/liveDiscovery";
 import { ActionType, ResolutionResult } from "@/lib/engine/types";
 
+export const maxDuration = 30;
+
 function isObviouslyFakeQuery(query: string): boolean {
   const clean = query.trim().toLowerCase();
   // 7+ consecutive consonants with zero vowels is keyboard-mashing (e.g. asdfghjk, zxcvbnm)
