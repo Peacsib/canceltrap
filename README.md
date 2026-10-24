@@ -257,10 +257,9 @@ cancel-trap/
 │   ├── prd.md                  # Complete product requirements
 │   ├── spec.md                 # Technical blueprint & architecture
 │   └── checklist.md            # Build checklist & verification records
-├── public/                     # Static assets, hero backdrops, and branding logos
-│   ├── canceltrap-hero-water.jpg
-│   ├── canceltrap-logo.png
-│   └── water-glass-hero.jpg
+├── public/                     # Static assets & optimized WebP media
+│   ├── canceltrap-logo.webp    # Crisp transparent branding logo
+│   └── newhero.webp            # Optimized atmospheric water caustics background
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── api/

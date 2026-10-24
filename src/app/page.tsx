@@ -38,7 +38,6 @@ export default function Home() {
           setIsAnalyzing={setIsAnalyzing}
           error={error}
           setError={setError}
-          onOpenDashboard={() => setIsDashboardView(true)}
         />
       ) : (
         <DefusalDashboard data={data} destination={destination} onReset={handleReset} />

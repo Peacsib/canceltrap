@@ -688,7 +688,7 @@ export function DefusalDashboard({
   } | null>(null);
 
   // Compute initial active service cleanly
-  const initialActiveService: ServiceData = useMemo(() => {
+  const initialActiveService: ServiceData | null = useMemo(() => {
     if (serviceParam && PRESET_SERVICES[serviceParam]) {
       return PRESET_SERVICES[serviceParam];
     }
@@ -710,11 +710,11 @@ export function DefusalDashboard({
         darkPatterns: initialDestination.darkPatternWarnings,
       };
     }
-    return PRESET_SERVICES.google_cloud;
+    return null;
   }, [serviceParam, initialDestination]);
 
-  const [selectedServiceId, setSelectedServiceId] = useState<string>(() => initialActiveService.id);
-  const [activeService, setActiveService] = useState<ServiceData>(() => initialActiveService);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(() => initialActiveService?.id || null);
+  const [activeService, setActiveService] = useState<ServiceData | null>(() => initialActiveService);
   const [searchQuery, setSearchQuery] = useState<string>(() => {
     if (queryParam) return queryParam;
     if (serviceParam && PRESET_SERVICES[serviceParam]) {
@@ -1137,6 +1137,7 @@ export function DefusalDashboard({
   };
 
   const isRouteSaved = useMemo(() => {
+    if (!activeService) return false;
     return savedRoutes.some((s) => s.id === activeService.id || s.name.toLowerCase() === activeService.name.toLowerCase());
   }, [savedRoutes, activeService]);
 
@@ -1148,6 +1149,7 @@ export function DefusalDashboard({
 
   const handleOpenDestination = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    if (!activeService) return;
     // 1. Open the REAL application tab in the browser
     if (activeService.directUrl) {
       window.open(activeService.directUrl, "_blank", "noopener,noreferrer");
@@ -1174,7 +1176,8 @@ export function DefusalDashboard({
     }
   };
 
-  const activeDestinationNode: DestinationNode = useMemo(() => {
+  const activeDestinationNode: DestinationNode | null = useMemo(() => {
+    if (!activeService) return null;
     return {
       id: activeService.id,
       providerName: activeService.name,
@@ -1718,7 +1721,7 @@ export function DefusalDashboard({
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : activeService ? (
               <div className="mt-7 bg-white/85 backdrop-blur-2xl rounded-3xl border border-white/95 p-6 sm:p-7 shadow-[0_16px_48px_rgba(20,70,160,0.08),inset_0_1px_3px_rgba(255,255,255,1)] flex flex-col sm:flex-row sm:items-center justify-between gap-6 card-hover-lift">
                 <div className="flex items-start gap-4">
                   {/* Dynamic Brand Logo */}
@@ -1875,6 +1878,18 @@ export function DefusalDashboard({
                     </button>
                   </div>
                 )}
+              </div>
+            ) : (
+              <div className="mt-7 bg-white/70 backdrop-blur-xl rounded-3xl border border-white/90 p-8 sm:p-10 shadow-[0_12px_36px_rgba(20,70,160,0.06)] text-center flex flex-col items-center justify-center">
+                <div className="w-14 h-14 rounded-2xl bg-blue-50/80 border border-blue-100 flex items-center justify-center text-[#1658eb] mb-3.5 shadow-xs">
+                  <Search className="w-6 h-6 stroke-[2.2]" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-[#0c1b38] font-display">
+                  Find your cancellation destination
+                </h3>
+                <p className="text-xs sm:text-sm text-[#556987] mt-1.5 max-w-md leading-relaxed">
+                  Search any subscription above (e.g. Netflix, Adobe, AWS, ChatGPT, Lovable) or pick a popular service to get the direct cancellation path.
+                </p>
               </div>
             )}
 
@@ -2141,7 +2156,7 @@ export function DefusalDashboard({
       </main>
 
       {/* ─── Integrated Live Defusal In-App Guided Window ─── */}
-      {inAppModalOpen && (
+      {inAppModalOpen && activeDestinationNode && (
         <InAppDefusalWindow
           destination={activeDestinationNode}
           isOpen={inAppModalOpen}

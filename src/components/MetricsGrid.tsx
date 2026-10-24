@@ -13,7 +13,8 @@ export function MetricsGrid({ data }: MetricsGridProps) {
 
   // Format renewal countdown
   const days = billing?.daysUntilRenewal ?? 3;
-  const isUrgent = days <= 3;
+  const isUnknown = days === -1;
+  const isUrgent = !isUnknown && days <= 3;
 
   const formatRenewalDate = (dateStr?: string) => {
     if (!dateStr) return "Upcoming cycle";
@@ -48,18 +49,26 @@ export function MetricsGrid({ data }: MetricsGridProps) {
         </div>
 
         <div className="flex items-baseline space-x-2">
-          <span
-            className={`text-3xl font-extrabold font-display ${
-              isUrgent ? "text-[#df202e]" : "text-[#0f1e3b]"
-            }`}
-          >
-            {days} {days === 1 ? "Day" : "Days"}
-          </span>
-          <span className="text-xs font-medium text-[#54657a]">remaining</span>
+          {isUnknown ? (
+            <span className="text-lg font-bold text-[#54657a] leading-tight">
+              See billing page
+            </span>
+          ) : (
+            <span
+              className={`text-3xl font-extrabold font-display ${
+                isUrgent ? "text-[#df202e]" : "text-[#0f1e3b]"
+              }`}
+            >
+              {days} {days === 1 ? "Day" : "Days"}
+            </span>
+          )}
+          {!isUnknown && <span className="text-xs font-medium text-[#54657a]">remaining</span>}
         </div>
 
         <p className="text-xs text-[#54657a] mt-2 truncate">
-          Target deadline: {formatRenewalDate(billing?.renewalDate)}
+          {isUnknown
+            ? "Your real date is on your billing portal"
+            : `Target deadline: ${formatRenewalDate(billing?.renewalDate)}`}
         </p>
       </div>
 

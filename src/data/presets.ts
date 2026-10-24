@@ -15,17 +15,20 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
     data: {
       isSubscription: true,
       merchant: {
-        name: "Lovable (GPT Engineer)",
+        name: "Lovable",
         category: "AI Code Builder",
         directPortalUrl: "https://lovable.dev/settings/billing",
-        finePrintNotes: "Cancel before cycle cutoff; active compute credits expire at billing date.",
+        // Real renewal date is only on YOUR billing page — we cannot read it
+        finePrintNotes:
+          "Your exact renewal date is on lovable.dev/settings/billing. Cancel before your billing cycle cutoff; active compute credits expire at that date.",
       },
       billing: {
         amount: 20.0,
         currency: "$",
         billingCycle: "monthly",
-        renewalDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
-        daysUntilRenewal: 4,
+        // -1 = unknown — we cannot read your real Lovable billing date
+        renewalDate: "",
+        daysUntilRenewal: -1,
         vampireBleed5Year: 1200.0,
       },
       darkPattern: {
@@ -58,11 +61,12 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         },
       ],
       killSwitch: {
-        eventTitle: "🚨 Kill-Switch: Cancel Lovable Pro Subscription",
-        suggestedAlertDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+        eventTitle: "🚨 Cancel Lovable Pro Before Next Renewal",
+        // No fake date — you must set this from your real billing page
+        suggestedAlertDate: "",
         alertMinutesBefore: 120,
         eventDescription:
-          "CancelTrap Alert: Lovable Pro renews in 48 hours ($20/mo). 5-Year Vampire Bleed: $1,200. Direct cancellation portal: https://lovable.dev/settings/billing",
+          "CancelTrap: Cancel Lovable Pro before your renewal ($20/mo). Check your exact date at lovable.dev/settings/billing. 5-Year Vampire Bleed if forgotten: $1,200.",
       },
     },
   },

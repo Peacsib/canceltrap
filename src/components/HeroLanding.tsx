@@ -27,7 +27,6 @@ interface HeroLandingProps {
   setIsAnalyzing: (analyzing: boolean) => void;
   error: string | null;
   setError: (error: string | null) => void;
-  onOpenDashboard?: () => void;
 }
 
 export function HeroLanding({
@@ -36,12 +35,11 @@ export function HeroLanding({
   setIsAnalyzing,
   error,
   setError,
-  onOpenDashboard,
 }: HeroLandingProps) {
   const router = useRouter();
   const [scanStep, setScanStep] = useState<number>(0);
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const [activeModal, setActiveModal] = useState<"howItWorks" | "features" | "privacy" | "faq" | "signIn" | null>(null);
+  const [activeModal, setActiveModal] = useState<"howItWorks" | "features" | "privacy" | "faq" | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const runPresetAnalysis = (preset: PresetScenario) => {
@@ -59,7 +57,7 @@ export function HeroLanding({
           if (typeof window !== "undefined") {
             try {
               sessionStorage.setItem("canceltrap_active_scan", JSON.stringify(preset.data));
-            } catch {}
+            } catch { }
           }
           router.push(`/dashboard?service=${preset.id}`);
           onAnalyzeComplete(preset.data);
@@ -113,7 +111,7 @@ export function HeroLanding({
           if (!result.isSubscription) {
             setError(
               result.unrecognizedReason ||
-                "This doesn't look like a subscription receipt or trial confirmation — couldn't find merchant, billing amount, or renewal terms."
+              "This doesn't look like a subscription receipt or trial confirmation — couldn't find merchant, billing amount, or renewal terms."
             );
             setIsAnalyzing(false);
             return;
@@ -125,7 +123,7 @@ export function HeroLanding({
             if (typeof window !== "undefined") {
               try {
                 sessionStorage.setItem("canceltrap_active_scan", JSON.stringify(result));
-              } catch {}
+              } catch { }
             }
             const sKey = result.merchant?.name ? encodeURIComponent(result.merchant.name.toLowerCase()) : "google_cloud";
             router.push(`/dashboard?service=${sKey}`);
@@ -352,11 +350,10 @@ export function HeroLanding({
 
               <div className="flex flex-col space-y-3">
                 <div
-                  className={`flex items-center space-x-3 p-3 rounded-2xl border transition-all ${
-                    scanStep >= 1
+                  className={`flex items-center space-x-3 p-3 rounded-2xl border transition-all ${scanStep >= 1
                       ? "bg-emerald-50/70 border-emerald-300/50 text-[#0c1b38]"
                       : "bg-slate-50 border-transparent text-[#556987]"
-                  }`}
+                    }`}
                 >
                   {scanStep > 1 ? (
                     <Check className="w-4 h-4 text-[#15a24a] stroke-3" />
@@ -367,11 +364,10 @@ export function HeroLanding({
                 </div>
 
                 <div
-                  className={`flex items-center space-x-3 p-3 rounded-2xl border transition-all ${
-                    scanStep >= 2
+                  className={`flex items-center space-x-3 p-3 rounded-2xl border transition-all ${scanStep >= 2
                       ? "bg-emerald-50/70 border-emerald-300/50 text-[#0c1b38]"
                       : "bg-slate-50 border-transparent text-[#556987]"
-                  }`}
+                    }`}
                 >
                   {scanStep > 2 ? (
                     <Check className="w-4 h-4 text-[#15a24a] stroke-3" />
@@ -384,11 +380,10 @@ export function HeroLanding({
                 </div>
 
                 <div
-                  className={`flex items-center space-x-3 p-3 rounded-2xl border transition-all ${
-                    scanStep >= 3
+                  className={`flex items-center space-x-3 p-3 rounded-2xl border transition-all ${scanStep >= 3
                       ? "bg-emerald-50/70 border-emerald-300/50 text-[#0c1b38]"
                       : "bg-slate-50 border-transparent text-[#556987]"
-                  }`}
+                    }`}
                 >
                   {scanStep === 3 ? (
                     <Loader2 className="w-4 h-4 text-[#1658eb] animate-spin" />
@@ -432,7 +427,7 @@ export function HeroLanding({
           {/* Item 2: Save time */}
           <div className="flex items-center gap-3 flex-1 cursor-default opacity-80 hover:opacity-100 transition-opacity">
             <div className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white/50 border border-sky-200/50 flex items-center justify-center shrink-0 text-sky-600">
-              <Clock className="w-3.5 h-3.5 text-[#1658eb]/80 stroke-[2]" />
+              <Clock className="w-3.5 h-3.5 text-[#1658eb]/80 stroke-2" />
             </div>
             <div>
               <h4 className="font-semibold text-[#0c1b38]/80 text-xs sm:text-sm">
@@ -450,7 +445,7 @@ export function HeroLanding({
           {/* Item 3: Stay in control */}
           <div className="flex items-center gap-3 flex-1 cursor-default opacity-80 hover:opacity-100 transition-opacity">
             <div className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white/50 border border-sky-200/50 flex items-center justify-center shrink-0 text-sky-600">
-              <Shield className="w-3.5 h-3.5 text-[#1658eb]/80 stroke-[2]" />
+              <Shield className="w-3.5 h-3.5 text-[#1658eb]/80 stroke-2" />
             </div>
             <div>
               <h4 className="font-semibold text-[#0c1b38]/80 text-xs sm:text-sm">
@@ -537,28 +532,6 @@ export function HeroLanding({
                   <p><strong>What file formats are supported?</strong><br />PNG, JPEG, and WebP receipts or screenshots up to 10 MB.</p>
                   <p><strong>Can I use it on mobile?</strong><br />Yes, take a screenshot of your subscription and upload it directly from your phone.</p>
                 </div>
-              </div>
-            )}
-
-            {activeModal === "signIn" && (
-              <div className="text-center py-2">
-                <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#15a24a] flex items-center justify-center mx-auto mb-3">
-                  <Shield className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-[#0c1b38] mb-2">No Account Required</h3>
-                <p className="text-sm text-[#556987] leading-relaxed mb-5">
-                  CancelTrap is built with zero lock-in and zero friction. You can defuse any subscription immediately without signing in or sharing financial credentials.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveModal(null);
-                    fileInputRef.current?.click();
-                  }}
-                  className="btn-illuminate-primary w-full py-3.5 rounded-full font-bold text-sm cursor-pointer"
-                >
-                  Upload a screenshot now
-                </button>
               </div>
             )}
           </div>
