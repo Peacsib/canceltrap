@@ -6,20 +6,14 @@ import {
   Calendar,
   Check,
   AlertTriangle,
-  ArrowRight,
   ArrowLeft,
   Clock,
   Sparkles,
   Download,
   RotateCcw,
-  CheckCircle2,
   Lock,
-  ChevronRight,
-  DollarSign,
-  TrendingDown,
   Info,
   ShieldCheck,
-  Compass,
 } from "lucide-react";
 import { SubscriptionDefusalResponse } from "@/lib/types";
 import { downloadKillSwitchIcs } from "@/lib/calendar";
@@ -33,7 +27,7 @@ export function InteractiveDefusalWizard({
   data,
   onReset,
 }: InteractiveDefusalWizardProps) {
-  const { merchant, billing, darkPattern, defusalChecklist, killSwitch } = data;
+  const { merchant, billing, defusalChecklist, killSwitch } = data;
 
   // Active step: 1 | 2 | 3
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
@@ -177,7 +171,7 @@ export function InteractiveDefusalWizard({
                     : "bg-slate-200 text-slate-600"
                 }`}
               >
-                {step1Done ? <Check className="w-4 h-4 stroke-[3]" /> : "1"}
+                {step1Done ? <Check className="w-4 h-4 stroke-3" /> : "1"}
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] uppercase font-extrabold tracking-wider block text-[#556987]">
@@ -212,7 +206,7 @@ export function InteractiveDefusalWizard({
                     : "bg-slate-200 text-slate-600"
                 }`}
               >
-                {step2Done ? <Check className="w-4 h-4 stroke-[3]" /> : "2"}
+                {step2Done ? <Check className="w-4 h-4 stroke-3" /> : "2"}
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] uppercase font-extrabold tracking-wider block text-[#556987]">
@@ -247,7 +241,7 @@ export function InteractiveDefusalWizard({
                     : "bg-slate-200 text-slate-600"
                 }`}
               >
-                {step3Done ? <Check className="w-4 h-4 stroke-[3]" /> : "3"}
+                {step3Done ? <Check className="w-4 h-4 stroke-3" /> : "3"}
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] uppercase font-extrabold tracking-wider block text-[#556987]">
@@ -335,7 +329,7 @@ export function InteractiveDefusalWizard({
                   >
                     {step1Done ? (
                       <>
-                        <Check className="w-4 h-4 stroke-[3]" />
+                        <Check className="w-4 h-4 stroke-3" />
                         <span>Page Opened &middot; Continue to Step 2 &rarr;</span>
                       </>
                     ) : (
@@ -435,7 +429,7 @@ export function InteractiveDefusalWizard({
                               : "border-2 border-slate-300 bg-white"
                           }`}
                         >
-                          {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                          {isChecked && <Check className="w-3.5 h-3.5 stroke-3" />}
                         </div>
                       </div>
 
@@ -556,7 +550,7 @@ export function InteractiveDefusalWizard({
                   >
                     {step3Done ? (
                       <>
-                        <Check className="w-4 h-4 stroke-[3]" />
+                        <Check className="w-4 h-4 stroke-3" />
                         <span>Reminder Downloaded &middot; You&apos;re Done ✓</span>
                       </>
                     ) : (
@@ -624,7 +618,7 @@ export function InteractiveDefusalWizard({
           COMPLETION CELEBRATION (FULL-WIDTH EXPANSIVE BANNER)
       ═══════════════════════════════════════════════════════════════ */}
       {allComplete && (
-        <div className="glass-card p-6 sm:p-7 border-emerald-300/80 bg-gradient-to-r from-emerald-50/95 via-white/90 to-blue-50/95 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-5 text-left animate-in fade-in duration-300 w-full">
+        <div className="glass-card p-6 sm:p-7 border-emerald-300/80 bg-linear-to-r from-emerald-50/95 via-white/90 to-blue-50/95 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-5 text-left animate-in fade-in duration-300 w-full">
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
               <Sparkles className="w-6 h-6 animate-pulse" />

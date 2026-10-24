@@ -1,23 +1,25 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   Shield,
   Zap,
-  Bell,
-  Lock,
+  Clock,
   Upload,
+  Search,
   ArrowRight,
   Check,
   Loader2,
   AlertCircle,
   X,
   Sparkles,
-  ClipboardPaste,
 } from "lucide-react";
 import { PRESET_SCENARIOS, PresetScenario } from "@/data/presets";
 import { SubscriptionDefusalResponse } from "@/lib/types";
+import { CleanWaterMotionBg } from "./CleanWaterMotionBg";
+import { BasketServices } from "./BasketServices";
 
 interface HeroLandingProps {
   onAnalyzeComplete: (data: SubscriptionDefusalResponse) => void;
@@ -25,6 +27,7 @@ interface HeroLandingProps {
   setIsAnalyzing: (analyzing: boolean) => void;
   error: string | null;
   setError: (error: string | null) => void;
+  onOpenDashboard?: () => void;
 }
 
 export function HeroLanding({
@@ -33,7 +36,9 @@ export function HeroLanding({
   setIsAnalyzing,
   error,
   setError,
+  onOpenDashboard,
 }: HeroLandingProps) {
+  const router = useRouter();
   const [scanStep, setScanStep] = useState<number>(0);
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [activeModal, setActiveModal] = useState<"howItWorks" | "features" | "privacy" | "faq" | "signIn" | null>(null);
@@ -51,13 +56,19 @@ export function HeroLanding({
         setTimeout(() => {
           setIsAnalyzing(false);
           setScanStep(0);
+          if (typeof window !== "undefined") {
+            try {
+              sessionStorage.setItem("canceltrap_active_scan", JSON.stringify(preset.data));
+            } catch {}
+          }
+          router.push(`/dashboard?service=${preset.id}`);
           onAnalyzeComplete(preset.data);
         }, 600);
       }, 600);
     }, 600);
   };
 
-  const handleFile = async (file: File) => {
+  const handleFile = useCallback(async (file: File) => {
     if (!file.type.startsWith("image/")) {
       setError("Please upload an image file (.png, .jpg, .webp)");
       return;
@@ -111,6 +122,13 @@ export function HeroLanding({
           setTimeout(() => {
             setIsAnalyzing(false);
             setScanStep(0);
+            if (typeof window !== "undefined") {
+              try {
+                sessionStorage.setItem("canceltrap_active_scan", JSON.stringify(result));
+              } catch {}
+            }
+            const sKey = result.merchant?.name ? encodeURIComponent(result.merchant.name.toLowerCase()) : "google_cloud";
+            router.push(`/dashboard?service=${sKey}`);
             onAnalyzeComplete(result);
           }, 400);
         } catch {
@@ -123,37 +141,7 @@ export function HeroLanding({
       setError("Could not read file.");
       setIsAnalyzing(false);
     }
-  };
-
-  const handlePasteClick = async () => {
-    setError(null);
-    try {
-      if (!navigator.clipboard?.read) {
-        setError("Please press Ctrl + V on your keyboard to paste your screenshot.");
-        return;
-      }
-
-      const clipboardItems = await navigator.clipboard.read();
-      let imageFound = false;
-
-      for (const item of clipboardItems) {
-        const imageType = item.types.find((t) => t.startsWith("image/"));
-        if (imageType) {
-          const blob = await item.getType(imageType);
-          const file = new File([blob], "clipboard-screenshot.png", { type: imageType });
-          handleFile(file);
-          imageFound = true;
-          break;
-        }
-      }
-
-      if (!imageFound) {
-        setError("No image found in clipboard. Copy a screenshot (Win + Shift + S) and click Paste again, or press Ctrl + V.");
-      }
-    } catch {
-      setError("Please press Ctrl + V on your keyboard to paste your screenshot directly!");
-    }
-  };
+  }, [onAnalyzeComplete, setError, setIsAnalyzing, router]);
 
   useEffect(() => {
     const handleGlobalPaste = (e: ClipboardEvent) => {
@@ -174,16 +162,11 @@ export function HeroLanding({
 
     window.addEventListener("paste", handleGlobalPaste);
     return () => window.removeEventListener("paste", handleGlobalPaste);
-  }, []);
+  }, [handleFile]);
 
   return (
     <div
-      className="min-h-screen w-full flex flex-col justify-between relative bg-cover bg-no-repeat overflow-x-hidden"
-      style={{
-        backgroundImage: "url('/canceltrap-hero.png')",
-        backgroundPosition: "left top",
-        backgroundSize: "cover",
-      }}
+      className="min-h-screen w-full flex flex-col justify-between relative overflow-x-hidden"
       onDragOver={(e) => {
         e.preventDefault();
         setDragActive(true);
@@ -197,6 +180,8 @@ export function HeroLanding({
         }
       }}
     >
+      {/* Pristine Animated Water-Blue Motion Background */}
+      <CleanWaterMotionBg />
       {/* Hidden File Input for universal trigger */}
       <input
         ref={fileInputRef}
@@ -227,15 +212,15 @@ export function HeroLanding({
         <div className="pt-3 sm:pt-5 pl-2 sm:pl-4">
           <div
             onClick={() => window.location.reload()}
-            className="inline-flex items-center px-5 py-2.5 sm:px-6 sm:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-white shadow-[0_10px_25px_-5px_rgba(15,30,59,0.14),0_2px_6px_rgba(0,0,0,0.04)] ring-1 ring-black/5 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-5px_rgba(15,30,59,0.2)] hover:bg-white transition-all duration-300 cursor-pointer group"
+            className="inline-flex items-center px-5 py-2.5 sm:px-6 sm:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-white shadow-[0_10px_25px_-5px_rgba(15,30,59,0.14),0_2px_6px_rgba(0,0,0,0.04)] ring-1 ring-black/5 hover:-translate-y-1 hover:shadow-[0_18px_38px_-6px_rgba(22,88,235,0.3),0_0_24px_rgba(22,88,235,0.18)] hover:border-[#1658eb]/40 hover:bg-white active:scale-95 transition-all duration-300 cursor-pointer group"
           >
             <Image
-              src="/canceltrap-logo.png"
+              src="/canceltrap-logo.webp"
               alt="CancelTrap"
               width={180}
               height={45}
               priority
-              className="h-7 sm:h-8.5 w-auto object-contain transition-transform group-hover:scale-[1.02]"
+              className="h-7 sm:h-8.5 w-auto object-contain transition-transform group-hover:scale-[1.03]"
             />
           </div>
         </div>
@@ -245,41 +230,42 @@ export function HeroLanding({
           <button
             type="button"
             onClick={() => setActiveModal("howItWorks")}
-            className="hover:text-[#1658eb] transition-colors cursor-pointer"
+            className="nav-link-illuminated font-semibold cursor-pointer"
           >
             How it works
           </button>
           <button
             type="button"
             onClick={() => setActiveModal("features")}
-            className="hover:text-[#1658eb] transition-colors cursor-pointer"
+            className="nav-link-illuminated font-semibold cursor-pointer"
           >
             Features
           </button>
           <button
             type="button"
             onClick={() => setActiveModal("privacy")}
-            className="hover:text-[#1658eb] transition-colors cursor-pointer"
+            className="nav-link-illuminated font-semibold cursor-pointer"
           >
             Privacy
           </button>
           <button
             type="button"
             onClick={() => setActiveModal("faq")}
-            className="hover:text-[#1658eb] transition-colors cursor-pointer"
+            className="nav-link-illuminated font-semibold cursor-pointer"
           >
             FAQ
           </button>
         </nav>
 
-        {/* Right Sign in button */}
-        <div>
+        {/* Right Action Button */}
+        <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => setActiveModal("signIn")}
-            className="px-6 py-2 rounded-full border border-[#1658eb]/50 text-[#1658eb] text-sm font-semibold hover:bg-blue-50/70 hover:border-[#1658eb] transition-all cursor-pointer shadow-xs"
+            onClick={() => router.push("/dashboard")}
+            className="btn-illuminate-primary px-5 py-2 rounded-full text-white text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
-            Sign in
+            <span>Dashboard</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </header>
@@ -289,30 +275,31 @@ export function HeroLanding({
         {/* Hero Left Column: Brand promise, headline & CTA */}
         <div className="w-full lg:w-[48%] xl:w-[46%] text-left flex flex-col justify-center space-y-4 pr-0 lg:pr-8 xl:pr-12">
           {/* Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee] border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee]/90 backdrop-blur-md border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs interactive-pill hover:border-[#0f8b3c]/50 hover:shadow-[0_6px_20px_rgba(15,139,60,0.22)] staged-enter staged-delay-1">
             <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Take control of subscriptions</span>
           </div>
 
           {/* Short, Punchy Headline - calibrated size for clean 2 columns */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.15]">
+          <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.15] staged-enter staged-delay-2">
             Stop paying for <br />
-            <span className="text-[#1658eb]">subscriptions</span> you <span className="text-[#15a24a]">forgot</span>.
+            <span className="text-[#1658eb] headline-radiance-blue">subscriptions</span> you{" "}
+            <span className="text-[#15a24a] headline-radiance-green">forgot</span>.
           </h1>
 
           {/* Clean, Jargonless Tagline (Max 2 lines) */}
-          <p className="text-sm sm:text-base text-[#556987] font-normal leading-relaxed max-w-md">
-            Upload a receipt or trial email to find the cancellation page and set a reminder before renewal.
+          <p className="text-sm sm:text-base text-[#556987] font-normal leading-relaxed max-w-md staged-enter staged-delay-3">
+            Stop unwanted renewals before they cost you more. Get to the right cancellation page without digging through menus.
           </p>
 
           {/* Clean CTA Row */}
-          <div className="flex flex-wrap items-center gap-4 pt-1">
+          <div className="flex flex-wrap items-center gap-4 pt-1 staged-enter staged-delay-4">
             <button
               type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="px-6 py-3 rounded-full bg-[#1658eb] hover:bg-[#1246c4] text-white font-semibold text-sm sm:text-base inline-flex items-center gap-2 shadow-[0_10px_25px_-5px_rgba(22,88,235,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(22,88,235,0.45)] transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              onClick={() => router.push("/dashboard")}
+              className="btn-illuminate-primary px-7 py-3.5 rounded-full font-bold text-sm sm:text-base inline-flex items-center gap-2.5 transition-all cursor-pointer"
             >
-              <Upload className="w-4 h-4 stroke-[2.5]" />
+              <Search className="w-4 h-4 stroke-[2.5]" />
               <span>Find my subscription</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </button>
@@ -320,18 +307,14 @@ export function HeroLanding({
             <button
               type="button"
               onClick={() => setActiveModal("howItWorks")}
-              className="text-[#1658eb] hover:text-[#1246c4] font-semibold text-sm sm:text-base inline-flex items-center gap-1.5 transition-colors cursor-pointer group"
+              className="btn-illuminate-ghost px-5 py-3 rounded-full text-[#1658eb] font-semibold text-sm sm:text-base inline-flex items-center gap-2 transition-all cursor-pointer group"
             >
               <span>How it works</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
 
-          {/* Trust Line */}
-          <div className="flex items-center gap-2 text-xs text-[#556987] pt-1">
-            <Lock className="w-3.5 h-3.5 text-[#15a24a] stroke-[2.5]" />
-            <span>Your data is safe &amp; private</span>
-          </div>
+
 
           {/* Error Alert if any */}
           {error && (
@@ -350,10 +333,10 @@ export function HeroLanding({
         </div>
 
         {/* Visible Middle Split Line: Distinct boundary separating Hero Left from Hero Right */}
-        <div className="hidden lg:block w-[1.5px] h-[320px] xl:h-[360px] bg-gradient-to-b from-transparent via-[#1658eb]/25 to-transparent shrink-0 my-auto shadow-[0_0_8px_rgba(22,88,235,0.12)]" />
+        <div className="hidden lg:block w-[1.5px] h-80 xl:h-90 bg-linear-to-b from-transparent via-[#1658eb]/25 to-transparent shrink-0 my-auto shadow-[0_0_8px_rgba(22,88,235,0.12)] staged-enter staged-delay-5" />
 
-        {/* Hero Right Column: 3D phone showcase & interactive zone */}
-        <div className="w-full lg:w-[48%] xl:w-[50%] pl-0 lg:pl-8 xl:pl-12 flex items-center justify-center lg:justify-end relative min-h-[380px] lg:min-h-[460px]">
+        {/* Hero Right Column: 3D glass chair showcase & interactive zone */}
+        <div className="w-full lg:w-[48%] xl:w-[50%] flex items-center justify-center lg:translate-x-24 xl:translate-x-32 lg:-translate-y-4 xl:-translate-y-5 relative min-h-95 lg:min-h-115 staged-enter staged-delay-6">
           {/* Active AI Scanning Overlay Card when analyzing */}
           {isAnalyzing ? (
             <div className="w-full max-w-md p-7 rounded-3xl bg-white/95 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(22,88,235,0.25)] border border-white animate-in zoom-in-95 duration-200 z-30">
@@ -376,7 +359,7 @@ export function HeroLanding({
                   }`}
                 >
                   {scanStep > 1 ? (
-                    <Check className="w-4 h-4 text-[#15a24a] stroke-[3]" />
+                    <Check className="w-4 h-4 text-[#15a24a] stroke-3" />
                   ) : (
                     <Loader2 className="w-4 h-4 text-[#1658eb] animate-spin" />
                   )}
@@ -391,7 +374,7 @@ export function HeroLanding({
                   }`}
                 >
                   {scanStep > 2 ? (
-                    <Check className="w-4 h-4 text-[#15a24a] stroke-[3]" />
+                    <Check className="w-4 h-4 text-[#15a24a] stroke-3" />
                   ) : scanStep === 2 ? (
                     <Loader2 className="w-4 h-4 text-[#1658eb] animate-spin" />
                   ) : (
@@ -417,61 +400,63 @@ export function HeroLanding({
               </div>
             </div>
           ) : (
-            /* Interactive Hotspot over the 3D phone screen in the background */
-            <div className="w-[300px] h-[380px] lg:w-[360px] lg:h-[440px] relative flex flex-col items-center justify-center group">
-              {/* Minimal compact glass card: takes minimal space, fitted to the phone screen */}
-              <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-95 group-hover:scale-100 p-2 rounded-2xl bg-white/45 backdrop-blur-md border border-white/85 shadow-[0_12px_28px_-8px_rgba(22,88,235,0.25)] flex flex-col items-center z-10 pointer-events-auto">
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="py-2.5 px-5 rounded-xl bg-[#1658eb] hover:bg-[#1246c4] text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
-                >
-                  <Upload className="w-3.5 h-3.5" />
-                  <span>Upload screenshot</span>
-                </button>
-              </div>
-            </div>
+            /* Glass Basket holding 10 services (AWS, ChatGPT, Lovable, Gemini, Adobe, etc.) - No duplicate dashboard */
+            <BasketServices
+              onSelectService={(serviceId) => router.push(`/dashboard?service=${serviceId}`)}
+            />
           )}
         </div>
       </div>
 
-      {/* Bottom Features Strip: Translucent frosted glass with crisp black upper borderline */}
-      <footer className="w-full bg-white/20 backdrop-blur-xl border-t border-black shadow-[inset_0_1px_0_rgba(0,0,0,0.1)] py-3 px-6 sm:px-12 lg:px-16 z-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/40">
+      {/* Bottom Features Strip: Subtle, calm, unobtrusive trust footer */}
+      <footer className="w-full bg-white/10 backdrop-blur-[2px] border-t border-sky-100/40 py-2.5 px-6 sm:px-12 lg:px-16 z-20 staged-enter staged-delay-7">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
           {/* Item 1: Save money */}
-          <div className="flex items-center gap-3 py-2 md:py-0 md:px-8 first:pl-0">
-            <div className="w-8 h-8 rounded-lg bg-white/40 backdrop-blur-md border border-white/60 text-[#556987] flex items-center justify-center shrink-0">
-              <Zap className="w-3.5 h-3.5 text-[#556987]" />
+          <div className="flex items-center gap-3 flex-1 cursor-default opacity-80 hover:opacity-100 transition-opacity">
+            <div className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white/50 border border-sky-200/50 flex items-center justify-center shrink-0 text-sky-600">
+              <Zap className="w-3.5 h-3.5 text-[#1658eb]/80" />
             </div>
             <div>
-              <h4 className="font-semibold text-[#0c1b38]/85 text-xs sm:text-sm">Save money</h4>
-              <p className="text-[11px] sm:text-xs text-[#556987]/80 mt-0.5 leading-snug">
+              <h4 className="font-semibold text-[#0c1b38]/80 text-xs sm:text-sm">
+                Save money
+              </h4>
+              <p className="text-[11px] text-[#556987]/75 leading-tight font-normal">
                 Avoid surprise charges and unwanted renewals.
               </p>
             </div>
           </div>
 
+          {/* Subtle Vertical Divider 1 */}
+          <div className="hidden md:block w-px h-5 bg-sky-200/35 self-center shrink-0" />
+
           {/* Item 2: Save time */}
-          <div className="flex items-center gap-3 py-2 md:py-0 md:px-8">
-            <div className="w-8 h-8 rounded-lg bg-white/40 backdrop-blur-md border border-white/60 text-[#556987] flex items-center justify-center shrink-0">
-              <Shield className="w-3.5 h-3.5 text-[#556987]" />
+          <div className="flex items-center gap-3 flex-1 cursor-default opacity-80 hover:opacity-100 transition-opacity">
+            <div className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white/50 border border-sky-200/50 flex items-center justify-center shrink-0 text-sky-600">
+              <Clock className="w-3.5 h-3.5 text-[#1658eb]/80 stroke-[2]" />
             </div>
             <div>
-              <h4 className="font-semibold text-[#0c1b38]/85 text-xs sm:text-sm">Save time</h4>
-              <p className="text-[11px] sm:text-xs text-[#556987]/80 mt-0.5 leading-snug">
+              <h4 className="font-semibold text-[#0c1b38]/80 text-xs sm:text-sm">
+                Save time
+              </h4>
+              <p className="text-[11px] text-[#556987]/75 leading-tight font-normal">
                 Get to the exact cancellation page in seconds.
               </p>
             </div>
           </div>
 
+          {/* Subtle Vertical Divider 2 */}
+          <div className="hidden md:block w-px h-5 bg-sky-200/35 self-center shrink-0" />
+
           {/* Item 3: Stay in control */}
-          <div className="flex items-center gap-3 py-2 md:py-0 md:px-8 last:pr-0">
-            <div className="w-8 h-8 rounded-lg bg-white/40 backdrop-blur-md border border-white/60 text-[#556987] flex items-center justify-center shrink-0">
-              <Bell className="w-3.5 h-3.5 text-[#556987]" />
+          <div className="flex items-center gap-3 flex-1 cursor-default opacity-80 hover:opacity-100 transition-opacity">
+            <div className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white/50 border border-sky-200/50 flex items-center justify-center shrink-0 text-sky-600">
+              <Shield className="w-3.5 h-3.5 text-[#1658eb]/80 stroke-[2]" />
             </div>
             <div>
-              <h4 className="font-semibold text-[#0c1b38]/85 text-xs sm:text-sm">Stay in control</h4>
-              <p className="text-[11px] sm:text-xs text-[#556987]/80 mt-0.5 leading-snug">
+              <h4 className="font-semibold text-[#0c1b38]/80 text-xs sm:text-sm">
+                Stay in control
+              </h4>
+              <p className="text-[11px] text-[#556987]/75 leading-tight font-normal">
                 Set reminders and never forget again.
               </p>
             </div>
@@ -481,12 +466,12 @@ export function HeroLanding({
 
       {/* Helpful Interactive Modals for Top Nav Links */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-7 shadow-2xl border border-slate-100 relative animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white/95 backdrop-blur-2xl rounded-3xl max-w-lg w-full p-7 shadow-[0_30px_70px_-15px_rgba(15,30,59,0.35)] border border-white relative animate-in zoom-in-95 duration-200">
             <button
               type="button"
               onClick={() => setActiveModal(null)}
-              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 active:scale-90 transition-all cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -495,14 +480,14 @@ export function HeroLanding({
               <div>
                 <h3 className="text-xl font-bold text-[#0c1b38] mb-3">How CancelTrap Works</h3>
                 <div className="space-y-3 text-sm text-[#556987]">
-                  <p><strong>1. Upload or Paste:</strong> Drop any trial confirmation, billing receipt, or account settings screenshot (or press Ctrl+V).</p>
-                  <p><strong>2. Smart Scan:</strong> Instantly detects the company name, renewal deadline, and recurring price.</p>
-                  <p><strong>3. Hidden Link Finder:</strong> We find the hidden cancellation page and warn you about tricky decoy buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;).</p>
-                  <p><strong>4. Calendar Reminder:</strong> Download a 1-click calendar reminder set before your trial renews.</p>
+                  <p><strong>1. Search your service:</strong> Type any subscription provider (Netflix, Adobe, AWS, ChatGPT, etc.) in the dashboard search bar.</p>
+                  <p><strong>2. Get the direct route:</strong> CancelTrap surfaces the exact cancellation page URL, bypassing nested menus and dark-pattern decoys.</p>
+                  <p><strong>3. See what to watch for:</strong> Clear warnings flag tricky buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;) that keep you locked in.</p>
+                  <p><strong>4. Set a reminder:</strong> Add a 1-click calendar reminder so you never miss a trial renewal deadline again.</p>
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
-                  <span className="text-xs font-semibold text-[#0c1b38] block mb-2">Or test an instant sample scan:</span>
+                  <span className="text-xs font-semibold text-[#0c1b38] block mb-2">Jump to a quick demo:</span>
                   <div className="flex gap-2 flex-wrap">
                     {PRESET_SCENARIOS.map((preset) => (
                       <button
@@ -512,7 +497,7 @@ export function HeroLanding({
                           setActiveModal(null);
                           runPresetAnalysis(preset);
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-[#e8f1fd] text-[#1658eb] hover:bg-[#d6e7fc] text-xs font-semibold transition-all cursor-pointer"
+                        className="btn-illuminate-ghost px-3.5 py-2 rounded-xl text-xs font-bold text-[#1658eb] hover:border-[#1658eb]/50 transition-all cursor-pointer"
                       >
                         {preset.id === "adobe" ? "Adobe Annual Trap" : preset.id === "lovable" ? "Lovable Pro" : "7-Day AI Trial"}
                       </button>
@@ -526,10 +511,11 @@ export function HeroLanding({
               <div>
                 <h3 className="text-xl font-bold text-[#0c1b38] mb-3">Core Features</h3>
                 <div className="space-y-3 text-sm text-[#556987]">
-                  <p>🛡️ <strong>Direct Cancel Links:</strong> Jump straight to the vendor&apos;s cancellation page without searching through nested menus.</p>
-                  <p>⚠️ <strong>Decoy Button Warnings:</strong> Clear warnings for tricks designed to keep you paying.</p>
-                  <p>📈 <strong>5-Year Cost Projection:</strong> See how much this subscription would cost you over 5 years if forgotten.</p>
-                  <p>📅 <strong>1-Click Calendar Reminder:</strong> Works natively with Google Calendar, Apple Calendar, and Outlook.</p>
+                  <p>🔍 <strong>Instant Service Search:</strong> Search 50+ major subscription providers and get the direct cancellation URL in seconds.</p>
+                  <p>🛡️ <strong>Dark Pattern Warnings:</strong> Clear callouts for deceptive UI tricks (fake &quot;Cancel&quot; buttons, forced annual lock-ins, hidden pause loops).</p>
+                  <p>🗺️ <strong>Step-by-Step Navigation:</strong> An exact click-path guide from login to confirmation, so you never get lost mid-flow.</p>
+                  <p>📅 <strong>1-Click Calendar Reminder:</strong> Download a .ics reminder for Google Calendar, Apple Calendar, or Outlook — set before your trial expires.</p>
+                  <p>💰 <strong>Cost Projection:</strong> See what forgetting this subscription costs you over 1, 2, and 5 years.</p>
                 </div>
               </div>
             )}
@@ -569,7 +555,7 @@ export function HeroLanding({
                     setActiveModal(null);
                     fileInputRef.current?.click();
                   }}
-                  className="w-full py-3 rounded-full bg-[#1658eb] text-white font-semibold text-sm hover:bg-[#1246c4] cursor-pointer"
+                  className="btn-illuminate-primary w-full py-3.5 rounded-full font-bold text-sm cursor-pointer"
                 >
                   Upload a screenshot now
                 </button>
@@ -581,3 +567,4 @@ export function HeroLanding({
     </div>
   );
 }
+

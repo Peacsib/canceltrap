@@ -9,154 +9,110 @@ AI-powered dark-pattern subscription defuser & trial kill-switch to cancel subsc
 Source: `scope.md > The Unique Kernel`, `scope.md > The Core Loop`, `scope.md > The POC Boundary`.
 
 ## The Core Journey
-1. **Arrival**: The user lands on a single-viewport, no-scroll hero screen with an atmospheric glassy blue environment.
-2. **Input Selection**: On the right frosted card, the user either drags & drops a subscription receipt/screenshot or clicks one of 3 sample preset pills (*"Lovable Pro $20/mo"*, *"Adobe Annual Trap"*, *"7-Day AI Trial"*).
-3. **Sequential Analysis**: The card transitions into an animated progress checklist:
-   - ✓ Reading image
-   - ✓ Detecting merchant & renewal deadline
-   - ⟳ Dissecting dark patterns & building kill-switch
-4. **Dashboard Reveal**: The view transitions into a clean, comprehensive Defusal Dashboard:
-   - High-impact metric cards: **Renewal Countdown** (time remaining), **Current Price**, **5-Year Vampire Bleed** cost, and **Dark Pattern Identified**.
-   - **Step-by-Step Defusal Action Plan**: Exact instructions to bypass decoy cancellation buttons, pause traps, or multi-step retention mazes.
-   - **Direct Bypass Portal Link**: One-click button opening the verified merchant cancellation URL in a new tab, instantly updating to a confirmed status (*"Portal Opened — Follow steps below"*).
+1. **Arrival**: The user lands on a visually striking hero: on the left, a bold headline + "Find my subscription" CTA; on the right, the **BlueStickFighter** — an autonomous, free-roaming martial-arts stick figure that dodges, spins, punches, and kick-flips subscription brand logos (Adobe, AWS, ChatGPT, Lovable, Netflix, etc.) for instant comic delight.
+2. **Input Selection**:
+   - **Service Search (Primary)**: User clicks "Find my subscription" and is taken to the dashboard where they type any service name (e.g. `ecoai`, `strava`, `netflix`). High-res logo suggestions populate in real time.
+   - **Quick Presets**: Three hero-level preset pills (*"Lovable Pro"*, *"Adobe Annual Trap"*, *"7-Day AI Trial"*) jump the user straight into the dashboard with pre-loaded data.
+3. **Clean Comic Search Animation**:
+   - The card transitions into a clean, expressive cartoon stick runner on the hunt:
+     - Iconic hand-drawn line art with 3 spiky cowlick hairs and fierce gritted teeth.
+     - Smooth billowing ear steam plumes (`~~~☁️`) reflecting consumer frustration.
+     - Energetic running stride with pumping arms holding a magnifying glass.
+     - A single, crisp speech bubble cycling concise, relatable quips (e.g. *"Where's the cancel button?! 😤"*).
+     - Subtle, clean ground baseline with zero visual clutter.
+4. **Resolution & Victory Celebration**:
+   - The system queries the deterministic registry, live web discovery engine, and Gemini AI validation gate.
+   - Upon discovery, the runner smoothly halts in the center, transitions to vibrant emerald green (`#10b981`), beams a joyful smile with happy crescent eyes and blushing cheeks, raises his arms in victory, and celebrates with a clean confetti drop as the bubble pops:
+     `"Aha! Found it! 🎉"`
+5. **Dashboard Reveal**:
+   - High-impact metrics: **Renewal Countdown**, **Current Price**, **5-Year Vampire Bleed**, and **Dark Pattern Identified**.
+   - **Step-by-Step Defusal Action Plan**: Exact instructions to bypass decoy buttons, pause traps, or multi-step retention mazes (including USSD/SMS fallback for mobile VAS).
+   - **Direct Bypass Portal Link**: One-click button opening the verified merchant cancellation URL in a new tab with an authentic high-res brand logo.
+   - **In-App Defusal Guide Co-Pilot (`InAppDefusalWindow.tsx`)**: Interactive modal walking users through cancellation steps with warning banners.
    - **1-Click Calendar Kill-Switch (.ics)**: Instant download of a calendar event scheduled 24–48 hours before auto-renewal with reminders and direct portal links in the description.
-5. **Success & Reset**: The user defuses their subscription and can click "New Scan" in the header to evaluate another subscription.
+6. **Success & Reset**: The user saves the route to their bookmark list or clicks "New Scan" in the header to evaluate another subscription.
 
-## Screens and Layout
+---
 
-### Surface 1: The Hero Landing (Single Viewport, No-Scroll)
-Source: `scope.md > Inspiration & Identity`
-- **Left Column**:
-  - CancelTrap logo (transparent image asset).
-  - High-impact headline: *"Defuse deceptive subscriptions before they charge you."*
-  - Supporting subhead explaining how AI exposes hidden cancel buttons and calculates multi-year compounding bleed.
-  - 4 bottom feature cards: *"Instant Dark-Pattern Detection"*, *"Direct Portal Bypass"*, *"1-Click Calendar Kill-Switch"*, *"100% Private & In-Browser"*.
-- **Right Column**:
-  - Frosted glass floating card with subtle background depth.
-  - Drag-and-drop dropzone supporting PNG/JPEG/WEBP receipts.
-  - "Choose screenshot" primary CTA button.
-  - Interactive preset chips: *"Or try a sample receipt: Lovable Pro | Adobe Annual | 7-Day AI Trial"*.
-  - Privacy indicator footer: *"🛡️ Processed privately on your device"*.
+## Screens and Surfaces
 
-### Surface 2: The Defusal Dashboard
-Source: `scope.md > The Core Loop`
+### Surface 1: The Main Defusal Dashboard
 - **Top Navigation Bar**:
-  - CancelTrap logo on left.
-  - Active merchant name tag (e.g. *"Adobe Creative Cloud"*) and receipt filename.
-  - "New Scan" outline button on right to reset.
-- **Top Metrics Row (4 Glass Cards)**:
-  - **Renewal Countdown**: Remaining time formatted in days/hours with high-urgency color coding (e.g., *"Renews in 3 Days, 14 Hours"*).
-  - **Billing Amount**: Current recurring cost (e.g., *"$59.99 / month"*).
-  - **5-Year Vampire Bleed**: Compounding financial projection if auto-renewal continues unchecked (e.g., *"$3,599.40 drained"*).
-  - **Deceptive Dark Pattern**: Flagged deceptive practice (e.g., *"Disguised 'Pause' & $300 Early-Fee Maze"*).
-- **Primary Content Grid (Two Columns)**:
-  - **Left Column — Step-by-Step Defusal Checklist**:
-    - Sequential actionable cards detailing the exact click path through the merchant's settings.
-    - Highlights decoy buttons to avoid (e.g., *"Do not click 'Keep Plan for 50% Off' or 'Pause for 30 Days'"*).
-    - Interactive checkboxes for each step so the user can mark off their progress.
-  - **Right Column — Defusal Action Hub**:
-    - **Verified Direct Portal Button**: Prominent button linking straight to the deep-linked cancellation page. When clicked, transitions to confirmed state: *"✓ Portal Opened — Complete steps on the left"*.
-    - **Calendar Kill-Switch (.ics) Card**: Visual calendar widget displaying event details (Date, Alert 48h prior, Title: *"Kill-Switch: Cancel [Merchant]"*) with a 1-click button to download the `.ics` file.
-    - **Merchant Cancellation Notes**: Summary of merchant-specific fine print (e.g., notice periods, refund windows).
+  - CancelTrap logo and active defusal status pill (`● Direct Defusal Active`).
+  - Navigation tabs: `Defusal Mission`, `Saved (N)`, `History (N)`, and `New Scan`.
+- **Search & URL Input Hub**:
+  - Toggle between **Search service** and **Paste a URL**.
+  - Search input with real-time autocomplete suggestions displaying high-res brand logos and domain badges.
+  - "Find destination" primary CTA with animated loading state.
+  - Quick-access service chips: AWS, Google Cloud, Adobe, Microsoft 365, ChatGPT, Lovable, Figma, Wikipedia (Free), Blender (Free).
+- **Dynamic Search Stage (StickAngerSearcher)**:
+  - Houses the clean cartoon search runner, ear steam plumes, and emerald confetti victory celebration.
+- **Active Destination Card**:
+  - Authentic high-res brand mark (128px Google favicon API or regional telecom icon).
+  - Verified domain pill (e.g. `ecoaitoken.co.zw`, `en.wikipedia.org`).
+  - Action title and verified navigation breadcrumb trail (e.g. `Billing account → Subscriptions → Manage subscription`).
+  - **Zero-Billing / Free Software Mode**: For 100% free / open-source software (e.g. Wikipedia, Blender, Signal, VLC, Ubuntu), displays an emerald green shield (`🛡️ 100% Free & Safe — Zero Recurring Billing Risk`), shows `$0.00 / Free Forever`, provides official portal links (`Visit official site`), and clarifies that no subscription cancellation is required.
+  - Regional telecom defusal banner when applicable (e.g. `🇿🇼 Econet Wireless Zimbabwe: USSD *449# / ecoaitoken.co.zw`).
+  - Primary Action Buttons: `Open real tab` (or `Visit official site`) and `Open destination` (in-app co-pilot / safety guide).
+  - Bookmark route toggle button.
 
-## Look and Feel
-Source: `scope.md > Inspiration & Identity`
-- **Design Inspiration**: Exact styling and design tokens extracted from the Risklyte design system.
-- **Typography**:
-  - Headings & Display: `Manrope` (bold/semibold, clean geometric tracking).
-  - Body & UI: `Plus Jakarta Sans` (400 regular, 500 medium, line-height 1.5).
-- **Core Color System & CSS Variables**:
-  - Sky Background Gradient: `--gradient-sky: linear-gradient(160deg, #f8fdff, #d2ecff 60%, #afdeff);`
-  - Page Background: `--background: #f0f8fe;`
-  - High-Contrast Foreground: `--foreground: #0f1e3b;` / `#031F3B;`
-  - Primary Action Blue: `--primary: #11338a;` (with hover `--brand: #1640ad;`)
-  - Secondary Light Blue: `--secondary: #e0f1fe;`
-  - Accent Tint: `--accent: #d2ecff;`
-  - Glass Containers: `--glass: #ffffff9e;` with `backdrop-filter: blur(16px)`
-  - Glass Borders: `--glass-border: #ffffffd9;` (1px subtle border)
-  - Card Shadow: `--shadow-glass: 0 20px 50px -20px #1f559659, inset 0 1px 0 #ffffffe6;`
-  - Button Shadow: `--shadow-button: 0 10px 24px -10px #11338ab3;`
-  - Corner Radius: `--radius: 0.875rem;` (14px)
-- **Status & Urgency Accents**:
-  - Safe / Verified: `#54b66e` (green)
-  - Attention / Renewal Notice: `#eab532` (amber)
-  - Urgent / Dark-Pattern Trap: `#e62b34` (crimson red)
-- **Tone & Atmosphere**: Calm institutional confidence, high-end translucent glass cards, zero cyberpunk clutter.
+### Surface 2: The In-App Defusal Co-Pilot (`InAppDefusalWindow.tsx`)
+- Side-by-side floating modal window that provides step-by-step guidance while the user navigates the external cancellation flow:
+  - Step progress indicators with active checkmarks.
+  - Decoy button warnings highlighted in amber/red alert boxes.
+  - Quick-copy text fields for account identifiers or cancellation codes.
+  - Direct link to launch the official portal in a split tab.
+
+### Surface 3: Hero Landing
+- Single-viewport split layout:
+  - **Left panel**: Brand pill, punchy headline (*"Stop paying for subscriptions you forgot"*), concise two-line tagline, "Find my subscription" primary CTA, and "How it works" ghost button.
+  - **Right panel**: `BlueStickFighter` — an autonomous SVG martial-arts stick figure that free-roams, dodges, spins, dances, and strikes subscription brand logos (AWS, ChatGPT, Adobe, Lovable, Netflix, Gemini, etc.) with random comic hit tags and logo recoil effects.
+- Subtle footer strip with three benefit micro-cards (Save money / Save time / Stay in control).
+- No redundant sign-in button; single "Dashboard" header button routes to `/dashboard`.
+
+---
 
 ## Features and Behavior
 
-### 1. Preset Receipt Selection
-- User clicks one of the 3 sample preset pills on the upload card.
-- Instantly loads pre-configured sample receipt metadata without requiring the user to supply personal files.
-  - **Lovable Pro**: $20/mo, 30-day recurring cycle, dark pattern: downgrade disguised as cancel, direct billing URL: `https://lovable.dev/settings/billing`.
-  - **Adobe Annual**: $59.99/mo, annual plan paid monthly, dark pattern: hidden $300 early termination cancellation fee & 4-page retention quiz, direct billing URL: `https://account.adobe.com/plans`.
-  - **7-Day AI Trial**: $0 now, $39.99/mo starting in 72 hours, dark pattern: immediate trial conversion without confirmation email, direct billing URL: `https://platform.example.com/billing`.
+### 1. Multi-Stage Discovery Pipeline
+- **Tier 1: Deterministic Registry (Sub-millisecond)**: 50+ hand-curated services with verified deep links and dark pattern breakdowns.
+- **Tier 2: Live Web Discovery Engine (`src/lib/engine/liveDiscovery.ts`)**: Real-time web intelligence querying live search indexes in ~200ms without API quotas, extracting canonical domains and cancellation navigation paths.
+- **Tier 3: Google Gemini 3.8 Flash Validation Gate**: Evaluates uncataloged queries, formats structured JSON payloads, and enforces anti-hallucination protocols.
+- **Anti-Hallucination Safe-Guard**: Rejects non-existent queries (`asdfghjk99`) with a clean security warning rather than fabricating fake URLs or steps.
 
-### 2. Custom Screenshot Upload & Analysis
-- User drops or selects an image (`.png`, `.jpg`, `.jpeg`, `.webp`).
-- Client triggers sequential visual progress indicators inside the card:
-  - Step 1: "Reading screenshot..." (immediate)
-  - Step 2: "Extracting merchant & renewal terms..." (500ms)
-  - Step 3: "Analyzing dark retention patterns..." (1000ms)
-- Multimodal Gemini 2.5 Flash analyzes the image and returns a strictly typed JSON payload.
+### 2. Universal High-Res Brand Marks
+- Powered by Google's universal favicon API (`https://www.google.com/s2/favicons?domain=${domain}&sz=128`) with DuckDuckGo fallback and styled initials.
+- Custom vector marks for regional entities (e.g., Econet `ecoAI` with Zimbabwean flag `🇿🇼 ZIM` badge).
 
-### 3. Edge Case & Ambiguity Handling
-- **Non-Receipt / Blurry Upload**: If the uploaded image cannot be identified as a receipt or billing page:
-  - The upload card displays an inline red-tinted warning banner (matching the Risklyte error reference):
-    *"⚠️ This doesn't look like a subscription receipt or trial confirmation — couldn't detect a merchant, billing amount, or renewal terms."*
-  - The card remains on the upload screen and allows the user to re-upload or select one of the 3 presets.
-- **Relative Dates ("Ends in 3 days")**:
-  - The system calculates the renewal date based on `current_time + relative_duration`.
-  - The Kill-Switch .ics event is scheduled 24 hours prior to that calculated cutoff.
+### 3. Enjoyous Comic Search Animation
+- **Puffing Ear Steam & Head Heat Squiggles**: Reflects user frustration with cancellation dark patterns.
+- **Flying Sweat Droplets & Pumping Scissor Legs**: High-energy sprint dynamics.
+- **Giant Magnifying Glass Scanner**: Projecting a semi-transparent cyan radar sweep beam over the track.
+- **Non-Flipping Comic Speech Bubbles**: Bubbles stay upright and readable when the character turns around.
+- **Emerald Victory Power-Up**: Instant color shift to emerald green, joyous smiling face, glowing Golden Key, sunburst rays, and a 10-piece multi-color confetti shower.
 
-### 4. Direct Portal Bypass & Verification
-- Displays the verified direct cancellation link for the merchant.
-- User clicks "Open Direct Cancellation Portal" -> Opens in new tab with `rel="noopener noreferrer"`.
-- Button visually morphs into an active state: *"✓ Portal Opened — Complete steps below"*.
+### 4. Regional Subscription Defusal (Econet Wireless Zimbabwe `ecoAI`)
+- Supports mobile telecom recurring airtime/wallet deductions.
+- Provides USSD shortcode guidance (`*449#`), SMS keyword opt-outs (`STOP` to `449`), and web portal deep links (`ecoaitoken.co.zw`).
 
-### 5. Calendar Kill-Switch (.ics Generation)
-- Pure client-side generation of an RFC 5545 `.ics` file.
-- Event Title: `🚨 Kill-Switch: Cancel [Merchant] Subscription`
-- Event Date/Time: 24–48 hours prior to detected renewal deadline.
-- Description: Includes detected renewal cost, 5-year vampire bleed, and direct cancellation URL.
-- Alarm Trigger: Pre-configured calendar alarm alert 2 hours before the event.
+### 5. 1-Click Calendar Kill-Switch (.ics)
+- Client-side RFC 5545 `.ics` generator with `VALARM` notifications scheduled 24–48 hours prior to renewal.
 
-## States and Boundaries
+---
 
-- **Hero / Initial State**: Single-viewport landing page with clean dropzone and active preset pills.
-- **Scanning State**: Upload card displays animated step-by-step progress checklist.
-- **Dashboard / Success State**: Full-screen glassy dashboard displaying metrics, defusal checklist, portal bypass, and kill-switch generator.
-- **Error State**: Non-blocking inline warning card allowing immediate retry or preset selection.
-- **Persistence Boundary**: 100% stateless in-memory session. Refreshing returns to the clean initial hero screen without stale storage or database dependencies.
+## Look and Feel
+- **Theme**: Institutional calm, clean glassy blue gradients, crisp borders, and joyful comic accents.
+- **Typography**: `Manrope` for bold headings, `Plus Jakarta Sans` for body copy, and `JetBrains Mono` for domain pills.
+- **Color Palette**:
+  - Primary Action Blue: `#1658eb` / `#11338a`
+  - Emerald Victory Green: `#10b981` / `#0f8b3c`
+  - Dark-Pattern Danger Red: `#e11d48` / `#e62b34`
+  - Attention Amber: `#f59e0b` / `#eab532`
+  - Surface Glass: `rgba(255, 255, 255, 0.95)` with `backdrop-filter: blur(16px)`
 
-## Product Decisions
-- **Single-Viewport Hero**: Decided based on the Risklyte design reference to give an immediate, high-converting, professional first impression with zero page clutter.
-- **Presets Inside the Upload Card**: Positioned as sample chips directly within the upload card for intuitive 1-click evaluation without hunting.
-- **Verified Portal Opened State**: Button updates inline to confirm launch and redirect the user's attention to the defusal checklist.
-- **Cut Dispute/Refund Letters**: Focused exclusively on proactive, timely cancellation to eliminate post-charge dispute complexity.
-
-## What We're Building
-- Single-viewport glassy blue hero layout with split branding/upload cards.
-- 3 interactive preset scenarios (Lovable, Adobe, 7-Day AI).
-- Real screenshot upload zone with drag-and-drop.
-- Multimodal Gemini 2.5 Flash analysis with structured schema.
-- Comprehensive Defusal Dashboard:
-  - Renewal Countdown & 5-Year Vampire Bleed.
-  - Step-by-step dark pattern defusal checklist with interactive checkboxes.
-  - Direct portal bypass button with stateful launch verification.
-  - 1-Click .ics calendar download.
-- Error banner for unrecognized/blurry images.
-
-## Deferred From the POC
-- Live DOM extension to manipulate merchant pages in real time.
-- Direct sync with Google Calendar API / Outlook API (using standard `.ics` downloads instead).
-- Multi-currency currency converter.
+---
 
 ## Non-Goals
-- No post-charge refund negotiation, FTC dispute letters, or bank chargeback flows.
-- No user accounts, passwords, or cloud database storage.
-- No backend automated email dispatch (SMTP).
-- No scraping of live merchant portals behind logins.
-
-## Open Questions
-- None blocking. Technical implementation details (Next.js route handlers vs. client API, exact JSON schema) will be locked in `4-spec`.
+- No post-charge legal dispute letters or bank chargebacks.
+- No user accounts or persistent backend databases (100% private, client-side session).
+- No scraping behind user authentication credentials.

@@ -112,7 +112,7 @@ export function UploadCard({
   return (
     <div className="flex flex-col items-center">
       {/* Main Opaque Card (Risklyte pixel-match) */}
-      <div className="w-full sm:w-[410px] p-8 rounded-[28px] bg-white/95 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(17,51,138,0.22)] border border-white transition-all relative">
+      <div className="w-full sm:w-102.5 p-8 rounded-[28px] bg-white/95 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(17,51,138,0.22)] border border-white transition-all relative">
         {/* Card Header */}
         <div className="mb-6 text-center">
           <h2 className="text-2xl font-bold tracking-tight text-[#0f1e3b]">
@@ -134,7 +134,7 @@ export function UploadCard({
               }`}
             >
               {scanStep > 1 ? (
-                <Check className="w-4 h-4 text-[#54b66e] stroke-[3]" />
+                <Check className="w-4 h-4 text-[#54b66e] stroke-3" />
               ) : (
                 <Loader2 className="w-4 h-4 text-[#11338a] animate-spin" />
               )}
@@ -149,7 +149,7 @@ export function UploadCard({
               }`}
             >
               {scanStep > 2 ? (
-                <Check className="w-4 h-4 text-[#54b66e] stroke-[3]" />
+                <Check className="w-4 h-4 text-[#54b66e] stroke-3" />
               ) : scanStep === 2 ? (
                 <Loader2 className="w-4 h-4 text-[#11338a] animate-spin" />
               ) : (
@@ -192,7 +192,7 @@ export function UploadCard({
               className={`border-2 border-dashed rounded-2xl p-7 text-center transition-all cursor-pointer relative overflow-hidden ${
                 dragActive
                   ? "border-[#11338a] bg-blue-50/80 scale-[1.01]"
-                  : "border-[#b5d6f3] hover:border-[#11338a]/60 bg-gradient-to-b from-emerald-50/30 via-sky-50/20 to-white"
+                  : "border-[#b5d6f3] hover:border-[#11338a]/60 bg-linear-to-b from-emerald-50/30 via-sky-50/20 to-white"
               }`}
               onClick={() => document.getElementById("receipt-input")?.click()}
             >
