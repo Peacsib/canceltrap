@@ -132,6 +132,112 @@ export const DESTINATION_REGISTRY: RegistryEntry[] = [
   },
 
   // ──────────────────────────────────────────────────────────────────────
+  // v0 (v0.dev by Vercel)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "v0",
+    providerName: "v0 by Vercel",
+    providerDomain: "v0.dev",
+    aliases: ["v0", "v0.dev", "v0 dev", "v0 ai", "vercel v0"],
+    products: ["v0 Premium", "v0 Credits", "v0 Team"],
+    category: "Generative AI & Developer Tools",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://v0.dev/settings/billing",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "Open v0 Billing Settings",
+            instruction: "Navigate directly to v0.dev/settings/billing or click your profile avatar in the lower corner and select 'Settings' -> 'Billing'.",
+            targetType: "link",
+            decoyWarning: "Ensure you are logged into the Vercel or v0 account with active paid credits or tier.",
+          },
+          {
+            stepNumber: 2,
+            label: "Open Plan Management",
+            instruction: "Under Active Plan, click 'Manage Plan' or 'Subscription Details'. This opens the Stripe customer portal.",
+            targetType: "button",
+            decoyWarning: "Do not select 'Top-up credits' — select 'Manage Plan' to view the cancel option.",
+          },
+          {
+            stepNumber: 3,
+            label: "Confirm Cancellation",
+            instruction: "Click 'Cancel Plan'. Confirm to disable auto-renewal; paid features remain active until the billing period ends.",
+            targetType: "button",
+            decoyWarning: "Unused generation credits expire at the end of the billing cycle without refund.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Generation credits do not roll over after billing cycle concludes",
+          "Cancellation requires navigating through the Stripe customer portal confirmation",
+        ],
+        finePrintNotes: "Direct URL: https://v0.dev/settings/billing.",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
+  // ChatGPT / OpenAI (ChatGPT Plus, Pro & Team)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "chatgpt",
+    providerName: "ChatGPT (OpenAI)",
+    providerDomain: "chatgpt.com",
+    aliases: [
+      "chatgpt",
+      "chat gpt",
+      "openai",
+      "chatgpt plus",
+      "chatgpt pro",
+      "chatgpt team",
+      "openai plus",
+    ],
+    products: ["ChatGPT Plus", "ChatGPT Pro", "ChatGPT Team"],
+    category: "AI & Productivity",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://chatgpt.com/settings/billing",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "Open ChatGPT Billing Settings",
+            instruction: "Navigate directly to chatgpt.com/settings/billing or click your profile icon in the bottom-left corner and select 'Settings' -> 'My Plan'.",
+            targetType: "link",
+            decoyWarning: "If subscribed through Apple App Store (iOS) or Google Play Store (Android), cancellation must be completed in your phone's OS subscription settings.",
+          },
+          {
+            stepNumber: 2,
+            label: "Open Stripe Subscription Portal",
+            instruction: "Click 'Manage my subscription'. This securely opens the Stripe customer management portal.",
+            targetType: "button",
+            decoyWarning: "Do not click 'Payment methods' — click 'Manage my subscription'.",
+          },
+          {
+            stepNumber: 3,
+            label: "Cancel Plan & Confirm",
+            instruction: "Click 'Cancel plan'. Pass the retention survey screen and confirm. You retain access until your current billing period ends.",
+            targetType: "button",
+            decoyWarning: "OpenAI displays a list of capabilities you will lose (higher limits, early access); confirm cancellation to finalize.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Multi-screen retention prompts emphasizing loss of priority access and reasoning limits",
+          "Subscriptions created on iOS/Android must be canceled through Apple ID or Google Play, not the web settings",
+        ],
+        finePrintNotes: "Direct URL: https://chatgpt.com/settings/billing. Mobile store subscriptions must be canceled via iOS/Android device settings.",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
   // NetOne Cellular (Zimbabwe Mobile Network & Value Added Services)
   // ──────────────────────────────────────────────────────────────────────
   {

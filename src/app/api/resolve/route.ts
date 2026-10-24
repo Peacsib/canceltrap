@@ -171,7 +171,10 @@ async function discoverWithAI(
 
   try {
     const ai = new GoogleGenAI({ apiKey });
-    const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+    const primaryModel = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+    const modelsToTry = [primaryModel, "gemini-3.5-flash", "gemini-3.5-flash-lite"].filter(
+      (m, idx, arr) => arr.indexOf(m) === idx
+    );
 
     const actionLabel = ACTION_LABELS[actionType] || "cancel subscription";
 
@@ -225,26 +228,41 @@ Respond with ONLY valid JSON matching this schema:
   "uncertaintyNote": string (what you're NOT sure about)
 }`;
 
-    const response = await ai.models.generateContent({
-      model,
-      contents: [
-        {
-          role: "user",
-          parts: [
-            { text: systemPrompt },
+    let lastError: unknown = null;
+    let responseText = "";
+
+    for (const model of modelsToTry) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          contents: [
             {
-              text: `User query: "${rawQuery}"\nProvider: "${providerName}"\nRequested action: "${actionType}"`,
+              role: "user",
+              parts: [
+                { text: systemPrompt },
+                {
+                  text: `User query: "${rawQuery}"\nProvider: "${providerName}"\nRequested action: "${actionType}"`,
+                },
+              ],
             },
           ],
-        },
-      ],
-      config: {
-        responseMimeType: "application/json",
-      },
-    });
+          config: {
+            responseMimeType: "application/json",
+          },
+        });
+        responseText = response.text || "";
+        if (responseText) break;
+      } catch (err: unknown) {
+        lastError = err;
+        console.warn(`[AI Discovery] Model ${model} failed, trying fallback:`, err instanceof Error ? err.message : err);
+      }
+    }
 
-    const text = response.text || "";
-    const cleanedText = text
+    if (!responseText) {
+      throw lastError || new Error("All AI models failed to generate content");
+    }
+
+    const cleanedText = responseText
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
