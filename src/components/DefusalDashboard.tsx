@@ -1772,7 +1772,7 @@ export function DefusalDashboard({
                     {activeService.isFreeService ? (
                       <div className="mt-2.5 inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
                         <Shield className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>🛡️ Zero Recurring Billing • $0.00 / Free Forever • No Subscription Trap</span>
+                        <span>Zero Recurring Billing • $0.00 / Free Forever • No Subscription Trap</span>
                       </div>
                     ) : activeService.name.toLowerCase().includes("zimbabwe") ? (
                       <div className="mt-2.5 inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold">

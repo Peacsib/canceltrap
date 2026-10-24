@@ -312,8 +312,9 @@ export function InteractiveDefusalWizard({
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#556987]">
-                    💡 <strong>Tip:</strong> Keep this tab open while you cancel on their website so you can follow the next step.
+                  <p className="text-xs text-[#556987] flex items-center gap-1">
+                    <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 inline" />
+                    <span><strong>Tip:</strong> Keep this tab open while you cancel on their website so you can follow the next step.</span>
                   </p>
                 </div>
 

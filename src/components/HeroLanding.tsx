@@ -15,6 +15,10 @@ import {
   AlertCircle,
   X,
   Sparkles,
+  ShieldAlert,
+  Compass,
+  Calendar,
+  DollarSign,
 } from "lucide-react";
 import { PRESET_SCENARIOS, PresetScenario } from "@/data/presets";
 import { SubscriptionDefusalResponse } from "@/lib/types";
@@ -473,12 +477,47 @@ export function HeroLanding({
 
             {activeModal === "howItWorks" && (
               <div>
-                <h3 className="text-xl font-bold text-[#0c1b38] mb-3">How CancelTrap Works</h3>
-                <div className="space-y-3 text-sm text-[#556987]">
-                  <p><strong>1. Search your service:</strong> Type any subscription provider (Netflix, Adobe, AWS, ChatGPT, etc.) in the dashboard search bar.</p>
-                  <p><strong>2. Get the direct route:</strong> CancelTrap surfaces the exact cancellation page URL, bypassing nested menus and dark-pattern decoys.</p>
-                  <p><strong>3. See what to watch for:</strong> Clear warnings flag tricky buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;) that keep you locked in.</p>
-                  <p><strong>4. Set a reminder:</strong> Add a 1-click calendar reminder so you never miss a trial renewal deadline again.</p>
+                <h3 className="text-xl font-bold text-[#0c1b38] mb-4">How CancelTrap Works</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-white/70 border border-slate-100">
+                    <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200/80 text-[#1658eb] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                      1
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Search your service</strong>
+                      <span className="text-[#556987] leading-relaxed">Type any subscription provider (Netflix, Adobe, AWS, ChatGPT, etc.) in the dashboard search bar.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-white/70 border border-slate-100">
+                    <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200/80 text-[#1658eb] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                      2
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Get the direct route</strong>
+                      <span className="text-[#556987] leading-relaxed">CancelTrap surfaces the exact cancellation page URL, bypassing nested menus and dark-pattern decoys.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-white/70 border border-slate-100">
+                    <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200/80 text-[#1658eb] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                      3
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">See what to watch for</strong>
+                      <span className="text-[#556987] leading-relaxed">Clear warnings flag tricky buttons (like &quot;Pause&quot; or &quot;Switch to Annual&quot;) that keep you locked in.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-white/70 border border-slate-100">
+                    <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200/80 text-[#1658eb] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                      4
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Set a reminder</strong>
+                      <span className="text-[#556987] leading-relaxed">Add a 1-click calendar reminder so you never miss a trial renewal deadline again.</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
@@ -504,13 +543,57 @@ export function HeroLanding({
 
             {activeModal === "features" && (
               <div>
-                <h3 className="text-xl font-bold text-[#0c1b38] mb-3">Core Features</h3>
-                <div className="space-y-3 text-sm text-[#556987]">
-                  <p>🔍 <strong>Instant Service Search:</strong> Search 50+ major subscription providers and get the direct cancellation URL in seconds.</p>
-                  <p>🛡️ <strong>Dark Pattern Warnings:</strong> Clear callouts for deceptive UI tricks (fake &quot;Cancel&quot; buttons, forced annual lock-ins, hidden pause loops).</p>
-                  <p>🗺️ <strong>Step-by-Step Navigation:</strong> An exact click-path guide from login to confirmation, so you never get lost mid-flow.</p>
-                  <p>📅 <strong>1-Click Calendar Reminder:</strong> Download a .ics reminder for Google Calendar, Apple Calendar, or Outlook — set before your trial expires.</p>
-                  <p>💰 <strong>Cost Projection:</strong> See what forgetting this subscription costs you over 1, 2, and 5 years.</p>
+                <h3 className="text-xl font-bold text-[#0c1b38] mb-4">Core Features</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-blue-50/50 border border-blue-100/60 transition hover:bg-blue-50/80">
+                    <div className="w-8 h-8 rounded-xl bg-blue-100/80 border border-blue-200/60 flex items-center justify-center shrink-0 mt-0.5 text-[#1658eb] shadow-2xs">
+                      <Search className="w-4 h-4" />
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Instant Service Search</strong>
+                      <span className="text-[#556987] leading-relaxed">Search 50+ major subscription providers and get the direct cancellation URL in seconds.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-amber-50/50 border border-amber-100/60 transition hover:bg-amber-50/80">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100/80 border border-amber-200/60 flex items-center justify-center shrink-0 mt-0.5 text-amber-600 shadow-2xs">
+                      <ShieldAlert className="w-4 h-4" />
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Dark Pattern Warnings</strong>
+                      <span className="text-[#556987] leading-relaxed">Clear callouts for deceptive UI tricks (fake &quot;Cancel&quot; buttons, forced annual lock-ins, hidden pause loops).</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-sky-50/50 border border-sky-100/60 transition hover:bg-sky-50/80">
+                    <div className="w-8 h-8 rounded-xl bg-sky-100/80 border border-sky-200/60 flex items-center justify-center shrink-0 mt-0.5 text-sky-600 shadow-2xs">
+                      <Compass className="w-4 h-4" />
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Step-by-Step Navigation</strong>
+                      <span className="text-[#556987] leading-relaxed">An exact click-path guide from login to confirmation, so you never get lost mid-flow.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-indigo-50/50 border border-indigo-100/60 transition hover:bg-indigo-50/80">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-100/80 border border-indigo-200/60 flex items-center justify-center shrink-0 mt-0.5 text-indigo-600 shadow-2xs">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">1-Click Calendar Reminder</strong>
+                      <span className="text-[#556987] leading-relaxed">Download a .ics reminder for Google Calendar, Apple Calendar, or Outlook — set before your trial expires.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-emerald-50/50 border border-emerald-100/60 transition hover:bg-emerald-50/80">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100/80 border border-emerald-200/60 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600 shadow-2xs">
+                      <DollarSign className="w-4 h-4" />
+                    </div>
+                    <div className="text-xs sm:text-sm">
+                      <strong className="text-[#0c1b38] font-semibold block mb-0.5">Cost Projection</strong>
+                      <span className="text-[#556987] leading-relaxed">See what forgetting this subscription costs you over 1, 2, and 5 years.</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
