@@ -96,7 +96,11 @@ export function ActionHub({ data }: ActionHubProps) {
             </>
           ) : (
             <>
-              <span>Open Cancellation Portal</span>
+              <span>
+                {(merchant?.name || "").toLowerCase().includes("google cloud")
+                  ? "Open Billing Console"
+                  : "Open Cancellation Page"}
+              </span>
               <ExternalLink className="w-4 h-4" />
             </>
           )}

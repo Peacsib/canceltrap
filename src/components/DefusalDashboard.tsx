@@ -12,7 +12,6 @@ import {
   ArrowRight,
   ChevronRight,
   CheckCircle2,
-  Check,
   Star,
   Trash2,
   ExternalLink,
@@ -66,6 +65,50 @@ export interface DefusalDashboardProps {
   initialTab?: SidebarTab;
   onReset?: () => void;
 }
+
+/** Resolves contextual, clean action button text (never awkward/overflowing) */
+export const getActionBtnLabel = (service: ServiceData): string => {
+  if (service.isFreeService) return "Official Site";
+
+  const title = (service.actionTitle || "").toLowerCase().trim();
+  const name = (service.name || "").toLowerCase().trim();
+
+  // Cloud & platform billing management (e.g. Google Cloud)
+  if (name.includes("google cloud") || service.id === "google_cloud") {
+    return "Manage Billing";
+  }
+  if (title.includes("manage billing") || title.includes("billing subscription")) {
+    return "Manage Billing";
+  }
+  if (title.includes("cancel recurring billing")) {
+    return "Manage Billing";
+  }
+  if (title.includes("downgrade")) {
+    return "Downgrade Plan";
+  }
+  if (title.includes("auto-renewal") || title.includes("autorenew")) {
+    return "Manage Auto-Renew";
+  }
+  if (title.includes("delete account") || title.includes("close account")) {
+    return "Delete Account";
+  }
+  if (title.includes("pause")) {
+    return "Pause Service";
+  }
+  if (title.includes("billing") || title.includes("invoice")) {
+    return "Billing Portal";
+  }
+  if (title.includes("cancel")) {
+    return "Cancellation Page";
+  }
+
+  return "Manage Subscription";
+};
+
+export const getActionTooltip = (service: ServiceData, label: string): string => {
+  if (service.isFreeService) return `Visit official ${service.name} website`;
+  return `Open official ${service.name} ${label.toLowerCase()} in new tab`;
+};
 
 const PRESET_SERVICES: Record<string, ServiceData> = {
   google_cloud: {
@@ -1750,11 +1793,11 @@ export function DefusalDashboard({
                   </div>
 
                   {/* Bookmark Star & Quick Primary Button */}
-                  <div className="flex items-center gap-2.5 self-start sm:self-center">
+                  <div className="flex items-center gap-2.5 self-start sm:self-center shrink-0">
                     <button
                       type="button"
                       onClick={() => toggleSaveRoute(activeService)}
-                      className={`p-2.5 rounded-xl border transition cursor-pointer ${
+                      className={`p-2.5 rounded-xl border transition cursor-pointer shrink-0 ${
                         isRouteSaved
                           ? "bg-amber-50 border-amber-300 text-amber-500"
                           : "bg-white border-slate-200 text-slate-400 hover:text-amber-500"
@@ -1768,15 +1811,15 @@ export function DefusalDashboard({
                       href={activeService.directUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`px-5 py-2.5 rounded-xl text-white font-semibold text-xs sm:text-sm shadow-md active:scale-98 transition flex items-center gap-2 cursor-pointer ${
+                      className={`px-4 sm:px-5 py-2.5 rounded-xl text-white font-semibold text-xs sm:text-sm shadow-md active:scale-98 transition flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                         activeService.isFreeService
                           ? "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20"
                           : "bg-linear-to-r from-[#1658eb] to-[#0f4bc9] hover:from-[#1246c4] hover:to-[#0d3ea6] shadow-blue-500/20"
                       }`}
-                      title={`Open official ${activeService.name} cancellation portal in new tab`}
+                      title={getActionTooltip(activeService, getActionBtnLabel(activeService))}
                     >
-                      <span>{activeService.isFreeService ? "Visit Official Site" : "Open Cancellation Portal"}</span>
-                      <ExternalLink className="w-4 h-4" />
+                      <span>{getActionBtnLabel(activeService)}</span>
+                      <ExternalLink className="w-4 h-4 shrink-0" />
                     </a>
                   </div>
                 </div>

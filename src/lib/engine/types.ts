@@ -60,7 +60,12 @@ export interface DestinationNode {
     confidenceScore: number;
     evidenceSummary: string;
     lastVerifiedDate: string;
-    verifiedBy: "registry" | "algorithmic_discovery" | "ai_validated";
+    verifiedBy:
+      | "registry"
+      | "algorithmic_discovery"
+      | "ai_validated"
+      | "brave_search_verified"
+      | "brave_search_grounded";
   };
 }
 

@@ -359,7 +359,9 @@ export async function discoverLiveWeb(query: string): Promise<LiveDiscoveryResul
           ? `Verified from ${sourceEngine}: official portal (${top.domain}) for free/open-source tool "${cleanQuery}".`
           : `Verified from ${sourceEngine}: official destination (${top.domain} -> ${top.url}) for "${cleanQuery}".`,
         lastVerifiedDate: new Date().toISOString().split("T")[0],
-        verifiedBy: sourceEngine.includes("Brave") ? "brave_search_verified" as any : "algorithmic_discovery",
+        verifiedBy: sourceEngine.includes("Brave")
+          ? "brave_search_verified"
+          : "algorithmic_discovery",
       },
     };
 

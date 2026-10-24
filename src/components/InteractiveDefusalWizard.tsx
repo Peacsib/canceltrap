@@ -335,7 +335,11 @@ export function InteractiveDefusalWizard({
                       </>
                     ) : (
                       <>
-                        <span>Open Cancellation Page</span>
+                        <span>
+                          {(merchant?.name || "").toLowerCase().includes("google cloud")
+                            ? "Open Billing Console"
+                            : "Open Cancellation Page"}
+                        </span>
                         <ExternalLink className="w-4 h-4" />
                       </>
                     )}
