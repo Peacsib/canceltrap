@@ -72,7 +72,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(result);
     }
 
-    // Stage 4: Real-time Live Web Discovery (searches Google/web for authentic real-world domains)
+    // Stage 4: AI-assisted discovery for uncataloged providers via Gemini 3.8 Flash
+    if (process.env.GEMINI_API_KEY) {
+      const providerName = result.destination?.providerName || trimmedQuery;
+      const actionType = result.destination?.actionType || actionOverride || "cancel_subscription";
+      const aiResult = await discoverWithAI(trimmedQuery, providerName, actionType);
+
+      if (aiResult && aiResult.resolved && aiResult.destination) {
+        return NextResponse.json(aiResult);
+      }
+    }
+
+    // Stage 5: Fallback to real-time live web discovery
     const liveWebRes = await discoverLiveWeb(trimmedQuery);
     if (liveWebRes && liveWebRes.found && liveWebRes.destination) {
       return NextResponse.json({
@@ -80,22 +91,6 @@ export async function POST(req: NextRequest) {
         destination: liveWebRes.destination,
         candidates: liveWebRes.candidates,
       });
-    }
-
-    // Stage 5: AI-assisted discovery for unknown providers via Gemini
-    if (
-      !result.resolved &&
-      result.destination?.verification?.status === "UNRESOLVED"
-    ) {
-      const aiResult = await discoverWithAI(
-        trimmedQuery,
-        result.destination.providerName,
-        result.destination.actionType
-      );
-
-      if (aiResult) {
-        return NextResponse.json(aiResult);
-      }
     }
 
     // Fallback: return whatever we have
