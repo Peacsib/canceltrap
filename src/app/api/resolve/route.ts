@@ -11,6 +11,7 @@
 //   2. If unresolved → AI-assisted discovery via Gemini
 // ─────────────────────────────────────────────────────────────────────────────
 
+import dns from "dns";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { resolve, resolveWithAction } from "@/lib/engine/resolver";
@@ -18,6 +19,50 @@ import { discoverLiveWeb } from "@/lib/engine/liveDiscovery";
 import { ActionType, ResolutionResult } from "@/lib/engine/types";
 
 export const maxDuration = 30;
+
+async function verifyAndSanitizeUrl(targetUrl: string): Promise<string> {
+  try {
+    const parsed = new URL(targetUrl);
+    const hostname = parsed.hostname;
+
+    // Check if the hostname resolves via DNS
+    try {
+      await Promise.race([
+        dns.promises.lookup(hostname),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("DNS timeout")), 1500)),
+      ]);
+      return targetUrl; // Verified on DNS!
+    } catch {
+      // Subdomain failed (e.g. selfcare.netone.co.zw) -> test parent/root candidates
+      const parts = hostname.split(".");
+      if (parts.length > 2) {
+        const candidates = [
+          "www." + parts.slice(1).join("."),
+          parts.slice(1).join("."),
+        ];
+        if (parts.length > 3) {
+          candidates.push(parts.slice(-2).join("."));
+          candidates.push("www." + parts.slice(-2).join("."));
+        }
+        for (const cand of candidates) {
+          try {
+            await Promise.race([
+              dns.promises.lookup(cand),
+              new Promise((_, reject) => setTimeout(() => reject(new Error("DNS timeout")), 1000)),
+            ]);
+            parsed.hostname = cand;
+            return parsed.toString();
+          } catch {
+            continue;
+          }
+        }
+      }
+      return targetUrl;
+    }
+  } catch {
+    return targetUrl;
+  }
+}
 
 function isObviouslyFakeQuery(query: string): boolean {
   const clean = query.trim().toLowerCase();
@@ -137,7 +182,11 @@ CRITICAL RULES:
 2. A billing dashboard (e.g. /billing) is NOT a successful result if the user needs to navigate further to find the cancel button.
 3. Distinguish between: the cancellation page itself vs. a page that LINKS to the cancellation page.
 4. If the service uses disguised terminology (e.g., "Downgrade to free" instead of "Cancel"), identify the REAL action label.
-5. NEVER invent or hallucinate URLs. If you are unsure, say so.
+5. NEVER invent or hallucinate URLs or speculative subdomains:
+   - Only return domains and subdomains that are known to exist on public DNS.
+   - NEVER guess or invent speculative subdomains (such as "selfcare.[domain]", "portal.[domain]", "cancel.[domain]") unless it is an established, universally recognized portal (e.g. "myaccount.google.com").
+   - If you are unsure whether a specialized subdomain exists, ALWAYS default to the official primary website (e.g. "https://www.netone.co.zw" or "https://[domain]") where the user can log in or access account settings.
+   - For mobile network operators / telecom providers (e.g. NetOne, Econet, MTN, Vodacom), provide the primary official website AND include the exact USSD shortcodes (e.g., *111#, *130#) in the navigation steps so users can cancel recurring bundles directly from their mobile device.
 7. FORGIVING BRAND & SERVICE MATCHING: Users frequently search using informal names, typos, or partial queries (e.g., "ecoai", "eco ai", "strava", "midjourney", "cursor", "elevenlabs", "copilot", etc.). If the query refers to ANY real software, AI startup, SaaS tool, cloud platform, media app, or consumer subscription found anywhere on Google or the web, YOU MUST RESOLVE IT.
    - Formulate its canonical domain (e.g., "ecoai.com", "strava.com", "cursor.com").
    - Find or construct the primary cancellation/billing settings endpoint (e.g., "https://[domain]/settings/billing", "https://app.[domain]/account", or Stripe customer portal).
@@ -209,6 +258,7 @@ Respond with ONLY valid JSON matching this schema:
       };
     }
 
+    const sanitizedTargetUrl = await verifyAndSanitizeUrl(aiResponse.targetUrl);
     const isFree = Boolean(aiResponse.isFreeService || actionType === "zero_billing_free");
 
     // Build destination from AI response
@@ -218,9 +268,9 @@ Respond with ONLY valid JSON matching this schema:
         id: `ai-${providerName.toLowerCase().replace(/\s+/g, "-")}`,
         providerName: aiResponse.providerName || providerName,
         providerDomain:
-          extractDomainFromUrl(aiResponse.targetUrl) || providerName + ".com",
+          extractDomainFromUrl(sanitizedTargetUrl) || providerName + ".com",
         actionType: isFree ? "zero_billing_free" : actionType,
-        targetUrl: aiResponse.targetUrl,
+        targetUrl: sanitizedTargetUrl,
         requiresAuth: aiResponse.requiresAuth ?? (!isFree),
         isModalOrInPage: aiResponse.isModalOrInPage ?? false,
         isFreeService: isFree,

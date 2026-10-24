@@ -132,6 +132,69 @@ export const DESTINATION_REGISTRY: RegistryEntry[] = [
   },
 
   // ──────────────────────────────────────────────────────────────────────
+  // NetOne Cellular (Zimbabwe Mobile Network & Value Added Services)
+  // ──────────────────────────────────────────────────────────────────────
+  {
+    id: "netone",
+    providerName: "NetOne Cellular (Zimbabwe)",
+    providerDomain: "netone.co.zw",
+    aliases: [
+      "netone",
+      "net one",
+      "netone cellular",
+      "netone zimbabwe",
+      "one fusion",
+      "onefusion",
+      "onemoney",
+      "one money",
+      "*111#",
+      "*130#",
+      "netone.co.zw",
+      "www.netone.co.zw",
+    ],
+    products: ["OneFusion Bundles", "Data & Voice Passes", "Value Added Services", "OneMoney Subscriptions"],
+    category: "Mobile Telecommunications & VAS",
+    supportedActions: [
+      {
+        actionType: "cancel_subscription",
+        targetUrl: "https://www.netone.co.zw",
+        requiresAuth: true,
+        isModalOrInPage: true,
+        navigationPath: [
+          {
+            stepNumber: 1,
+            label: "USSD Defusal Dial (*111# or *130#)",
+            instruction: "On your NetOne mobile handset, dial *111# to launch the official NetOne Customer Self-Service USSD portal. If your subscription is billed via mobile money, dial *130# for OneMoney.",
+            targetType: "button",
+            decoyWarning: "Do not rely on simply depleting airtime; recurring bundles deduct automatically from any subsequent airtime or OneMoney top-up.",
+          },
+          {
+            stepNumber: 2,
+            label: "Select Subscriptions & Active Bundles",
+            instruction: "In the *111# USSD menu, reply with the number for 'Active Bundles / Subscriptions' or 'Manage Services'. Select 'Cancel Auto-Renewal' or 'Deactivate Service'.",
+            targetType: "button",
+            decoyWarning: "Do not select 'Buy Bundles' or 'Check Balance' — look specifically for Manage or Opt-Out options.",
+          },
+          {
+            stepNumber: 3,
+            label: "Official Portal & Care Confirmation",
+            instruction: "Visit the verified NetOne portal at https://www.netone.co.zw or contact NetOne Customer Care by dialing 123 (toll-free on NetOne) or WhatsApp +263 712 980 198 to confirm deactivation.",
+            targetType: "link",
+            decoyWarning: "Ensure you receive an official carrier SMS confirming service deactivation to prevent unexpected future airtime deductions.",
+          },
+        ],
+        darkPatternWarnings: [
+          "Silent airtime drain: Auto-renewing bundles deduct immediately from newly loaded airtime or OneMoney balances",
+          "Speculative subdomains: Portals like 'selfcare.netone.co.zw' do not exist on public DNS; all management is strictly via USSD (*111#) or official www.netone.co.zw",
+          "Buried opt-out options in multi-layered USSD carrier submenus",
+        ],
+        finePrintNotes: "Dial *111# on your NetOne phone or visit https://www.netone.co.zw. NetOne Customer Care WhatsApp: +263 712 980 198, Toll-Free: 123.",
+        lastVerifiedDate: "2026-10-24",
+      },
+    ],
+  },
+
+  // ──────────────────────────────────────────────────────────────────────
   // Lovable (GPT Engineer)
   // ──────────────────────────────────────────────────────────────────────
   {
