@@ -51,11 +51,11 @@ export function ActionHub({ data }: ActionHubProps) {
     return isNaN(d.getTime())
       ? dateStr
       : d.toLocaleString(undefined, {
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "2-digit",
-        });
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      });
   };
 
   return (
@@ -83,15 +83,14 @@ export function ActionHub({ data }: ActionHubProps) {
         <button
           type="button"
           onClick={handleOpenPortal}
-          className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer ${
-            portalOpened
+          className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer ${portalOpened
               ? "bg-[#54b66e] text-white shadow-md"
               : "btn-primary"
-          }`}
+            }`}
         >
           {portalOpened ? (
             <>
-              <Check className="w-4 h-4 stroke-[3]" />
+              <Check className="w-4 h-4 stroke-3" />
               <span>Portal Opened — Complete steps on left</span>
             </>
           ) : (
