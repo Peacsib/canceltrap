@@ -847,8 +847,12 @@ export function DefusalDashboard({
     });
   }, []);
 
-  const loadCustomDestination = useCallback((dest: DestinationNode) => {
+  const loadCustomDestination = useCallback((dest: DestinationNode, skipAnimationReset = false) => {
     setIsResolving(false);
+    if (!skipAnimationReset) {
+      setIsSearchingFigure(false);
+      setSearchCelebration(false);
+    }
     setResolveError(null);
     const isFree = Boolean(dest.isFreeService || dest.actionType === "zero_billing_free");
     const custom: ServiceData = {
@@ -900,12 +904,14 @@ export function DefusalDashboard({
     recordHistory(dest.id, dest.providerName, custom.actionTitle);
   }, [recordHistory]);
 
-  const selectServiceById = useCallback((id: string) => {
+  const selectServiceById = useCallback((id: string, skipAnimationReset = false) => {
     const key = id.toLowerCase();
     setSelectedServiceId(key);
     setIsResolving(false);
-    setIsSearchingFigure(false);
-    setSearchCelebration(false);
+    if (!skipAnimationReset) {
+      setIsSearchingFigure(false);
+      setSearchCelebration(false);
+    }
     setResolveError(null);
 
     // 1. Check in-memory & session resolved cache
@@ -939,7 +945,7 @@ export function DefusalDashboard({
     // 3. Try resolving from registry
     const res = resolve(key);
     if (res.resolved && res.destination) {
-      loadCustomDestination(res.destination);
+      loadCustomDestination(res.destination, skipAnimationReset);
     } else {
       // Look up registry entry
       const reg = DESTINATION_REGISTRY.find(
@@ -987,6 +993,48 @@ export function DefusalDashboard({
     }
   }, [loadCustomDestination, recordHistory]);
 
+  const selectPresetWithAnimation = useCallback(
+    async (id: string) => {
+      const key = id.toLowerCase();
+      setSelectedServiceId(key);
+      setResolveError(null);
+
+      // Determine human-readable service name for search display
+      let displayName = id;
+      if (PRESET_SERVICES[key]) {
+        displayName = PRESET_SERVICES[key].name;
+      } else {
+        const reg = DESTINATION_REGISTRY.find(
+          (e) => e.id.toLowerCase() === key || e.aliases.some((a) => a.toLowerCase() === key)
+        );
+        if (reg) {
+          displayName = reg.providerName;
+        } else {
+          displayName = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        }
+      }
+
+      setSidebarTab("overview");
+      setActiveSearchTerm(displayName);
+      setSearchQuery(displayName);
+
+      // Trigger search figure hunt animation
+      setIsSearchingFigure(true);
+      setSearchCelebration(false);
+
+      // Minimum hunting animation duration
+      await new Promise((r) => setTimeout(r, 1300));
+
+      // Resolve the service data without wiping animation
+      selectServiceById(key, true);
+
+      // Trigger celebration / destination found mode
+      setIsSearchingFigure(true);
+      setSearchCelebration(true);
+    },
+    [selectServiceById]
+  );
+
   const handleSearchQuery = useCallback(async (queryText: string) => {
     const q = queryText.toLowerCase().trim();
     if (!q) return;
@@ -1009,7 +1057,7 @@ export function DefusalDashboard({
       const res = resolve(q);
       if (res.resolved && res.destination) {
         await waitMinHuntAnimation();
-        loadCustomDestination(res.destination);
+        loadCustomDestination(res.destination, true);
         setIsSearchingFigure(true);
         setSearchCelebration(true);
         return;
@@ -1019,43 +1067,43 @@ export function DefusalDashboard({
     // 2. Fast registry check for instant presets
     if (q.includes("aws") || q.includes("amazon")) {
       await waitMinHuntAnimation();
-      selectServiceById("aws");
+      selectServiceById("aws", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
     } else if (q.includes("adobe") || q.includes("photoshop") || q.includes("creative cloud")) {
       await waitMinHuntAnimation();
-      selectServiceById("adobe");
+      selectServiceById("adobe", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
     } else if (q.includes("microsoft") || q.includes("office") || q.includes("365")) {
       await waitMinHuntAnimation();
-      selectServiceById("microsoft_365");
+      selectServiceById("microsoft_365", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
     } else if (q.includes("google") || q.includes("cloud") || q.includes("gcp") || q.includes("gemini")) {
       await waitMinHuntAnimation();
-      selectServiceById("google_cloud");
+      selectServiceById("google_cloud", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
     } else if (q.includes("lovable") || q.includes("gpt engineer")) {
       await waitMinHuntAnimation();
-      selectServiceById("lovable");
+      selectServiceById("lovable", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
     } else if (q.includes("openai") || q.includes("chatgpt")) {
       await waitMinHuntAnimation();
-      selectServiceById("chatgpt");
+      selectServiceById("chatgpt", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
     } else if (q.includes("figma")) {
       await waitMinHuntAnimation();
-      selectServiceById("figma");
+      selectServiceById("figma", true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
@@ -1065,7 +1113,7 @@ export function DefusalDashboard({
     const localRes = resolve(q);
     if (localRes.resolved && localRes.destination) {
       await waitMinHuntAnimation();
-      loadCustomDestination(localRes.destination);
+      loadCustomDestination(localRes.destination, true);
       setIsSearchingFigure(true);
       setSearchCelebration(true);
       return;
@@ -1124,11 +1172,11 @@ export function DefusalDashboard({
     if (serviceParam && serviceParam !== prevServiceParamRef.current) {
       prevServiceParamRef.current = serviceParam;
       const t = setTimeout(() => {
-        selectServiceById(serviceParam);
+        selectPresetWithAnimation(serviceParam);
       }, 0);
       return () => clearTimeout(t);
     }
-  }, [serviceParam, selectServiceById]);
+  }, [serviceParam, selectPresetWithAnimation]);
 
   // Synchronize initialDestination when prop changes
   const prevDestIdRef = useRef(initialDestination?.id);
@@ -1243,7 +1291,7 @@ export function DefusalDashboard({
   }, [activeService]);
 
   return (
-    <div className="relative min-h-screen w-full bg-linear-to-br from-[#d4ecfd] via-[#e8f3fd] to-[#c7e5fd] flex text-[#0c1b38] antialiased overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-linear-to-br from-[#d4ecfd] via-[#e8f3fd] to-[#c7e5fd] flex flex-col md:flex-row text-[#0c1b38] antialiased overflow-x-hidden">
       {/* ─── Ambient Oceanic Water Backdrop Layer ─── */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         {/* Soft caustics wallpaper from newhero.webp */}
@@ -1317,8 +1365,117 @@ export function DefusalDashboard({
         />
       </div>
 
-      {/* ─── Left Sidebar Navigation (Frosted Scotch Glass Panel) ─── */}
-      <aside className="relative z-10 w-60 sm:w-64 shrink-0 border-r border-white/70 bg-white/55 backdrop-blur-2xl p-6 sm:p-8 flex flex-col justify-between select-none shadow-[4px_0_24px_rgba(20,70,160,0.03)]">
+      {/* ─── Mobile Top Header Navigation (Frosted Scotch Glass Strip) ─── */}
+      <header className="md:hidden sticky top-0 z-30 w-full bg-white/80 backdrop-blur-xl border-b border-white/80 shadow-[0_4px_16px_rgba(20,70,160,0.04)] px-4 py-3 flex flex-col gap-2.5">
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => (onReset ? onReset() : router.push("/"))}
+            className="inline-flex items-center gap-2 group cursor-pointer"
+            title="CancelTrap Home"
+          >
+            <Image
+              src="/canceltrap-logo.webp"
+              alt="CancelTrap"
+              width={120}
+              height={30}
+              priority
+              className="h-6 w-auto object-contain"
+            />
+          </button>
+          <button
+            type="button"
+            onClick={() => (onReset ? onReset() : router.push("/"))}
+            className="text-xs text-[#556987] hover:text-[#1658eb] font-semibold flex items-center gap-1 transition cursor-pointer px-2.5 py-1 rounded-full bg-white/60 border border-white/80"
+          >
+            <span>← Home</span>
+          </button>
+        </div>
+
+        {/* Mobile Horizontal Scrollable Segmented Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 -mx-1 px-1">
+          <button
+            type="button"
+            onClick={() => {
+              setSidebarTab("overview");
+              router.push("/dashboard");
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
+              sidebarTab === "overview"
+                ? "bg-[#1658eb] text-white shadow-xs"
+                : "bg-white/65 text-[#486284] border border-white/80"
+            }`}
+          >
+            <Home className="w-3.5 h-3.5" />
+            <span>Overview</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSidebarTab("find");
+              router.push("/find");
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
+              sidebarTab === "find"
+                ? "bg-[#1658eb] text-white shadow-xs"
+                : "bg-white/65 text-[#486284] border border-white/80"
+            }`}
+          >
+            <Search className="w-3.5 h-3.5" />
+            <span>Find destination</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSidebarTab("saved");
+              router.push("/saved");
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
+              sidebarTab === "saved"
+                ? "bg-[#1658eb] text-white shadow-xs"
+                : "bg-white/65 text-[#486284] border border-white/80"
+            }`}
+          >
+            <Bookmark className="w-3.5 h-3.5" />
+            <span>Saved</span>
+            {isMounted && savedRoutes.length > 0 && (
+              <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${
+                sidebarTab === "saved" ? "bg-white/25 text-white" : "bg-blue-100 text-[#1658eb]"
+              }`}>
+                {savedRoutes.length}
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSidebarTab("history");
+              router.push("/history");
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
+              sidebarTab === "history"
+                ? "bg-[#1658eb] text-white shadow-xs"
+                : "bg-white/65 text-[#486284] border border-white/80"
+            }`}
+          >
+            <Clock className="w-3.5 h-3.5" />
+            <span>History</span>
+            {isMounted && historyItems.length > 0 && (
+              <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${
+                sidebarTab === "history" ? "bg-white/25 text-white" : "bg-slate-200 text-slate-600"
+              }`}>
+                {historyItems.length}
+              </span>
+            )}
+          </button>
+        </div>
+      </header>
+
+      {/* ─── Left Sidebar Navigation (Desktop Scotch Glass Panel) ─── */}
+      <aside className="hidden md:flex relative z-10 w-60 sm:w-64 shrink-0 border-r border-white/70 bg-white/55 backdrop-blur-2xl p-6 sm:p-8 flex-col justify-between select-none shadow-[4px_0_24px_rgba(20,70,160,0.03)]">
         <div className="space-y-6">
           {/* Brand Logo & Back to Home button */}
           <div className="flex items-center justify-between pb-3 border-b border-white/60">
@@ -1440,7 +1597,7 @@ export function DefusalDashboard({
       </aside>
 
       {/* ─── Main Content Canvas ─── */}
-      <main className="relative z-10 flex-1 py-10 px-8 sm:px-12 lg:px-16 max-w-5xl text-left">
+      <main className="relative z-10 flex-1 w-full py-6 sm:py-8 md:py-10 px-4 sm:px-8 lg:px-16 max-w-5xl text-left">
         {/* ─── TAB 1: OVERVIEW ─── */}
         {sidebarTab === "overview" && (
           <>
@@ -1538,7 +1695,7 @@ export function DefusalDashboard({
                     <div
                       key={item.id}
                       onClick={() => {
-                        selectServiceById(item.id);
+                        selectPresetWithAnimation(item.id);
                         setShowSuggestions(false);
                       }}
                       className="p-3.5 px-5 flex items-center justify-between hover:bg-sky-50/60 cursor-pointer transition"
@@ -1575,7 +1732,7 @@ export function DefusalDashboard({
               {/* AWS Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("aws")}
+                onClick={() => selectPresetWithAnimation("aws")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "aws"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1589,7 +1746,7 @@ export function DefusalDashboard({
               {/* Google Cloud Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("google_cloud")}
+                onClick={() => selectPresetWithAnimation("google_cloud")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "google_cloud"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1603,7 +1760,7 @@ export function DefusalDashboard({
               {/* Adobe Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("adobe")}
+                onClick={() => selectPresetWithAnimation("adobe")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "adobe"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1617,7 +1774,7 @@ export function DefusalDashboard({
               {/* Microsoft 365 Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("microsoft_365")}
+                onClick={() => selectPresetWithAnimation("microsoft_365")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "microsoft_365"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1631,7 +1788,7 @@ export function DefusalDashboard({
               {/* ChatGPT Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("chatgpt")}
+                onClick={() => selectPresetWithAnimation("chatgpt")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "chatgpt" || selectedServiceId === "openai"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1645,7 +1802,7 @@ export function DefusalDashboard({
               {/* Lovable Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("lovable")}
+                onClick={() => selectPresetWithAnimation("lovable")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "lovable"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1659,7 +1816,7 @@ export function DefusalDashboard({
               {/* Figma Chip */}
               <button
                 type="button"
-                onClick={() => selectServiceById("figma")}
+                onClick={() => selectPresetWithAnimation("figma")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "figma"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1673,7 +1830,7 @@ export function DefusalDashboard({
               {/* Wikipedia Chip (Free Non-Profit) */}
               <button
                 type="button"
-                onClick={() => selectServiceById("wikipedia")}
+                onClick={() => selectPresetWithAnimation("wikipedia")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "wikipedia"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1688,7 +1845,7 @@ export function DefusalDashboard({
               {/* Blender Chip (Free Open-Source) */}
               <button
                 type="button"
-                onClick={() => selectServiceById("blender")}
+                onClick={() => selectPresetWithAnimation("blender")}
                 className={`px-4 py-1.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
                   selectedServiceId === "blender"
                     ? "bg-white/90 border-sky-300 text-[#1658eb] shadow-[0_2px_8px_rgba(22,88,235,0.12),inset_0_1px_1px_rgba(255,255,255,1)] backdrop-blur-xl"
@@ -1948,7 +2105,7 @@ export function DefusalDashboard({
                 {historyItems.slice(0, 4).map((item) => (
                   <div
                     key={`${item.id}-${item.timestamp}`}
-                    onClick={() => selectServiceById(item.id)}
+                    onClick={() => selectPresetWithAnimation(item.id)}
                     className="p-4 sm:p-5 flex items-center justify-between cursor-pointer hover:bg-white/60 transition group"
                   >
                     <div className="flex items-center gap-3.5">
@@ -2010,11 +2167,7 @@ export function DefusalDashboard({
               {Object.values(PRESET_SERVICES).map((service) => (
                 <div
                   key={service.id}
-                  onClick={() => {
-                    setActiveService(service);
-                    setSelectedServiceId(service.id);
-                    setSidebarTab("overview");
-                  }}
+                  onClick={() => selectPresetWithAnimation(service.id)}
                   className="p-5 rounded-2xl bg-white/75 backdrop-blur-xl border border-white/90 hover:border-sky-400 hover:bg-white/90 hover:shadow-[0_12px_36px_rgba(20,70,160,0.12)] transition cursor-pointer group flex items-start gap-4 shadow-[0_6px_20px_rgba(20,70,160,0.04),inset_0_1px_1px_rgba(255,255,255,1)]"
                 >
                   {renderServiceIcon(service.id, service.name, "row")}
@@ -2159,10 +2312,7 @@ export function DefusalDashboard({
                 {historyItems.map((item, index) => (
                   <div
                     key={`${item.id}-${index}`}
-                    onClick={() => {
-                      selectServiceById(item.id);
-                      setSidebarTab("overview");
-                    }}
+                    onClick={() => selectPresetWithAnimation(item.id)}
                     className="p-4 sm:p-5 flex items-center justify-between hover:bg-white/60 cursor-pointer transition group"
                   >
                     <div className="flex items-center gap-3.5">

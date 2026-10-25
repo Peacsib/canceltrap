@@ -273,9 +273,9 @@ export function HeroLanding({
       </header>
 
       {/* Main Hero Section: Split into distinct Left and Right halves with a visible middle line */}
-      <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-6 lg:py-10 gap-8 lg:gap-0">
-        {/* Hero Left Column: Brand promise, headline & CTA */}
-        <div className="w-full lg:w-[48%] xl:w-[46%] text-left flex flex-col justify-center space-y-4 pr-0 lg:pr-8 xl:pr-12">
+      <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-4 lg:py-10 gap-0">
+        {/* Hero Left Column: Brand promise, headline & CTA (Takes full first screen on mobile) */}
+        <div className="w-full lg:w-[48%] xl:w-[46%] text-left flex flex-col justify-center space-y-4 pr-0 lg:pr-8 xl:pr-12 min-h-[calc(100svh-5.5rem)] lg:min-h-0 py-6 lg:py-0">
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee]/90 backdrop-blur-md border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs interactive-pill hover:border-[#0f8b3c]/50 hover:shadow-[0_6px_20px_rgba(15,139,60,0.22)] staged-enter staged-delay-1">
             <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -316,7 +316,11 @@ export function HeroLanding({
             </button>
           </div>
 
-
+          {/* Subtle mobile scroll indicator hint */}
+          <div className="lg:hidden flex items-center gap-2 pt-4 text-xs text-sky-600/70 font-medium">
+            <span>Scroll down to explore interactive defusal arena</span>
+            <ArrowRight className="w-3.5 h-3.5 rotate-90 animate-bounce" />
+          </div>
 
           {/* Error Alert if any */}
           {error && (
@@ -337,8 +341,8 @@ export function HeroLanding({
         {/* Visible Middle Split Line: Distinct boundary separating Hero Left from Hero Right */}
         <div className="hidden lg:block w-[1.5px] h-80 xl:h-90 bg-linear-to-b from-transparent via-[#1658eb]/25 to-transparent shrink-0 my-auto shadow-[0_0_8px_rgba(22,88,235,0.12)] staged-enter staged-delay-5" />
 
-        {/* Hero Right Column: 3D glass chair showcase & interactive zone */}
-        <div className="w-full lg:w-[48%] xl:w-[50%] flex items-center justify-center lg:translate-x-24 xl:translate-x-32 lg:-translate-y-4 xl:-translate-y-5 relative min-h-95 lg:min-h-115 staged-enter staged-delay-6">
+        {/* Hero Right Column: 3D glass chair showcase & interactive zone (Revealed via scroll on mobile) */}
+        <div className="w-full lg:w-[48%] xl:w-[50%] flex items-center justify-center lg:translate-x-24 xl:translate-x-32 lg:-translate-y-4 xl:-translate-y-5 relative min-h-[85svh] lg:min-h-115 py-10 lg:py-0 staged-enter staged-delay-6">
           {/* Active AI Scanning Overlay Card when analyzing */}
           {isAnalyzing ? (
             <div className="w-full max-w-md p-7 rounded-3xl bg-white/95 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(22,88,235,0.25)] border border-white animate-in zoom-in-95 duration-200 z-30">
@@ -407,8 +411,8 @@ export function HeroLanding({
         </div>
       </div>
 
-      {/* Bottom Features Strip: Subtle, calm, unobtrusive trust footer */}
-      <footer className="w-full bg-white/10 backdrop-blur-[2px] border-t border-sky-100/40 py-2.5 px-6 sm:px-12 lg:px-16 z-20 staged-enter staged-delay-7">
+      {/* Bottom Features Strip: Hidden on mobile per design spec */}
+      <footer className="hidden md:block w-full bg-white/10 backdrop-blur-[2px] border-t border-sky-100/40 py-2.5 px-6 sm:px-12 lg:px-16 z-20 staged-enter staged-delay-7">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
           {/* Item 1: Save money */}
           <div className="flex items-center gap-3 flex-1 cursor-default opacity-80 hover:opacity-100 transition-opacity">

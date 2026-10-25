@@ -342,7 +342,7 @@ Respond with ONLY valid JSON matching this schema:
               ? "Verified free / open-source software with zero recurring subscription fees."
               : "Discovered via AI analysis."),
           lastVerifiedDate: new Date().toISOString().split("T")[0],
-          verifiedBy: usedBrave ? ("brave_search_grounded" as any) : ("ai_validated" as const),
+          verifiedBy: usedBrave ? ("brave_search_grounded" as const) : ("ai_validated" as const),
         },
       },
     };
