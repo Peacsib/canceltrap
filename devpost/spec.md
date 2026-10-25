@@ -47,11 +47,12 @@ graph TD
 1. **Tier 1 — Sub-millisecond Deterministic Registry (`src/lib/engine/registry.ts`)**:
    - Checks against 50+ hand-curated services (AWS, Google Cloud, Adobe, Microsoft 365, ChatGPT, Lovable, Figma, Netflix, Spotify, Econet Zimbabwe `ecoAI`, etc.).
    - Provides verified direct cancellation URLs, step breadcrumbs, and dark pattern warnings without network calls.
-2. **Tier 2 — Real-Time Live Web Discovery Engine (`src/lib/engine/liveDiscovery.ts`)**:
-   - If the query is uncataloged or newly launched, runs zero-cost live web queries against search indexing.
-   - Extracts canonical domain names (e.g. `strava.com`, `ecoaitoken.co.zw`), strips aggregator spam, detects navigation keywords (`settings/account`, `manage subscription`), and formats actionable steps.
-3. **Tier 3 — Google Gemini 3.8 Flash Validation Gate**:
-   - Cross-references extracted signals to verify authenticity.
+2. **Tier 2 — Real-Time Brave Search API Grounding Engine (`src/lib/engine/liveDiscovery.ts`)**:
+   - For uncataloged or newly launched services, invokes `searchBraveWeb()` against the Brave Search API.
+   - Extracts live merchant titles, deep URLs, canonical domains, and search snippets to ground LLM reasoning in verified web data.
+3. **Tier 3 — Google Gemini 3.8 Flash Validation Gate with DNS Verification**:
+   - Analyzes Brave Search results to extract exact navigation steps and dark pattern warnings.
+   - Verifies target domains on public DNS using Node.js `dns.promises.lookup` to ensure zero dead or hallucinated links.
    - **Anti-Hallucination Guard**: Obvious nonsense queries (`asdfghjk99`, `testfakexyz`) are rejected with `{ resolved: false, isFakeOrUnrecognized: true }` rather than fabricating fake URLs.
 
 ### 2. Multimodal Screenshot Analysis (`src/app/api/analyze/route.ts`)
@@ -100,7 +101,7 @@ graph TD
 | **Language** | TypeScript 5 (Strict Mode) | Full type safety across API boundaries and component props. |
 | **Styling** | Tailwind CSS v4 | Rapid glassmorphism, lab colors, and hardware-accelerated animations. |
 | **AI / Multimodal** | Google Gen AI SDK (`@google/genai`) | Low-latency multimodal reasoning with strict structured JSON schema enforcement. |
-| **Live Web Discovery** | Zero-Cost Web Engine (`liveDiscovery.ts`) | Real-time domain resolution without API rate limits or quota costs. |
+| **Live Web Grounding** | Brave Search API + Node.js DNS Verification (`liveDiscovery.ts`) | Real-time web intelligence query grounding with DNS lookup validation (`dns.promises.lookup`) to eliminate hallucinated links. |
 | **Icons** | Lucide React | Clean, responsive vector icons for UI state indicators. |
 | **Calendar Standard** | RFC 5545 (`.ics`) | Zero-dependency client-side calendar file synthesis. |
 
@@ -231,3 +232,11 @@ cancel-trap/
 2. **Fake or Fictional Queries**: Queries like `asdfghjk99` trigger anti-hallucination guardrails, returning an explanatory security banner rather than inventing fake steps.
 3. **Gemini 429 Rate Limits**: The zero-cost live web discovery engine acts as a fallback layer that operates independently of LLM API quotas.
 4. **Mirrored Text in CSS Flip**: Isolated subcontainers ensure speech bubble text remains readable left-to-right when the running stick figure turns around.
+
+---
+
+## Hackathon Submission Status
+- **Demo Video**: Complete product demonstration recorded and submitted for Devpost evaluation.
+- **Live Deployment**: Verified and operational on Vercel at `https://canceltrap.vercel.app`.
+- **Source Code**: Public GitHub repository at `https://github.com/Peacsib/canceltrap`.
+

@@ -64,10 +64,10 @@ Source: `scope.md > The Unique Kernel`, `scope.md > The Core Loop`, `scope.md > 
   - Direct link to launch the official portal in a split tab.
 
 ### Surface 3: Hero Landing
-- Single-viewport split layout:
-  - **Left panel**: Brand pill, punchy headline (*"Stop paying for subscriptions you forgot"*), concise two-line tagline, "Find my subscription" primary CTA, and "How it works" ghost button.
-  - **Right panel**: `BlueStickFighter` — an autonomous SVG martial-arts stick figure that free-roams, dodges, spins, dances, and strikes subscription brand logos (AWS, ChatGPT, Adobe, Lovable, Netflix, Gemini, etc.) with random comic hit tags and logo recoil effects.
-- Subtle footer strip with three benefit micro-cards (Save money / Save time / Stay in control).
+- Single-viewport split layout calibrated for desktop and mobile:
+  - **Left panel**: Brand pill, punchy headline (*"Stop paying for subscriptions you forgot"*), concise two-line tagline, "Find my subscription" primary CTA, "How it works" ghost button, and a mobile scroll indicator. On mobile viewports, the Left Panel fills the first screen (`min-h-[calc(100svh-5.5rem)]`) for an uncluttered initial view.
+  - **Right panel**: `BlueStickFighter` — an autonomous SVG martial-arts stick figure that free-roams, dodges, spins, dances, and strikes subscription brand logos (AWS, ChatGPT, Adobe, Lovable, Netflix, Gemini, etc.) with random comic hit tags and logo recoil effects, cleanly revealed on mobile upon scrolling down.
+- Subtle footer strip with three benefit micro-cards (Save money / Save time / Stay in control), hidden on mobile via `hidden md:block` to maximize screen real estate.
 - No redundant sign-in button; single "Dashboard" header button routes to `/dashboard`.
 
 ---
@@ -76,9 +76,9 @@ Source: `scope.md > The Unique Kernel`, `scope.md > The Core Loop`, `scope.md > 
 
 ### 1. Multi-Stage Discovery Pipeline
 - **Tier 1: Deterministic Registry (Sub-millisecond)**: 50+ hand-curated services with verified deep links and dark pattern breakdowns.
-- **Tier 2: Live Web Discovery Engine (`src/lib/engine/liveDiscovery.ts`)**: Real-time web intelligence querying live search indexes in ~200ms without API quotas, extracting canonical domains and cancellation navigation paths.
-- **Tier 3: Google Gemini 3.8 Flash Validation Gate**: Evaluates uncataloged queries, formats structured JSON payloads, and enforces anti-hallucination protocols.
-- **Anti-Hallucination Safe-Guard**: Rejects non-existent queries (`asdfghjk99`) with a clean security warning rather than fabricating fake URLs or steps.
+- **Tier 2: Brave Search API Live Grounding (`src/lib/engine/liveDiscovery.ts`)**: Real-time web intelligence querying the Brave Search API to discover live merchant URLs, settings endpoints, and cancellation terms for uncataloged queries.
+- **Tier 3: Google Gemini 3.8 Flash Validation Gate**: Synthesizes navigation steps strictly grounded in Brave Search results, verifying public DNS lookups (`dns.promises.lookup`) and enforcing strict anti-hallucination guardrails.
+- **Anti-Hallucination Safe-Guard**: Rejects non-existent queries (`asdfghjk99`) with a clean security warning shield rather than fabricating fake URLs or steps.
 
 ### 2. Universal High-Res Brand Marks
 - Powered by Google's universal favicon API (`https://www.google.com/s2/favicons?domain=${domain}&sz=128`) with DuckDuckGo fallback and styled initials.
@@ -116,3 +116,12 @@ Source: `scope.md > The Unique Kernel`, `scope.md > The Core Loop`, `scope.md > 
 - No post-charge legal dispute letters or bank chargebacks.
 - No user accounts or persistent backend databases (100% private, client-side session).
 - No scraping behind user authentication credentials.
+
+---
+
+## Verification & Video Demonstration
+- **Video Completed**: Product walkthrough demo video completed and submitted for Devpost evaluation.
+- **Production Deployment**: Verified live on Vercel (`https://canceltrap.vercel.app`).
+- **Code Repository**: Publicly accessible at `https://github.com/Peacsib/canceltrap`.
+- **Zero Errors**: Validated with `npx tsc --noEmit` and `npm run build` (0 lint errors, 0 type errors).
+

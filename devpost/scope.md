@@ -8,39 +8,42 @@ status: approved
 AI-powered dark-pattern subscription defuser & trial kill-switch to cancel subscriptions before you get charged.
 
 ## The Unique Kernel
-The moment CancelTrap spots a service name typed into the search bar, it tears through its deterministic registry and live web discovery engine, then equips the user with an entertaining comic step-by-step defusal checklist, a direct portal bypass button, and a 1-click calendar kill-switch (.ics) alongside the 5-year "Vampire Bleed" calculation — all to stop recurring charges before the trap springs.
+The moment CancelTrap spots a service name typed into the search bar, it queries its sub-millisecond deterministic registry and real-time Brave Search API grounding engine, cross-validates via Gemini 3.8 Flash, and equips the user with an entertaining comic step-by-step defusal checklist, a direct portal bypass button, and a 1-click calendar kill-switch (.ics) alongside the 5-year "Vampire Bleed" calculation — all to stop recurring charges before the trap springs.
 
 ## Who It's For
-Developers, tech professionals, and students who frequently sign up for modern developer tools, AI platforms, streaming media, and regional telecommunication services (e.g. Lovable, Adobe, Strava, Econet `ecoAI`) and risk getting hit by sneaky auto-renewals, hidden cancellation buttons, or confusing downgrade mazes. Today, they scramble through nested settings menus, forget renewal dates, or give up and eat unwanted recurring charges.
+Consumers, non-technical parents, developers, and students who frequently sign up for modern developer tools, AI platforms, streaming media, and regional telecommunication services (e.g. Lovable, Adobe, Strava, Econet `ecoAI`) and risk getting hit by sneaky auto-renewals, hidden cancellation buttons, or confusing downgrade mazes. Today, they scramble through nested settings menus, forget renewal dates, or give up and eat unwanted recurring charges.
 
 ## The Core Loop
 1. **Choose Input**:
    - **Universal Search**: Type any service name or paste any subscription/billing URL with autocomplete and real brand logo identification.
-   - **Interactive Presets**: Jump straight to one of our real-world demo presets (*Lovable Pro*, *Adobe Annual*, *7-Day AI Trial*) from the hero.
+   - **Interactive Presets**: Jump straight to one of our real-world demo presets (*AWS*, *Google Cloud*, *Adobe*, *Microsoft 365*, *ChatGPT*, *Lovable*, *Figma*, *Wikipedia*, *Blender*) from the hero or dashboard.
 2. **Enjoyous Comic Search & Multi-Stage Discovery**:
    - Watch the angry stick figure sprint corner to corner puffing ear steam, dodging decoy traps, and wielding a radar scanner.
-   - CancelTrap checks the sub-millisecond deterministic registry, queries the live web intelligence engine, and runs Gemini AI anti-hallucination validation.
+   - CancelTrap checks the sub-millisecond deterministic registry, grounds uncataloged queries with the real-time Brave Search API, and runs Gemini AI anti-hallucination validation with DNS checks.
    - Upon discovery, the runner screeches to a halt, turns emerald green, hoists the Golden Key of Defusal, and celebrates in a shower of confetti!
 3. **Review the Actionable "Defusal Dossier"**:
    - **Renewal Deadline & Countdown**: Remaining time before the charge hits.
    - **5-Year Vampire Bleed**: Compounding financial projection of what this subscription will drain if left running.
    - **Step-by-Step Defusal Checklist**: Practical breakdown exposing decoy buttons, "Pause" traps, or multi-page mazes.
    - **Direct Portal Bypass Button**: Instant direct URL to the merchant's verified cancellation/billing portal (or USSD/SMS codes for telecom services).
-   - **Side-by-Side Co-Pilot Modal**: In-app guidance window displaying cancellation steps alongside direct browser navigation.
+   - **Side-by-Side Co-Pilot Modal**: In-app guidance window (`InAppDefusalWindow.tsx`) displaying cancellation steps alongside direct browser navigation.
    - **1-Click Calendar Kill-Switch (.ics)**: Pre-configured calendar reminder set 24–48 hours prior to renewal so the user never forgets.
 
 ## Inspiration & Identity
+- **The Mother's Story**: Inspired by my mother getting trapped by an auto-renewing "free trial" document converter that silently charged her card month after month. Even as a software engineer, it took 15 minutes of digging through deceptive retention quizzes to cancel it. CancelTrap was built so everyday families never feel helpless against dark-pattern billing.
 - High-end glassy blue professional SaaS aesthetic.
 - Modern enterprise dashboard feel with translucent glass cards, soft atmospheric blue gradients, clean frosted panels, and sharp typography.
 - Entertaining comic animation elements inspired by hand-drawn sketches to bring dopamine and relief to an otherwise frustrating consumer ordeal.
 
 ## What "Working" Looks Like
+> **Video Demonstration Completed**: The end-to-end video walkthrough demonstrating every step below has been recorded, verified, and submitted for the Devpost hackathon.
+
 A 60-second end-to-end screen demonstration where:
-1. A user lands on the hero and sees the **BlueStickFighter** — a free-roaming martial-arts stick figure — beating, dodging, and celebrating alongside subscription brand logos on the right panel.
-2. The user clicks "Find my subscription" and types any global or regional subscription (e.g. `ecoai` in Zimbabwe or `strava` globally).
+1. A user lands on the hero and sees the **BlueStickFighter** — a free-roaming martial-arts stick figure — beating, dodging, and celebrating alongside subscription brand logos on the right panel (with a full-height first-screen viewport on mobile).
+2. The user clicks "Find my subscription" and types any global or regional subscription (e.g. `ecoai` in Zimbabwe or `strava` globally) or clicks any preset chip.
 3. The enjoyous comic stick figure sprints corner-to-corner hunting down the cancellation path, then transitions to an emerald celebration with confetti and a golden key.
-4. The verified destination card resolves with authentic high-res brand icons and real domains (e.g. `ecoaitoken.co.zw` with USSD `*449#`).
-5. The user follows the step-by-step defusal checklist, opens the direct portal, and downloads the 1-click `.ics` calendar alert.
+4. The verified destination card resolves with authentic high-res brand icons and real domains grounded via Brave Search (e.g. `ecoaitoken.co.zw` with USSD `*449#`).
+5. The user follows the step-by-step defusal checklist, launches the in-app co-pilot modal, and downloads the 1-click `.ics` calendar alert.
 
 ## The POC Boundary
 - **In Now**:
