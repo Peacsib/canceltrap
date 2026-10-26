@@ -289,9 +289,9 @@ export function HeroLanding({
             <span className="text-[#15a24a] headline-radiance-green">forgot</span>.
           </h1>
 
-          {/* Clean, Jargonless Tagline */}
-          <p className="text-xs sm:text-base text-[#556987] font-normal leading-snug max-w-xs sm:max-w-md staged-enter staged-delay-3">
-            Stop unwanted renewals before they cost you more.
+          {/* Clean, Jargonless Tagline (Max 2 lines) */}
+          <p className="text-xs sm:text-base text-[#556987] font-normal leading-relaxed max-w-md staged-enter staged-delay-3">
+            Stop unwanted renewals before they cost you more. Get to the right cancellation page without digging through menus.
           </p>
 
           {/* Desktop Clean CTA Row */}
