@@ -209,12 +209,12 @@ export function HeroLanding({
       )}
 
       {/* Top Header / Navigation Bar */}
-      <header className="w-full px-5 sm:px-8 lg:px-12 pt-3 sm:pt-4 pb-2 flex items-start justify-between z-20">
+      <header className="w-full px-4 sm:px-8 lg:px-12 py-3 sm:py-4 flex items-center justify-between z-20">
         {/* Brand Logo - Nestled cleanly inside the upper-left gradient circle as a refined glass capsule */}
-        <div className="pt-3 sm:pt-5 pl-2 sm:pl-4">
+        <div className="flex items-center">
           <div
             onClick={() => window.location.reload()}
-            className="inline-flex items-center px-5 py-2.5 sm:px-6 sm:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-white shadow-[0_10px_25px_-5px_rgba(15,30,59,0.14),0_2px_6px_rgba(0,0,0,0.04)] ring-1 ring-black/5 hover:-translate-y-1 hover:shadow-[0_18px_38px_-6px_rgba(22,88,235,0.3),0_0_24px_rgba(22,88,235,0.18)] hover:border-[#1658eb]/40 hover:bg-white active:scale-95 transition-all duration-300 cursor-pointer group"
+            className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-white shadow-[0_10px_25px_-5px_rgba(15,30,59,0.14),0_2px_6px_rgba(0,0,0,0.04)] ring-1 ring-black/5 hover:-translate-y-1 hover:shadow-[0_18px_38px_-6px_rgba(22,88,235,0.3),0_0_24px_rgba(22,88,235,0.18)] hover:border-[#1658eb]/40 hover:bg-white active:scale-95 transition-all duration-300 cursor-pointer group"
           >
             <Image
               src="/canceltrap-logo.webp"
@@ -222,7 +222,7 @@ export function HeroLanding({
               width={180}
               height={45}
               priority
-              className="h-7 sm:h-8.5 w-auto object-contain transition-transform group-hover:scale-[1.03]"
+              className="h-6.5 sm:h-8.5 w-auto object-contain transition-transform group-hover:scale-[1.03]"
             />
           </div>
         </div>
@@ -259,12 +259,12 @@ export function HeroLanding({
           </button>
         </nav>
 
-        {/* Right Action Button */}
-        <div className="flex items-center gap-3">
+        {/* Right Action Button - Vertically centered with logo on all screens */}
+        <div className="flex items-center">
           <button
             type="button"
             onClick={() => router.push("/dashboard")}
-            className="btn-illuminate-primary px-5 py-2 rounded-full text-white text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-xs cursor-pointer"
+            className="btn-illuminate-primary px-4 py-2 sm:px-5 sm:py-2 rounded-full text-white text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
             <span>Dashboard</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -273,53 +273,47 @@ export function HeroLanding({
       </header>
 
       {/* Main Hero Section: Split into distinct Left and Right halves with a visible middle line */}
-      <div className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-4 lg:py-10 gap-0">
-        {/* Hero Left Column: Brand promise, headline & CTA (Takes full first screen on mobile) */}
-        <div className="w-full lg:w-[48%] xl:w-[46%] text-left flex flex-col justify-center space-y-4 pr-0 lg:pr-8 xl:pr-12 min-h-[calc(100svh-5.5rem)] lg:min-h-0 py-6 lg:py-0">
+      <div className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-12 lg:px-16 flex flex-col lg:flex-row items-center justify-between relative z-10 py-2 sm:py-4 lg:py-10 gap-4 lg:gap-0">
+        {/* Hero Left Column: Brand promise, headline & CTA (Flows naturally on mobile into stick fighter) */}
+        <div className="w-full lg:w-[48%] xl:w-[46%] text-left flex flex-col justify-center space-y-3 sm:space-y-4 pr-0 lg:pr-8 xl:pr-12 pt-1 pb-2 lg:py-0">
           {/* Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e8f7ee]/90 backdrop-blur-md border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs interactive-pill hover:border-[#0f8b3c]/50 hover:shadow-[0_6px_20px_rgba(15,139,60,0.22)] staged-enter staged-delay-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#e8f7ee]/90 backdrop-blur-md border border-[#a7e8be] text-[#0f8b3c] text-xs font-semibold w-fit shadow-xs interactive-pill hover:border-[#0f8b3c]/50 hover:shadow-[0_6px_20px_rgba(15,139,60,0.22)] staged-enter staged-delay-1">
             <Shield className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Take control of subscriptions</span>
           </div>
 
           {/* Short, Punchy Headline - calibrated size for clean 2 columns */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.15] staged-enter staged-delay-2">
-            Stop paying for <br />
+          <h1 className="text-2xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-extrabold text-[#0c1b38] font-display tracking-tight leading-[1.18] staged-enter staged-delay-2">
+            Stop paying for <br className="hidden sm:inline" />
             <span className="text-[#1658eb] headline-radiance-blue">subscriptions</span> you{" "}
             <span className="text-[#15a24a] headline-radiance-green">forgot</span>.
           </h1>
 
           {/* Clean, Jargonless Tagline (Max 2 lines) */}
-          <p className="text-sm sm:text-base text-[#556987] font-normal leading-relaxed max-w-md staged-enter staged-delay-3">
+          <p className="text-xs sm:text-base text-[#556987] font-normal leading-relaxed max-w-md staged-enter staged-delay-3">
             Stop unwanted renewals before they cost you more. Get to the right cancellation page without digging through menus.
           </p>
 
           {/* Clean CTA Row */}
-          <div className="flex flex-wrap items-center gap-4 pt-1 staged-enter staged-delay-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 staged-enter staged-delay-4">
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
-              className="btn-illuminate-primary px-7 py-3.5 rounded-full font-bold text-sm sm:text-base inline-flex items-center gap-2.5 transition-all cursor-pointer"
+              className="btn-illuminate-primary px-6 py-3 sm:px-7 sm:py-3.5 rounded-full font-bold text-xs sm:text-base inline-flex items-center gap-2 transition-all cursor-pointer shadow-md"
             >
-              <Search className="w-4 h-4 stroke-[2.5]" />
+              <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
               <span>Find my subscription</span>
-              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
             </button>
 
             <button
               type="button"
               onClick={() => setActiveModal("howItWorks")}
-              className="btn-illuminate-ghost px-5 py-3 rounded-full text-[#1658eb] font-semibold text-sm sm:text-base inline-flex items-center gap-2 transition-all cursor-pointer group"
+              className="btn-illuminate-ghost px-4 py-2.5 sm:px-5 sm:py-3 rounded-full text-[#1658eb] font-semibold text-xs sm:text-base inline-flex items-center gap-1.5 transition-all cursor-pointer group"
             >
               <span>How it works</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
             </button>
-          </div>
-
-          {/* Subtle mobile scroll indicator hint */}
-          <div className="lg:hidden flex items-center gap-2 pt-4 text-xs text-sky-600/70 font-medium">
-            <span>Scroll down to explore interactive defusal arena</span>
-            <ArrowRight className="w-3.5 h-3.5 rotate-90 animate-bounce" />
           </div>
 
           {/* Error Alert if any */}
@@ -341,8 +335,8 @@ export function HeroLanding({
         {/* Visible Middle Split Line: Distinct boundary separating Hero Left from Hero Right */}
         <div className="hidden lg:block w-[1.5px] h-80 xl:h-90 bg-linear-to-b from-transparent via-[#1658eb]/25 to-transparent shrink-0 my-auto shadow-[0_0_8px_rgba(22,88,235,0.12)] staged-enter staged-delay-5" />
 
-        {/* Hero Right Column: 3D glass chair showcase & interactive zone (Revealed via scroll on mobile) */}
-        <div className="w-full lg:w-[48%] xl:w-[50%] flex items-center justify-center lg:translate-x-24 xl:translate-x-32 lg:-translate-y-4 xl:-translate-y-5 relative min-h-[85svh] lg:min-h-115 py-10 lg:py-0 staged-enter staged-delay-6">
+        {/* Hero Right Column: 3D glass chair showcase & stick fighter interactive arena */}
+        <div className="w-full lg:w-[48%] xl:w-[50%] flex items-center justify-center lg:translate-x-24 xl:translate-x-32 lg:-translate-y-4 xl:-translate-y-5 relative min-h-0 py-2 sm:py-6 lg:py-0 staged-enter staged-delay-6">
           {/* Active AI Scanning Overlay Card when analyzing */}
           {isAnalyzing ? (
             <div className="w-full max-w-md p-7 rounded-3xl bg-white/95 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(22,88,235,0.25)] border border-white animate-in zoom-in-95 duration-200 z-30">
@@ -403,10 +397,12 @@ export function HeroLanding({
               </div>
             </div>
           ) : (
-            /* Glass Basket holding 10 services (AWS, ChatGPT, Lovable, Gemini, Adobe, etc.) - No duplicate dashboard */
-            <BasketServices
-              onSelectService={(serviceId) => router.push(`/dashboard?service=${serviceId}`)}
-            />
+            /* Glass Basket holding 10 services (AWS, ChatGPT, Lovable, Gemini, Adobe, etc.) */
+            <div className="w-full flex items-center justify-center scale-[0.82] sm:scale-95 lg:scale-100 origin-center -my-3 sm:my-0">
+              <BasketServices
+                onSelectService={(serviceId) => router.push(`/dashboard?service=${serviceId}`)}
+              />
+            </div>
           )}
         </div>
       </div>

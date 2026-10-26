@@ -1365,113 +1365,30 @@ export function DefusalDashboard({
         />
       </div>
 
-      {/* ─── Mobile Top Header Navigation (Frosted Scotch Glass Strip) ─── */}
-      <header className="md:hidden sticky top-0 z-30 w-full bg-white/80 backdrop-blur-xl border-b border-white/80 shadow-[0_4px_16px_rgba(20,70,160,0.04)] px-4 py-3 flex flex-col gap-2.5">
-        <div className="flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => (onReset ? onReset() : router.push("/"))}
-            className="inline-flex items-center gap-2 group cursor-pointer"
-            title="CancelTrap Home"
-          >
-            <Image
-              src="/canceltrap-logo.webp"
-              alt="CancelTrap"
-              width={120}
-              height={30}
-              priority
-              className="h-6 w-auto object-contain"
-            />
-          </button>
-          <button
-            type="button"
-            onClick={() => (onReset ? onReset() : router.push("/"))}
-            className="text-xs text-[#556987] hover:text-[#1658eb] font-semibold flex items-center gap-1 transition cursor-pointer px-2.5 py-1 rounded-full bg-white/60 border border-white/80"
-          >
-            <span>← Home</span>
-          </button>
-        </div>
-
-        {/* Mobile Horizontal Scrollable Segmented Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 -mx-1 px-1">
-          <button
-            type="button"
-            onClick={() => {
-              setSidebarTab("overview");
-              router.push("/dashboard");
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
-              sidebarTab === "overview"
-                ? "bg-[#1658eb] text-white shadow-xs"
-                : "bg-white/65 text-[#486284] border border-white/80"
-            }`}
-          >
-            <Home className="w-3.5 h-3.5" />
-            <span>Overview</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setSidebarTab("find");
-              router.push("/find");
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
-              sidebarTab === "find"
-                ? "bg-[#1658eb] text-white shadow-xs"
-                : "bg-white/65 text-[#486284] border border-white/80"
-            }`}
-          >
-            <Search className="w-3.5 h-3.5" />
-            <span>Find destination</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setSidebarTab("saved");
-              router.push("/saved");
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
-              sidebarTab === "saved"
-                ? "bg-[#1658eb] text-white shadow-xs"
-                : "bg-white/65 text-[#486284] border border-white/80"
-            }`}
-          >
-            <Bookmark className="w-3.5 h-3.5" />
-            <span>Saved</span>
-            {isMounted && savedRoutes.length > 0 && (
-              <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${
-                sidebarTab === "saved" ? "bg-white/25 text-white" : "bg-blue-100 text-[#1658eb]"
-              }`}>
-                {savedRoutes.length}
-              </span>
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setSidebarTab("history");
-              router.push("/history");
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition shrink-0 ${
-              sidebarTab === "history"
-                ? "bg-[#1658eb] text-white shadow-xs"
-                : "bg-white/65 text-[#486284] border border-white/80"
-            }`}
-          >
-            <Clock className="w-3.5 h-3.5" />
-            <span>History</span>
-            {isMounted && historyItems.length > 0 && (
-              <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${
-                sidebarTab === "history" ? "bg-white/25 text-white" : "bg-slate-200 text-slate-600"
-              }`}>
-                {historyItems.length}
-              </span>
-            )}
-          </button>
-        </div>
+      {/* ─── Mobile Top Header Navigation (Minimal Sleek Frosted Glass Strip) ─── */}
+      <header className="md:hidden sticky top-0 z-30 w-full bg-white/85 backdrop-blur-xl border-b border-white/80 shadow-[0_2px_12px_rgba(20,70,160,0.04)] px-4 py-3 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => (onReset ? onReset() : router.push("/"))}
+          className="inline-flex items-center gap-2 group cursor-pointer"
+          title="CancelTrap Home"
+        >
+          <Image
+            src="/canceltrap-logo.webp"
+            alt="CancelTrap"
+            width={120}
+            height={30}
+            priority
+            className="h-6 w-auto object-contain"
+          />
+        </button>
+        <button
+          type="button"
+          onClick={() => (onReset ? onReset() : router.push("/"))}
+          className="text-xs text-[#556987] hover:text-[#1658eb] font-semibold flex items-center gap-1 transition cursor-pointer px-3 py-1.5 rounded-full bg-white/70 border border-white/90 shadow-2xs"
+        >
+          <span>← Home</span>
+        </button>
       </header>
 
       {/* ─── Left Sidebar Navigation (Desktop Scotch Glass Panel) ─── */}
@@ -1597,7 +1514,7 @@ export function DefusalDashboard({
       </aside>
 
       {/* ─── Main Content Canvas ─── */}
-      <main className="relative z-10 flex-1 w-full py-6 sm:py-8 md:py-10 px-4 sm:px-8 lg:px-16 max-w-5xl text-left">
+      <main className="relative z-10 flex-1 w-full pt-4 pb-28 sm:py-8 md:py-10 px-4 sm:px-8 lg:px-16 max-w-5xl text-left">
         {/* ─── TAB 1: OVERVIEW ─── */}
         {sidebarTab === "overview" && (
           <>
@@ -1725,8 +1642,55 @@ export function DefusalDashboard({
               )}
             </div>
 
-            {/* Popular Filter Chips (Scotch Frosted Glass Pills) */}
-            <div className="flex items-center gap-3 mt-6 flex-wrap text-sm">
+            {/* Mobile: Exactly 3 Popular Presets on ONE Single Line */}
+            <div className="md:hidden flex items-center gap-2 mt-4 text-xs w-full overflow-hidden">
+              <span className="text-slate-500 font-semibold text-xs shrink-0">Popular:</span>
+
+              {/* AWS Chip */}
+              <button
+                type="button"
+                onClick={() => selectPresetWithAnimation("aws")}
+                className={`px-3 py-1.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer shrink-0 ${
+                  selectedServiceId === "aws"
+                    ? "bg-white/95 border-sky-300 text-[#1658eb] shadow-xs"
+                    : "bg-white/70 hover:bg-white/90 border-white/80 text-[#0c1b38]"
+                }`}
+              >
+                <AwsChipIcon />
+                <span>AWS</span>
+              </button>
+
+              {/* Google Cloud Chip */}
+              <button
+                type="button"
+                onClick={() => selectPresetWithAnimation("google_cloud")}
+                className={`px-3 py-1.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer shrink-0 ${
+                  selectedServiceId === "google_cloud"
+                    ? "bg-white/95 border-sky-300 text-[#1658eb] shadow-xs"
+                    : "bg-white/70 hover:bg-white/90 border-white/80 text-[#0c1b38]"
+                }`}
+              >
+                <GoogleCloudIcon className="w-3.5 h-3.5" />
+                <span>Google Cloud</span>
+              </button>
+
+              {/* Adobe Chip */}
+              <button
+                type="button"
+                onClick={() => selectPresetWithAnimation("adobe")}
+                className={`px-3 py-1.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer shrink-0 ${
+                  selectedServiceId === "adobe"
+                    ? "bg-white/95 border-sky-300 text-[#1658eb] shadow-xs"
+                    : "bg-white/70 hover:bg-white/90 border-white/80 text-[#0c1b38]"
+                }`}
+              >
+                <AdobeChipIcon />
+                <span>Adobe</span>
+              </button>
+            </div>
+
+            {/* Desktop: Full Set of Popular Filter Chips */}
+            <div className="hidden md:flex items-center gap-3 mt-6 flex-wrap text-sm">
               <span className="text-slate-500 font-medium text-sm mr-1">Popular</span>
 
               {/* AWS Chip */}
@@ -2350,6 +2314,95 @@ export function DefusalDashboard({
           isCanceled={false}
         />
       )}
+
+      {/* ─── Mobile Bottom Navigation Dock (Fintech Bar matching Revolut/Klarna) ─── */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/92 backdrop-blur-2xl border-t border-slate-200/80 px-4 py-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-8px_25px_rgba(15,30,59,0.08)] flex items-center justify-around select-none">
+        {/* 1. Overview */}
+        <button
+          type="button"
+          onClick={() => {
+            setSidebarTab("overview");
+            router.push("/dashboard");
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer ${
+            sidebarTab === "overview"
+              ? "text-[#1658eb] font-bold"
+              : "text-[#64748b] hover:text-[#0c1b38] font-medium"
+          }`}
+        >
+          <div className={`p-1.5 rounded-xl transition ${sidebarTab === "overview" ? "bg-blue-50 text-[#1658eb]" : ""}`}>
+            <Home className="w-5 h-5 stroke-[2.2]" />
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">Overview</span>
+        </button>
+
+        {/* 2. Find */}
+        <button
+          type="button"
+          onClick={() => {
+            setSidebarTab("find");
+            router.push("/find");
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer ${
+            sidebarTab === "find"
+              ? "text-[#1658eb] font-bold"
+              : "text-[#64748b] hover:text-[#0c1b38] font-medium"
+          }`}
+        >
+          <div className={`p-1.5 rounded-xl transition ${sidebarTab === "find" ? "bg-blue-50 text-[#1658eb]" : ""}`}>
+            <Search className="w-5 h-5 stroke-[2.2]" />
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">Find</span>
+        </button>
+
+        {/* 3. Saved */}
+        <button
+          type="button"
+          onClick={() => {
+            setSidebarTab("saved");
+            router.push("/saved");
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer relative ${
+            sidebarTab === "saved"
+              ? "text-[#1658eb] font-bold"
+              : "text-[#64748b] hover:text-[#0c1b38] font-medium"
+          }`}
+        >
+          <div className={`p-1.5 rounded-xl transition relative ${sidebarTab === "saved" ? "bg-blue-50 text-[#1658eb]" : ""}`}>
+            <Bookmark className="w-5 h-5 stroke-[2.2]" />
+            {isMounted && savedRoutes.length > 0 && (
+              <span className="absolute -top-1 -right-1.5 min-w-4 h-4 px-1 rounded-full bg-[#1658eb] text-white text-[9px] font-bold flex items-center justify-center shadow-xs">
+                {savedRoutes.length}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">Saved</span>
+        </button>
+
+        {/* 4. History */}
+        <button
+          type="button"
+          onClick={() => {
+            setSidebarTab("history");
+            router.push("/history");
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all cursor-pointer relative ${
+            sidebarTab === "history"
+              ? "text-[#1658eb] font-bold"
+              : "text-[#64748b] hover:text-[#0c1b38] font-medium"
+          }`}
+        >
+          <div className={`p-1.5 rounded-xl transition relative ${sidebarTab === "history" ? "bg-blue-50 text-[#1658eb]" : ""}`}>
+            <Clock className="w-5 h-5 stroke-[2.2]" />
+            {isMounted && historyItems.length > 0 && (
+              <span className="absolute -top-1 -right-1.5 min-w-4 h-4 px-1 rounded-full bg-slate-600 text-white text-[9px] font-bold flex items-center justify-center shadow-xs">
+                {historyItems.length}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">History</span>
+        </button>
+      </nav>
     </div>
   );
 }
