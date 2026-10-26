@@ -294,8 +294,8 @@ export function HeroLanding({
             Stop unwanted renewals before they cost you more. Get to the right cancellation page without digging through menus.
           </p>
 
-          {/* Clean CTA Row */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 staged-enter staged-delay-4">
+          {/* Desktop Clean CTA Row */}
+          <div className="hidden lg:flex flex-wrap items-center gap-3 sm:gap-4 pt-1 staged-enter staged-delay-4">
             <button
               type="button"
               onClick={() => router.push("/dashboard")}
@@ -398,12 +398,34 @@ export function HeroLanding({
             </div>
           ) : (
             /* Glass Basket holding 10 services (AWS, ChatGPT, Lovable, Gemini, Adobe, etc.) */
-            <div className="w-full flex items-center justify-center scale-[0.82] sm:scale-95 lg:scale-100 origin-center -my-3 sm:my-0">
+            <div className="w-full flex items-center justify-center scale-[0.84] sm:scale-95 lg:scale-100 origin-center -my-2 sm:my-0">
               <BasketServices
                 onSelectService={(serviceId) => router.push(`/dashboard?service=${serviceId}`)}
               />
             </div>
           )}
+        </div>
+
+        {/* Mobile CTA Row: Positioned WAY LOWER beneath the stick fighter arena for effortless thumb access without cramping */}
+        <div className="lg:hidden w-full flex flex-col items-center justify-center gap-2 pt-2 pb-5 z-20 staged-enter staged-delay-4">
+          <button
+            type="button"
+            onClick={() => router.push("/dashboard")}
+            className="btn-illuminate-primary w-full max-w-xs px-7 py-3.5 rounded-full font-bold text-sm inline-flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg active:scale-98"
+          >
+            <Search className="w-4 h-4 stroke-[2.5]" />
+            <span>Find my subscription</span>
+            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveModal("howItWorks")}
+            className="btn-illuminate-ghost px-5 py-2 rounded-full text-[#1658eb] font-semibold text-xs inline-flex items-center justify-center gap-1.5 transition-all cursor-pointer group"
+          >
+            <span>How it works</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+          </button>
         </div>
       </div>
 
