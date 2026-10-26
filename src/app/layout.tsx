@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -32,7 +33,9 @@ export default function RootLayout({
     >
       <body className="min-h-full font-sans antialiased text-[#0f1e3b]">
         {children}
+        <Analytics />
       </body>
     </html>
   );
 }
+
