@@ -411,7 +411,7 @@ export function HeroLanding({
           <button
             type="button"
             onClick={() => router.push("/dashboard")}
-            className="btn-illuminate-primary flex-1 max-w-[210px] px-5 py-2.5 rounded-full font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-md active:scale-98"
+            className="btn-illuminate-primary flex-1 max-w-52.5 px-5 py-2.5 rounded-full font-bold text-xs inline-flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-md active:scale-98"
           >
             <Search className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Find subscription</span>
